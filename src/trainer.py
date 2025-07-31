@@ -38,7 +38,7 @@ class Trainer(object):
         self.model_name = self.model_cfg.model_name
         self.model_path = os.path.join(self.model_dest, self.model_name, datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
 
-        self.logger = Logger(self.model_cfg.cfg, logfile_dest= logfile_dest, wandb_project= wandb_project, wandb_entity= wandb_entity) 
+        self.logger = Logger(model_cfg, logfile_dest= logfile_dest, wandb_project= wandb_project, wandb_entity= wandb_entity) 
         self.logger.info("Training model with config: ")
         self.logger.info(self.model_cfg.cfg)
         

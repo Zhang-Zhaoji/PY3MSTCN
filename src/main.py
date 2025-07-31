@@ -46,14 +46,14 @@ def main(args:argparse.ArgumentParser):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg_path', type=str, default='cfgs/default.json')
-    parser.add_argument('--logfile_dest', type=str, default='./logfile.txt')
+    parser.add_argument('--cfg_path', type=str, default='cfgs/v0-0-1.json')
+    parser.add_argument('--logfile_dest', type=str, default='./logs')
     parser.add_argument('--model_dest', type=str, default='./model')
     parser.add_argument('--wandb_project', type=str, default='MyMSTCN')
     parser.add_argument('--wandb_entity', type=str, default='')
     parser.add_argument('--train_loader', type=str, default='./train_loader.pkl')
-    parser.add_argument('--num_workers', type=int, default=4)
-    parser.add_argument('--batch_size', type=int, default=16)
+    parser.add_argument('--num_workers', type=int, default=2) # 4
+    parser.add_argument('--batch_size', type=int, default=4) # 16
     parser.add_argument('--mode',type=str, default='train', choices=['train', 'test', 'predict'])
     parser.add_argument('--resume_model_path', type=str, default=None)
     parser.add_argument('--resume_optimizer_path', type=str, default=None)

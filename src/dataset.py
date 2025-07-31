@@ -451,11 +451,18 @@ class CausalityInTrafficAccident(Dataset):
         #if(self.pred_type == 'both'):
         causality_mask[cause_start_idx:cause_end_idx] = 1
         causality_mask[effect_start_idx:effect_end_idx] = 2
+        # 这个好像才是label，那么mask是啥？？
+        # print('rgb_feat.size():') 
+        # print(rgb_feat.size()) [208, 1024]
+        # print('causality_mask.size():')
+        # print(causality_mask.size()) [208]
+        # sys.exit(1)
 
         # label = torch.Tensor([annos[1][3], annos[2][3]])
         # return rgb_feat, flow_feat, causality_mask, cause_loc, effect_loc, label, annos[0]
         # else:
-        return rgb_feat, flow_feat, causality_mask, cause_loc, effect_loc
+        # return rgb_feat, flow_feat, causality_mask, cause_loc, effect_loc
+        return {'feature':rgb_feat, 'label':causality_mask} #[208*1024 & 208]
     
 def collate_fn(sample):
     feat_list = [s['feature'] for s in sample]
@@ -474,16 +481,17 @@ def collate_fn(sample):
     num_classes = labels.max() + 1 if labels.numel() > 0 else 1
     
     # 创建mask，标识哪些位置是有效标签（非填充）
-    mask = torch.zeros(batch_size, num_classes, sequence_length, dtype=torch.float)
+    mask = torch.ones(batch_size, num_classes, sequence_length, dtype=torch.float)
     
     # 对于每个样本，标记有效标签位置
-    for i in range(batch_size):
+    # for i in range(batch_size):
         # 假设-100表示填充/无效标签（PyTorch常用约定）
-        valid_positions = (label_list[i] != -100)  # 获取有效位置
+        # valid_positions = (label_list[i] != -100)  # 获取有效位置
         # 对于每个有效位置，标记对应类别的mask
-        for j in range(len(label_list[i])):
-            if valid_positions[j]:  # 如果是有效位置
-                class_idx = label_list[i][j].item()
-                mask[i, class_idx, j] = 1.0
+        # for j in range(len(label_list[i])):
+        #     if valid_positions[j]:  # 如果是有效位置
+        #         class_idx = label_list[i][j].item()
+        #         mask[i, class_idx, j] = 1.0
 
-    return {'feature': features, 'label': labels, 'mask': mask}
+    # return {'feature': features, 'label': labels, 'mask': mask}
+    return features, labels, mask   

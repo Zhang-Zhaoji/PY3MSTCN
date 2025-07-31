@@ -1,0 +1,19 @@
+{
+    "model_name": "v0-0-1",
+    "save_model":true,
+    "result_path": "./rsts",
+    "max_save_model": 5,
+    "lr":0.001,
+    "lr_decay":0.95,
+    "lr_decay_step": 10,
+    "weight_decay": 0.0001,
+    "optimizer": "Adam",
+    "scheduler": "StepLR",
+    "resume": "",
+    "num_classes": 3,
+    "num_stages": 2,
+    "num_layers": 3,
+    "num_f_maps": 128,
+    "dim":208,
+    "epochs": 100
+}

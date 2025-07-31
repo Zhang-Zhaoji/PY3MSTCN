@@ -1,10 +1,15 @@
 import wandb
 import datetime
+import os
+import pathlib
 import json
+from config import Config
 
 class Logger:
-    def __init__(self, cfg, logfile_dest=None, wandb_project=None, wandb_entity=None) -> None:
-        self.logfile_dest = logfile_dest if logfile_dest else f"log{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.txt"
+    def __init__(self, cfg:Config, logfile_dest=None, wandb_project=None, wandb_entity=None) -> None:
+        dest = os.path.join((logfile_dest if logfile_dest else 'logs'), cfg.model_name)
+        pathlib.Path(dest).mkdir(parents=True, exist_ok=True)
+        self.logfile_dest = os.path.join(dest,f"log{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.txt")
         self.wandb_project = wandb_project if wandb_project else None
         self.wandb_entity = wandb_entity if wandb_entity else None
         self.wandb = None
@@ -13,7 +18,7 @@ class Logger:
             self.wandb.config.update(cfg)
         self.logfile = open(self.logfile_dest, "a")
         # 在__init__方法中改进配置写入
-        self.logfile.write(json.dumps(cfg, indent=2) + "\n")
+        self.logfile.write(json.dumps(cfg.cfg, indent=2) + "\n")
 
     def log(self, msg):
         timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
