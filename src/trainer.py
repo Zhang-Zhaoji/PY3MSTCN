@@ -22,7 +22,7 @@ class Trainer(object):
                          wandb_project:str=None,
                          wandb_entity:str=None,
                          resume_model_path:str=None,
-                         resume_optimizer_path:str=None
+                         resume_optimizer_path:str=None,
                          ):
         self.model_cfg = model_cfg
         self.train_loader = train_loader
@@ -32,6 +32,7 @@ class Trainer(object):
         self.max_save_model = self.model_cfg.max_save_model
         self.val_interval = self.model_cfg.val_interval
         self.result_path = self.model_cfg.result_path
+        self.epochs  = self.model_cfg.epoch
 
         self.model_dest = model_dest if model_dest else self.result_path
         self.model_name = self.model_cfg.model_name
@@ -40,10 +41,8 @@ class Trainer(object):
         self.logger = Logger(self.model_cfg.cfg, logfile_dest= logfile_dest, wandb_project= wandb_project, wandb_entity= wandb_entity) 
         self.logger.info("Training model with config: ")
         self.logger.info(self.model_cfg.cfg)
+        
         self.logger.info("Using device: ")
-        self.logger.info(self.device)
-        self.logger.info("Loading model")
-
         if device:
             self.device = device
         elif torch.cuda.is_available():
@@ -52,7 +51,7 @@ class Trainer(object):
         else:
             self.device = torch.device("cpu")
             self.logger.info("Using CPU")
-
+        self.logger.info("Loading model")
         
         try:
             self.model = build_from_cfg(self.model_cfg)

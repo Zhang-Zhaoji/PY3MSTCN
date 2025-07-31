@@ -1,0 +1,233 @@
+{
+  "model_name": "default",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 5,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 10,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 32,
+  "dim": 2048
+}
+[2025-07-31 17:21:18] [INFO] Training model with config: 
+[2025-07-31 17:21:18] [INFO] {'model_name': 'default', 'save_model': True, 'result_path': './rsts', 'max_save_model': 5, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 10, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 32, 'dim': 2048}
+[2025-07-31 17:21:18] [INFO] Using device: 
+{
+  "model_name": "default",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 5,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 10,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 32,
+  "dim": 2048
+}
+[2025-07-31 17:23:56] [INFO] Training model with config: 
+[2025-07-31 17:23:56] [INFO] {'model_name': 'default', 'save_model': True, 'result_path': './rsts', 'max_save_model': 5, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 10, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 32, 'dim': 2048}
+[2025-07-31 17:23:56] [INFO] Using device: 
+[2025-07-31 17:23:56] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-07-31 17:23:56] [INFO] Loading model
+[2025-07-31 17:23:56] [INFO] loading model successfully
+[2025-07-31 17:23:56] [INFO] building optimizer with optimizer:Adam
+[2025-07-31 17:23:56] [INFO] building scheduler with scheduler:StepLR
+{
+  "model_name": "default",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 5,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 10,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 32,
+  "dim": 2048,
+  "epochs": 100
+}
+[2025-07-31 17:25:10] [INFO] Training model with config: 
+[2025-07-31 17:25:10] [INFO] {'model_name': 'default', 'save_model': True, 'result_path': './rsts', 'max_save_model': 5, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 10, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 32, 'dim': 2048, 'epochs': 100}
+[2025-07-31 17:25:10] [INFO] Using device: 
+[2025-07-31 17:25:10] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-07-31 17:25:10] [INFO] Loading model
+[2025-07-31 17:25:10] [INFO] loading model successfully
+[2025-07-31 17:25:10] [INFO] building optimizer with optimizer:Adam
+[2025-07-31 17:25:10] [INFO] building scheduler with scheduler:StepLR
+[2025-07-31 17:25:10] [INFO] Starting training loop
+[2025-07-31 17:25:10] [INFO] Epoch: 0/100
+[2025-07-31 17:25:10] [INFO] Training starts: 
+[2025-07-31 17:25:10] [INFO] Training epoch 0
+{
+  "model_name": "default",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 5,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 10,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 32,
+  "dim": 2048,
+  "epochs": 100
+}
+[2025-07-31 17:40:48] [INFO] Training model with config: 
+[2025-07-31 17:40:48] [INFO] {'model_name': 'default', 'save_model': True, 'result_path': './rsts', 'max_save_model': 5, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 10, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 32, 'dim': 2048, 'epochs': 100}
+[2025-07-31 17:40:48] [INFO] Using device: 
+[2025-07-31 17:40:48] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-07-31 17:40:48] [INFO] Loading model
+[2025-07-31 17:40:48] [INFO] loading model successfully
+[2025-07-31 17:40:48] [INFO] building optimizer with optimizer:Adam
+[2025-07-31 17:40:48] [INFO] building scheduler with scheduler:StepLR
+[2025-07-31 17:40:48] [INFO] Starting training loop
+[2025-07-31 17:40:48] [INFO] Epoch: 0/100
+[2025-07-31 17:40:48] [INFO] Training starts: 
+[2025-07-31 17:40:48] [INFO] Training epoch 0
+{
+  "model_name": "default",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 5,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 10,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 32,
+  "dim": 2048,
+  "epochs": 100
+}
+[2025-07-31 17:41:41] [INFO] Training model with config: 
+[2025-07-31 17:41:41] [INFO] {'model_name': 'default', 'save_model': True, 'result_path': './rsts', 'max_save_model': 5, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 10, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 32, 'dim': 2048, 'epochs': 100}
+[2025-07-31 17:41:41] [INFO] Using device: 
+[2025-07-31 17:41:41] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-07-31 17:41:41] [INFO] Loading model
+[2025-07-31 17:41:41] [INFO] loading model successfully
+[2025-07-31 17:41:41] [INFO] building optimizer with optimizer:Adam
+[2025-07-31 17:41:41] [INFO] building scheduler with scheduler:StepLR
+[2025-07-31 17:41:41] [INFO] Starting training loop
+[2025-07-31 17:41:41] [INFO] Epoch: 0/100
+[2025-07-31 17:41:41] [INFO] Training starts: 
+[2025-07-31 17:41:41] [INFO] Training epoch 0
+{
+  "model_name": "default",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 5,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 10,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 32,
+  "dim": 2048,
+  "epochs": 100
+}
+[2025-07-31 17:43:56] [INFO] Training model with config: 
+[2025-07-31 17:43:56] [INFO] {'model_name': 'default', 'save_model': True, 'result_path': './rsts', 'max_save_model': 5, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 10, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 32, 'dim': 2048, 'epochs': 100}
+[2025-07-31 17:43:56] [INFO] Using device: 
+[2025-07-31 17:43:56] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-07-31 17:43:56] [INFO] Loading model
+[2025-07-31 17:43:56] [INFO] loading model successfully
+[2025-07-31 17:43:56] [INFO] building optimizer with optimizer:Adam
+[2025-07-31 17:43:56] [INFO] building scheduler with scheduler:StepLR
+[2025-07-31 17:43:56] [INFO] Starting training loop
+[2025-07-31 17:43:56] [INFO] Epoch: 0/100
+[2025-07-31 17:43:56] [INFO] Training starts: 
+[2025-07-31 17:43:56] [INFO] Training epoch 0
+{
+  "model_name": "default",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 5,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 10,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 32,
+  "dim": 2048,
+  "epochs": 100
+}
+[2025-07-31 17:46:29] [INFO] Training model with config: 
+[2025-07-31 17:46:29] [INFO] {'model_name': 'default', 'save_model': True, 'result_path': './rsts', 'max_save_model': 5, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 10, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 32, 'dim': 2048, 'epochs': 100}
+[2025-07-31 17:46:29] [INFO] Using device: 
+[2025-07-31 17:46:29] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-07-31 17:46:29] [INFO] Loading model
+[2025-07-31 17:46:29] [INFO] loading model successfully
+[2025-07-31 17:46:29] [INFO] building optimizer with optimizer:Adam
+[2025-07-31 17:46:29] [INFO] building scheduler with scheduler:StepLR
+[2025-07-31 17:46:29] [INFO] Starting training loop
+[2025-07-31 17:46:29] [INFO] Epoch: 0/100
+[2025-07-31 17:46:29] [INFO] Training starts: 
+[2025-07-31 17:46:29] [INFO] Training epoch 0
+{
+  "model_name": "default",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 5,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 10,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 32,
+  "dim": 2048,
+  "epochs": 100
+}
+[2025-07-31 17:52:28] [INFO] Training model with config: 
+[2025-07-31 17:52:28] [INFO] {'model_name': 'default', 'save_model': True, 'result_path': './rsts', 'max_save_model': 5, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 10, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 32, 'dim': 2048, 'epochs': 100}
+[2025-07-31 17:52:28] [INFO] Using device: 
+[2025-07-31 17:52:28] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-07-31 17:52:28] [INFO] Loading model
+[2025-07-31 17:52:28] [INFO] loading model successfully
+[2025-07-31 17:52:28] [INFO] building optimizer with optimizer:Adam
+[2025-07-31 17:52:28] [INFO] building scheduler with scheduler:StepLR
+[2025-07-31 17:52:28] [INFO] Starting training loop
+[2025-07-31 17:52:28] [INFO] Epoch: 0/100
+[2025-07-31 17:52:28] [INFO] Training starts: 
+[2025-07-31 17:52:28] [INFO] Training epoch 0

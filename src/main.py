@@ -1,25 +1,30 @@
 from config import Config
 from trainer import Trainer
 from torch.utils.data import Dataset, DataLoader
-from dataset import CausalityInTrafficAccident
+from dataset import CausalityInTrafficAccident, collate_fn
 import argparse
 
 def main(args:argparse.ArgumentParser):
     p = vars(args)
-    print(args)
+    p['len_sequence'] = 208
+    p['fps'] = 25
+    p['vid_length'] = p['len_sequence'] * 8 / p['fps']
+    print(p)
 
-    if p.mode == 'train':
+    if args.mode == 'train':
         dataset_train = CausalityInTrafficAccident(p, split='train')
         dataset_val   = CausalityInTrafficAccident(p, split='val', test_mode=True)
-        dataloader_train = DataLoader(dataset_train, batch_size=p['batch_size'], shuffle=True, num_workers=p['num_workers'])
-        dataloader_val = DataLoader(dataset_val, batch_size=p['batch_size'], num_workers=p['num_workers'])
-    elif p.mode == 'test':
-        dataset_train = None
-        dataset_val   = None
+        dataset_test  = []
+        dataloader_train = DataLoader(dataset_train, batch_size=p['batch_size'], shuffle=True, num_workers=p['num_workers'],collate_fn=collate_fn)
+        dataloader_val = DataLoader(dataset_val, batch_size=p['batch_size'], num_workers=p['num_workers'],collate_fn=collate_fn)
+        dataloader_test = None
+    elif args.mode == 'test':
+        dataset_train = []
+        dataset_val   = []
         dataset_test  = CausalityInTrafficAccident(p, split='test', test_mode=True)
         dataloader_train, dataloader_val = None, None
         dataloader_test = DataLoader(dataset_test, batch_size=p['batch_size'], num_workers=p['num_workers'])
-    elif p.mode == 'predict':
+    elif args.mode == 'predict':
         raise NotImplementedError('predict mode is not implemented yet')
     else:
         raise ValueError('mode must be train or test or predict')
@@ -32,7 +37,6 @@ def main(args:argparse.ArgumentParser):
                            val_loader=dataloader_val,
                            logfile_dest=p['logfile_dest'],
                            model_dest=p['model_dest'],
-                           model_name=p['model_name'],
                            wandb_project=p['wandb_project'],
                            wandb_entity=p['wandb_entity'],
                            resume_model_path=p['resume_model_path'],
@@ -53,5 +57,17 @@ if __name__ == '__main__':
     parser.add_argument('--mode',type=str, default='train', choices=['train', 'test', 'predict'])
     parser.add_argument('--resume_model_path', type=str, default=None)
     parser.add_argument('--resume_optimizer_path', type=str, default=None)
+    parser.add_argument('--feature', type=str, default="Mar9th")
+    parser.add_argument('--feature_folder', type=str, default="RGBdataset")
+    parser.add_argument('--input_size', type=int, default=1024)
+    parser.add_argument('--hidden_size', type=int, default=256)
+    parser.add_argument('--num_segments', type=int, default=4)
+    parser.add_argument('--new_length', type=int, default=1)    
+    parser.add_argument('--feed_type', type=str, default="multi-label",choices=["multi-label", "detection", "classification"])
+    parser.add_argument('--dataset_ver', type=str, default='Mar9th')
+    parser.add_argument('--num_layers', type=int, default=3)
+    parser.add_argument('--num_stages', type=int, default=2)
+    parser.add_argument('--positive_thres', type=float, default=0.4)
+    
     args = parser.parse_args()
     main(args)

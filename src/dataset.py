@@ -1,5 +1,5 @@
 # copied from https://github.com/tackgeun/CausalityInTrafficAccident/tree/master
-
+from numpy.random import randint
 import argparse, pickle, os, math, random, sys
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
@@ -39,7 +39,7 @@ class CausalityInTrafficAccident(Dataset):
     """Causality In Traffic Accident Dataset."""
     
     def __init__(self, p, split, test_mode=False):
-        DATA_ROOT = './dataset/'
+        DATA_ROOT = 'data'
         self.feature = p['feature']
         self.split = split
         if split == 'train':
@@ -52,7 +52,7 @@ class CausalityInTrafficAccident(Dataset):
 
         self.feed_type = p['feed_type']
 
-        self.use_flip = True
+        self.use_flip = False # used to be true
 
         self.feature_dim = p['input_size']
         self.seq_length = 208
@@ -74,21 +74,25 @@ class CausalityInTrafficAccident(Dataset):
         elif('rgb' in self.feature):
             self.use_flow = False
             self.use_rgb = True
+        else:
+            print(f'feature type of {self.feature} is not supported, maybe')
+            self.use_flow = False
+            self.use_rgb = True
 
         dv = p['dataset_ver']
-        self.anno_dir = DATA_ROOT + 'annotation-%s-25fps.pkl' % dv
+        self.anno_dir = os.path.join(DATA_ROOT, f'annotation-{dv}-25fps.pkl')
         
         with open(self.anno_dir, 'rb') as f:
             self.annos = pickle.load(f)
            
-            feat_rgb = torch.load(DATA_ROOT + 'i3d-rgb-fps25-%s.pt' % dv)
+            feat_rgb = torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-rgb-fps25-{dv}.pt'))
             if(self.use_flow):
-                feat_flow= torch.load(DATA_ROOT + 'i3d-flow-fps25-%s.pt' % dv)
+                feat_flow= torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-flow-fps25-{dv}.pt'))
 
             if(self.use_flip):
-                feat_rgb_flip = torch.load(DATA_ROOT + 'i3d-rgb-flip-fps25-%s.pt' % dv)
+                feat_rgb_flip = torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-rgb-flip-fps25-{dv}.pt'))
                 if(self.use_flow):
-                    feat_flow_flip = torch.load(DATA_ROOT + 'i3d-flow-flip-fps25-%s.pt' % dv)
+                    feat_flow_flip = torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-flow-flip-fps25-{dv}.pt'))
 
             start_idx = data_length[0]
             end_idx = data_length[1]
@@ -158,22 +162,22 @@ class CausalityInTrafficAccident(Dataset):
 
         if(self.feed_type == 'detection'):
             self.positive_thres = p['positive_thres']
-            scales = torch.Tensor((p['proposal_scales'])).unsqueeze(0).unsqueeze(1) # 1 x scale x 1
-            scales = scales / self.seq_length * self.vid_length
+            # scales = torch.Tensor((p['proposal_scales'])).unsqueeze(0).unsqueeze(1) # 1 x scale x 1
+            # scales = scales / self.seq_length * self.vid_length
             
-            boxes = torch.Tensor([j for j in range(0, self.seq_length)]).unsqueeze(0).unsqueeze(2)
-            boxes = boxes / self.seq_length * self.vid_length
-            boxes = boxes.repeat(2, 1, len(p['proposal_scales'])) # start/end, num_scales, temporal_length
+            # boxes = torch.Tensor([j for j in range(0, self.seq_length)]).unsqueeze(0).unsqueeze(2)
+            # boxes = boxes / self.seq_length * self.vid_length
+            # boxes = boxes.repeat(2, 1, len(p['proposal_scales'])) # start/end, num_scales, temporal_length
+# 
+            # #print('ssd size', scales.size(), boxes.size())
+# 
+            # boxes[0, :, :] = boxes[0, :, :] - scales/2 # start time
+            # boxes[1, :, :] = boxes[1, :, :] + scales/2 # end time
+# 
+            # self.boxes = boxes.cuda(p['device'])
 
-            #print('ssd size', scales.size(), boxes.size())
-
-            boxes[0, :, :] = boxes[0, :, :] - scales/2 # start time
-            boxes[1, :, :] = boxes[1, :, :] + scales/2 # end time
-
-            self.boxes = boxes.cuda(p['device'])
-
-            iou_bg = torch.ones(self.boxes.size(1), self.boxes.size(2)) * self.positive_thres
-            self.iou_bg = iou_bg.cuda(p['device'])
+            # iou_bg = torch.ones(self.boxes.size(1), self.boxes.size(2)) * self.positive_thres
+            # self.iou_bg = iou_bg.cuda(p['device'])
 
 
     def __len__(self):
@@ -270,8 +274,9 @@ class CausalityInTrafficAccident(Dataset):
         except:
             print('exception', idx)
         cause_loc, effect_loc, ious, labels = self.get_det_labels(idx)
-
-        return rgb_feat, flow_feat, cause_loc, effect_loc, labels, ious
+        
+        return {'feature':rgb_feat, 'label':labels}
+        # return rgb_feat, flow_feat, cause_loc, effect_loc, labels, ious
 
     def _sample_indices(self, num_frames):
         """
@@ -320,6 +325,7 @@ class CausalityInTrafficAccident(Dataset):
 
     def feed_classification(self, idx):
         annos = self.annos[idx]
+        print(f'annos:{annos}')
         
         if(self.use_flip and random.random() > 0.5):
             rgb_feat = self.feat_rgb_flip[idx]
@@ -329,8 +335,9 @@ class CausalityInTrafficAccident(Dataset):
         num_frames = rgb_feat.size(0)
 
         cause_label = annos[1][3] - 1# - 1 (no background label)
+        print(f'cause_label:{cause_label}')
         effect_label = annos[2][3] - self.num_causes - 1  # - 1 (no background label)
-        
+        print(f'effect_label:{effect_label}')
 
         if not self.test_mode:
             segment_indices = self._sample_indices(num_frames) if self.random_shift else self._get_val_indices(num_frames)
@@ -339,6 +346,7 @@ class CausalityInTrafficAccident(Dataset):
 
         #return self.get(record, segment_indices)
         segment_indices = segment_indices - 1
+        print(f'segment_indices:{segment_indices}')
 
         rgb_feat = rgb_feat[segment_indices, :]
         #label = dict()
@@ -349,7 +357,7 @@ class CausalityInTrafficAccident(Dataset):
         #feat['cause'] = rgb_feat
         #feat['effect'] = flow_feat
 
-        return rgb_feat, cause_label, effect_label
+        return {'feature':rgb_feat,'cause_label':cause_label,'effect_label': effect_label}
         #return feat, label
 
 
@@ -448,3 +456,34 @@ class CausalityInTrafficAccident(Dataset):
         # return rgb_feat, flow_feat, causality_mask, cause_loc, effect_loc, label, annos[0]
         # else:
         return rgb_feat, flow_feat, causality_mask, cause_loc, effect_loc
+    
+def collate_fn(sample):
+    feat_list = [s['feature'] for s in sample]
+    label_list = [s['label'] for s in sample]
+    # merge features from tuple of 2D tensor to 3D tensor
+    features = torch.stack(feat_list, dim=0)
+    # merge labels from tuple of 1D tensor to 2D tensor
+    labels = torch.stack(label_list, dim=0)
+    
+    # 创建mask张量来标识有效位置
+    batch_size = len(sample)
+    sequence_length = labels.size(1)  # 假设labels是(batch_size, sequence_length)
+    
+    # 由于代码中没有提供num_classes信息，这里需要从上下文获取
+    # 可以通过sample中的数据推断num_classes
+    num_classes = labels.max() + 1 if labels.numel() > 0 else 1
+    
+    # 创建mask，标识哪些位置是有效标签（非填充）
+    mask = torch.zeros(batch_size, num_classes, sequence_length, dtype=torch.float)
+    
+    # 对于每个样本，标记有效标签位置
+    for i in range(batch_size):
+        # 假设-100表示填充/无效标签（PyTorch常用约定）
+        valid_positions = (label_list[i] != -100)  # 获取有效位置
+        # 对于每个有效位置，标记对应类别的mask
+        for j in range(len(label_list[i])):
+            if valid_positions[j]:  # 如果是有效位置
+                class_idx = label_list[i][j].item()
+                mask[i, class_idx, j] = 1.0
+
+    return {'feature': features, 'label': labels, 'mask': mask}

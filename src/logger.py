@@ -8,7 +8,7 @@ class Logger:
         self.wandb_project = wandb_project if wandb_project else None
         self.wandb_entity = wandb_entity if wandb_entity else None
         self.wandb = None
-        if wandb_project is not None and wandb_entity is not None:
+        if wandb_project and wandb_entity:
             self.wandb = wandb.init(project=self.wandb_project, entity=self.wandb_entity)
             self.wandb.config.update(cfg)
         self.logfile = open(self.logfile_dest, "a")
