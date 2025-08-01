@@ -3,6 +3,7 @@ from trainer import Trainer
 from torch.utils.data import Dataset, DataLoader
 from dataset import CausalityInTrafficAccident, collate_fn
 import argparse
+import json
 
 def main(args:argparse.ArgumentParser):
     p = vars(args)
@@ -10,13 +11,16 @@ def main(args:argparse.ArgumentParser):
     p['fps'] = 25
     p['vid_length'] = p['len_sequence'] * 8 / p['fps']
     print(p)
+    defined_configs = json.load(open(p['cfg_path'], 'r'))
+    for k, v in defined_configs.items():
+        p[k] = v
 
     if args.mode == 'train':
         dataset_train = CausalityInTrafficAccident(p, split='train')
         dataset_val   = CausalityInTrafficAccident(p, split='val', test_mode=True)
         dataset_test  = []
-        dataloader_train = DataLoader(dataset_train, batch_size=p['batch_size'], shuffle=True, num_workers=p['num_workers'],collate_fn=collate_fn)
-        dataloader_val = DataLoader(dataset_val, batch_size=p['batch_size'], num_workers=p['num_workers'],collate_fn=collate_fn)
+        dataloader_train = DataLoader(dataset_train, batch_size=p['batch_size'], shuffle=True, num_workers=p['num_workers'],collate_fn=collate_fn,pin_memory=True)
+        dataloader_val = DataLoader(dataset_val, batch_size=p['batch_size'], num_workers=p['num_workers'],collate_fn=collate_fn,pin_memory=True)
         dataloader_test = None
     elif args.mode == 'test':
         dataset_train = []
@@ -46,14 +50,14 @@ def main(args:argparse.ArgumentParser):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg_path', type=str, default='cfgs/v0-0-1.json')
+    parser.add_argument('--cfg_path', type=str, default='cfgs/v1-0-0.json')
     parser.add_argument('--logfile_dest', type=str, default='./logs')
     parser.add_argument('--model_dest', type=str, default='./model')
     parser.add_argument('--wandb_project', type=str, default='MyMSTCN')
     parser.add_argument('--wandb_entity', type=str, default='')
     parser.add_argument('--train_loader', type=str, default='./train_loader.pkl')
     parser.add_argument('--num_workers', type=int, default=2) # 4
-    parser.add_argument('--batch_size', type=int, default=4) # 16
+    parser.add_argument('--batch_size', type=int, default=16) # 16
     parser.add_argument('--mode',type=str, default='train', choices=['train', 'test', 'predict'])
     parser.add_argument('--resume_model_path', type=str, default=None)
     parser.add_argument('--resume_optimizer_path', type=str, default=None)
@@ -65,8 +69,6 @@ if __name__ == '__main__':
     parser.add_argument('--new_length', type=int, default=1)    
     parser.add_argument('--feed_type', type=str, default="multi-label",choices=["multi-label", "detection", "classification"])
     parser.add_argument('--dataset_ver', type=str, default='Mar9th')
-    parser.add_argument('--num_layers', type=int, default=10)
-    parser.add_argument('--num_stages', type=int, default=4)
     parser.add_argument('--positive_thres', type=float, default=0.4)
     
     args = parser.parse_args()

@@ -1,0 +1,831 @@
+{
+  "model_name": "v1-0-0",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 5,
+  "lr": 0.005,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 4,
+  "num_layers": 10,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 100
+}
+[2025-08-01 17:15:38] [INFO] Training model with config: 
+[2025-08-01 17:15:38] [INFO] {'model_name': 'v1-0-0', 'save_model': True, 'result_path': './rsts', 'max_save_model': 5, 'lr': 0.005, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 4, 'num_layers': 10, 'num_f_maps': 128, 'dim': 1024, 'epochs': 100}
+[2025-08-01 17:15:38] [INFO] Using device: 
+[2025-08-01 17:15:39] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-08-01 17:15:39] [INFO] Loading model
+[2025-08-01 17:15:39] [INFO] loading model successfully
+[2025-08-01 17:15:39] [INFO] building optimizer with optimizer:Adam
+[2025-08-01 17:15:39] [INFO] building scheduler with scheduler:StepLR
+[2025-08-01 17:15:39] [INFO] Starting training loop
+[2025-08-01 17:15:39] [INFO] Epoch: 0/100
+[2025-08-01 17:15:39] [INFO] Training starts: 
+[2025-08-01 17:15:39] [INFO] Training epoch 0
+[2025-08-01 17:15:54] [INFO] Train Epoch: 0, Average Training Metric:1.261505 = 1009.204379/800.000000, Acc: 0.9035, [784/1355 (58%)]	
+[2025-08-01 17:15:56] [INFO] Train Epoch: 0, Average Training Metric:1.033299 = 1400.120498/1355.000000, Acc: 0.9161]	
+[2025-08-01 17:15:56] [INFO] Learning rate: 0.005
+[2025-08-01 17:15:56] [INFO] Validation starts: 
+[2025-08-01 17:15:56] [INFO] Epoch: 0
+[2025-08-01 17:15:56] [INFO] Validation begins: 
+[2025-08-01 17:15:56] [INFO] Validation set size: 290
+[2025-08-01 17:15:56] [INFO] Validation batch size: 16
+[2025-08-01 17:15:56] [INFO] Validation steps: 19
+[2025-08-01 17:16:11] [INFO] Validate Epoch: 0, Average Validation Metric:0.171280 = 49.671086/290.000000, Acc: 0.9343]	
+[2025-08-01 17:16:11] [INFO] Validation ends: 
+[2025-08-01 17:16:11] [INFO] Validation ends: 
+[2025-08-01 17:16:11] [INFO] Training ends: 
+[2025-08-01 17:16:11] [INFO] Epoch: 1/100
+[2025-08-01 17:16:11] [INFO] Training starts: 
+[2025-08-01 17:16:11] [INFO] Training epoch 1
+[2025-08-01 17:16:25] [INFO] Train Epoch: 1, Average Training Metric:0.673243 = 538.594626/800.000000, Acc: 0.9331, [784/1355 (58%)]	
+[2025-08-01 17:16:27] [INFO] Train Epoch: 1, Average Training Metric:0.662974 = 898.329562/1355.000000, Acc: 0.9351]	
+[2025-08-01 17:16:27] [INFO] Learning rate: 0.005
+[2025-08-01 17:16:27] [INFO] Validation starts: 
+[2025-08-01 17:16:27] [INFO] Epoch: 1
+[2025-08-01 17:16:27] [INFO] Validation begins: 
+[2025-08-01 17:16:27] [INFO] Validation set size: 290
+[2025-08-01 17:16:27] [INFO] Validation batch size: 16
+[2025-08-01 17:16:27] [INFO] Validation steps: 19
+[2025-08-01 17:16:41] [INFO] Validate Epoch: 1, Average Validation Metric:0.157820 = 45.767868/290.000000, Acc: 0.9437]	
+[2025-08-01 17:16:41] [INFO] Validation ends: 
+[2025-08-01 17:16:41] [INFO] Validation ends: 
+[2025-08-01 17:16:41] [INFO] Training ends: 
+[2025-08-01 17:16:41] [INFO] Epoch: 2/100
+[2025-08-01 17:16:41] [INFO] Training starts: 
+[2025-08-01 17:16:41] [INFO] Training epoch 2
+[2025-08-01 17:16:56] [INFO] Train Epoch: 2, Average Training Metric:0.590966 = 472.773116/800.000000, Acc: 0.9421, [784/1355 (58%)]	
+[2025-08-01 17:16:58] [INFO] Train Epoch: 2, Average Training Metric:0.588127 = 796.911934/1355.000000, Acc: 0.9415]	
+[2025-08-01 17:16:58] [INFO] Learning rate: 0.005
+[2025-08-01 17:16:58] [INFO] Validation starts: 
+[2025-08-01 17:16:58] [INFO] Epoch: 2
+[2025-08-01 17:16:58] [INFO] Validation begins: 
+[2025-08-01 17:16:58] [INFO] Validation set size: 290
+[2025-08-01 17:16:58] [INFO] Validation batch size: 16
+[2025-08-01 17:16:58] [INFO] Validation steps: 19
+[2025-08-01 17:17:11] [INFO] Validate Epoch: 2, Average Validation Metric:0.138169 = 40.069126/290.000000, Acc: 0.9480]	
+[2025-08-01 17:17:11] [INFO] Validation ends: 
+[2025-08-01 17:17:11] [INFO] Validation ends: 
+[2025-08-01 17:17:11] [INFO] Training ends: 
+[2025-08-01 17:17:11] [INFO] Epoch: 3/100
+[2025-08-01 17:17:11] [INFO] Training starts: 
+[2025-08-01 17:17:11] [INFO] Training epoch 3
+[2025-08-01 17:17:26] [INFO] Train Epoch: 3, Average Training Metric:0.573433 = 458.746180/800.000000, Acc: 0.9432, [784/1355 (58%)]	
+[2025-08-01 17:17:28] [INFO] Train Epoch: 3, Average Training Metric:0.568742 = 770.645712/1355.000000, Acc: 0.9439]	
+[2025-08-01 17:17:28] [INFO] Learning rate: 0.005
+[2025-08-01 17:17:28] [INFO] Validation starts: 
+[2025-08-01 17:17:28] [INFO] Epoch: 3
+[2025-08-01 17:17:28] [INFO] Validation begins: 
+[2025-08-01 17:17:28] [INFO] Validation set size: 290
+[2025-08-01 17:17:28] [INFO] Validation batch size: 16
+[2025-08-01 17:17:28] [INFO] Validation steps: 19
+[2025-08-01 17:17:42] [INFO] Validate Epoch: 3, Average Validation Metric:0.129478 = 37.548732/290.000000, Acc: 0.9467]	
+[2025-08-01 17:17:42] [INFO] Validation ends: 
+[2025-08-01 17:17:42] [INFO] Validation ends: 
+[2025-08-01 17:17:42] [INFO] Training ends: 
+[2025-08-01 17:17:42] [INFO] Epoch: 4/100
+[2025-08-01 17:17:42] [INFO] Training starts: 
+[2025-08-01 17:17:42] [INFO] Training epoch 4
+[2025-08-01 17:17:57] [INFO] Train Epoch: 4, Average Training Metric:0.539973 = 431.978306/800.000000, Acc: 0.9466, [784/1355 (58%)]	
+[2025-08-01 17:17:59] [INFO] Train Epoch: 4, Average Training Metric:0.535726 = 725.909391/1355.000000, Acc: 0.9464]	
+[2025-08-01 17:17:59] [INFO] Learning rate: 0.005
+[2025-08-01 17:17:59] [INFO] Validation starts: 
+[2025-08-01 17:17:59] [INFO] Epoch: 4
+[2025-08-01 17:17:59] [INFO] Validation begins: 
+[2025-08-01 17:17:59] [INFO] Validation set size: 290
+[2025-08-01 17:17:59] [INFO] Validation batch size: 16
+[2025-08-01 17:17:59] [INFO] Validation steps: 19
+[2025-08-01 17:18:13] [INFO] Validate Epoch: 4, Average Validation Metric:0.155185 = 45.003767/290.000000, Acc: 0.9409]	
+[2025-08-01 17:18:13] [INFO] Validation ends: 
+[2025-08-01 17:18:13] [INFO] Validation ends: 
+[2025-08-01 17:18:13] [INFO] Training ends: 
+[2025-08-01 17:18:13] [INFO] Epoch: 5/100
+[2025-08-01 17:18:13] [INFO] Training starts: 
+[2025-08-01 17:18:13] [INFO] Training epoch 5
+[2025-08-01 17:18:28] [INFO] Train Epoch: 5, Average Training Metric:0.484601 = 387.681161/800.000000, Acc: 0.9516, [784/1355 (58%)]	
+[2025-08-01 17:18:30] [INFO] Train Epoch: 5, Average Training Metric:0.502968 = 681.521278/1355.000000, Acc: 0.9507]	
+[2025-08-01 17:18:30] [INFO] Learning rate: 0.005
+[2025-08-01 17:18:30] [INFO] Validation starts: 
+[2025-08-01 17:18:30] [INFO] Epoch: 5
+[2025-08-01 17:18:30] [INFO] Validation begins: 
+[2025-08-01 17:18:30] [INFO] Validation set size: 290
+[2025-08-01 17:18:30] [INFO] Validation batch size: 16
+[2025-08-01 17:18:30] [INFO] Validation steps: 19
+[2025-08-01 17:18:44] [INFO] Validate Epoch: 5, Average Validation Metric:0.144175 = 41.810863/290.000000, Acc: 0.9448]	
+[2025-08-01 17:18:44] [INFO] Validation ends: 
+[2025-08-01 17:18:44] [INFO] Validation ends: 
+[2025-08-01 17:18:44] [INFO] Training ends: 
+[2025-08-01 17:18:44] [INFO] Epoch: 6/100
+[2025-08-01 17:18:44] [INFO] Training starts: 
+[2025-08-01 17:18:44] [INFO] Training epoch 6
+[2025-08-01 17:18:59] [INFO] Train Epoch: 6, Average Training Metric:0.488114 = 390.491477/800.000000, Acc: 0.9527, [784/1355 (58%)]	
+[2025-08-01 17:19:01] [INFO] Train Epoch: 6, Average Training Metric:0.518790 = 702.959855/1355.000000, Acc: 0.9498]	
+[2025-08-01 17:19:01] [INFO] Learning rate: 0.005
+[2025-08-01 17:19:01] [INFO] Validation starts: 
+[2025-08-01 17:19:01] [INFO] Epoch: 6
+[2025-08-01 17:19:01] [INFO] Validation begins: 
+[2025-08-01 17:19:01] [INFO] Validation set size: 290
+[2025-08-01 17:19:01] [INFO] Validation batch size: 16
+[2025-08-01 17:19:01] [INFO] Validation steps: 19
+[2025-08-01 17:19:15] [INFO] Validate Epoch: 6, Average Validation Metric:0.144058 = 41.776764/290.000000, Acc: 0.9450]	
+[2025-08-01 17:19:15] [INFO] Validation ends: 
+[2025-08-01 17:19:15] [INFO] Validation ends: 
+[2025-08-01 17:19:15] [INFO] Training ends: 
+[2025-08-01 17:19:15] [INFO] Epoch: 7/100
+[2025-08-01 17:19:15] [INFO] Training starts: 
+[2025-08-01 17:19:15] [INFO] Training epoch 7
+[2025-08-01 17:19:30] [INFO] Train Epoch: 7, Average Training Metric:0.493882 = 395.105502/800.000000, Acc: 0.9517, [784/1355 (58%)]	
+[2025-08-01 17:19:32] [INFO] Train Epoch: 7, Average Training Metric:0.496546 = 672.819390/1355.000000, Acc: 0.9513]	
+[2025-08-01 17:19:32] [INFO] Learning rate: 0.005
+[2025-08-01 17:19:32] [INFO] Validation starts: 
+[2025-08-01 17:19:32] [INFO] Epoch: 7
+[2025-08-01 17:19:32] [INFO] Validation begins: 
+[2025-08-01 17:19:32] [INFO] Validation set size: 290
+[2025-08-01 17:19:32] [INFO] Validation batch size: 16
+[2025-08-01 17:19:32] [INFO] Validation steps: 19
+[2025-08-01 17:19:46] [INFO] Validate Epoch: 7, Average Validation Metric:0.134438 = 38.987016/290.000000, Acc: 0.9463]	
+[2025-08-01 17:19:46] [INFO] Validation ends: 
+[2025-08-01 17:19:46] [INFO] Validation ends: 
+[2025-08-01 17:19:46] [INFO] Training ends: 
+[2025-08-01 17:19:46] [INFO] Epoch: 8/100
+[2025-08-01 17:19:46] [INFO] Training starts: 
+[2025-08-01 17:19:46] [INFO] Training epoch 8
+[2025-08-01 17:20:01] [INFO] Train Epoch: 8, Average Training Metric:0.455960 = 364.767949/800.000000, Acc: 0.9545, [784/1355 (58%)]	
+[2025-08-01 17:20:03] [INFO] Train Epoch: 8, Average Training Metric:0.465134 = 630.255943/1355.000000, Acc: 0.9539]	
+[2025-08-01 17:20:03] [INFO] Learning rate: 0.005
+[2025-08-01 17:20:03] [INFO] Validation starts: 
+[2025-08-01 17:20:03] [INFO] Epoch: 8
+[2025-08-01 17:20:03] [INFO] Validation begins: 
+[2025-08-01 17:20:03] [INFO] Validation set size: 290
+[2025-08-01 17:20:03] [INFO] Validation batch size: 16
+[2025-08-01 17:20:03] [INFO] Validation steps: 19
+[2025-08-01 17:20:17] [INFO] Validate Epoch: 8, Average Validation Metric:0.141578 = 41.057511/290.000000, Acc: 0.9448]	
+[2025-08-01 17:20:17] [INFO] Validation ends: 
+[2025-08-01 17:20:17] [INFO] Validation ends: 
+[2025-08-01 17:20:17] [INFO] Training ends: 
+[2025-08-01 17:20:17] [INFO] Epoch: 9/100
+[2025-08-01 17:20:17] [INFO] Training starts: 
+[2025-08-01 17:20:17] [INFO] Training epoch 9
+[2025-08-01 17:20:33] [INFO] Train Epoch: 9, Average Training Metric:0.457721 = 366.177121/800.000000, Acc: 0.9545, [784/1355 (58%)]	
+[2025-08-01 17:20:35] [INFO] Train Epoch: 9, Average Training Metric:0.471850 = 639.357311/1355.000000, Acc: 0.9535]	
+[2025-08-01 17:20:35] [INFO] Learning rate: 0.005
+[2025-08-01 17:20:35] [INFO] Validation starts: 
+[2025-08-01 17:20:35] [INFO] Epoch: 9
+[2025-08-01 17:20:35] [INFO] Validation begins: 
+[2025-08-01 17:20:35] [INFO] Validation set size: 290
+[2025-08-01 17:20:35] [INFO] Validation batch size: 16
+[2025-08-01 17:20:35] [INFO] Validation steps: 19
+[2025-08-01 17:20:49] [INFO] Validate Epoch: 9, Average Validation Metric:0.142890 = 41.438029/290.000000, Acc: 0.9469]	
+[2025-08-01 17:20:49] [INFO] Validation ends: 
+[2025-08-01 17:20:49] [INFO] Validation ends: 
+[2025-08-01 17:20:49] [INFO] Training ends: 
+[2025-08-01 17:20:49] [INFO] Epoch: 10/100
+[2025-08-01 17:20:49] [INFO] Training starts: 
+[2025-08-01 17:20:49] [INFO] Training epoch 10
+[2025-08-01 17:21:04] [INFO] Train Epoch: 10, Average Training Metric:0.443351 = 354.680940/800.000000, Acc: 0.9563, [784/1355 (58%)]	
+[2025-08-01 17:21:06] [INFO] Train Epoch: 10, Average Training Metric:0.457178 = 619.476219/1355.000000, Acc: 0.9551]	
+[2025-08-01 17:21:06] [INFO] Learning rate: 0.00475
+[2025-08-01 17:21:06] [INFO] Validation starts: 
+[2025-08-01 17:21:06] [INFO] Epoch: 10
+[2025-08-01 17:21:06] [INFO] Validation begins: 
+[2025-08-01 17:21:06] [INFO] Validation set size: 290
+[2025-08-01 17:21:06] [INFO] Validation batch size: 16
+[2025-08-01 17:21:06] [INFO] Validation steps: 19
+[2025-08-01 17:21:20] [INFO] Validate Epoch: 10, Average Validation Metric:0.136919 = 39.706508/290.000000, Acc: 0.9472]	
+[2025-08-01 17:21:20] [INFO] Validation ends: 
+[2025-08-01 17:21:20] [INFO] Validation ends: 
+[2025-08-01 17:21:20] [INFO] Training ends: 
+[2025-08-01 17:21:20] [INFO] Epoch: 11/100
+[2025-08-01 17:21:20] [INFO] Training starts: 
+[2025-08-01 17:21:20] [INFO] Training epoch 11
+[2025-08-01 17:21:35] [INFO] Train Epoch: 11, Average Training Metric:0.436896 = 349.516820/800.000000, Acc: 0.9563, [784/1355 (58%)]	
+[2025-08-01 17:21:37] [INFO] Train Epoch: 11, Average Training Metric:0.434675 = 588.984363/1355.000000, Acc: 0.9565]	
+[2025-08-01 17:21:37] [INFO] Learning rate: 0.00475
+[2025-08-01 17:21:37] [INFO] Validation starts: 
+[2025-08-01 17:21:37] [INFO] Epoch: 11
+[2025-08-01 17:21:37] [INFO] Validation begins: 
+[2025-08-01 17:21:37] [INFO] Validation set size: 290
+[2025-08-01 17:21:37] [INFO] Validation batch size: 16
+[2025-08-01 17:21:37] [INFO] Validation steps: 19
+[2025-08-01 17:21:51] [INFO] Validate Epoch: 11, Average Validation Metric:0.142081 = 41.203345/290.000000, Acc: 0.9432]	
+[2025-08-01 17:21:51] [INFO] Validation ends: 
+[2025-08-01 17:21:51] [INFO] Validation ends: 
+[2025-08-01 17:21:51] [INFO] Training ends: 
+[2025-08-01 17:21:51] [INFO] Epoch: 12/100
+[2025-08-01 17:21:51] [INFO] Training starts: 
+[2025-08-01 17:21:51] [INFO] Training epoch 12
+[2025-08-01 17:22:06] [INFO] Train Epoch: 12, Average Training Metric:0.415559 = 332.447458/800.000000, Acc: 0.9586, [784/1355 (58%)]	
+[2025-08-01 17:22:08] [INFO] Train Epoch: 12, Average Training Metric:0.423206 = 573.443570/1355.000000, Acc: 0.9578]	
+[2025-08-01 17:22:08] [INFO] Learning rate: 0.00475
+[2025-08-01 17:22:08] [INFO] Validation starts: 
+[2025-08-01 17:22:08] [INFO] Epoch: 12
+[2025-08-01 17:22:08] [INFO] Validation begins: 
+[2025-08-01 17:22:08] [INFO] Validation set size: 290
+[2025-08-01 17:22:08] [INFO] Validation batch size: 16
+[2025-08-01 17:22:08] [INFO] Validation steps: 19
+[2025-08-01 17:22:22] [INFO] Validate Epoch: 12, Average Validation Metric:0.158891 = 46.078261/290.000000, Acc: 0.9376]	
+[2025-08-01 17:22:22] [INFO] Validation ends: 
+[2025-08-01 17:22:22] [INFO] Validation ends: 
+[2025-08-01 17:22:22] [INFO] Training ends: 
+[2025-08-01 17:22:22] [INFO] Epoch: 13/100
+[2025-08-01 17:22:22] [INFO] Training starts: 
+[2025-08-01 17:22:22] [INFO] Training epoch 13
+[2025-08-01 17:22:37] [INFO] Train Epoch: 13, Average Training Metric:0.424156 = 339.324885/800.000000, Acc: 0.9575, [784/1355 (58%)]	
+[2025-08-01 17:22:39] [INFO] Train Epoch: 13, Average Training Metric:0.427682 = 579.509247/1355.000000, Acc: 0.9572]	
+[2025-08-01 17:22:39] [INFO] Learning rate: 0.00475
+[2025-08-01 17:22:39] [INFO] Validation starts: 
+[2025-08-01 17:22:39] [INFO] Epoch: 13
+[2025-08-01 17:22:39] [INFO] Validation begins: 
+[2025-08-01 17:22:39] [INFO] Validation set size: 290
+[2025-08-01 17:22:39] [INFO] Validation batch size: 16
+[2025-08-01 17:22:39] [INFO] Validation steps: 19
+[2025-08-01 17:22:54] [INFO] Validate Epoch: 13, Average Validation Metric:0.140063 = 40.618401/290.000000, Acc: 0.9482]	
+[2025-08-01 17:22:54] [INFO] Validation ends: 
+[2025-08-01 17:22:54] [INFO] Validation ends: 
+[2025-08-01 17:22:54] [INFO] Training ends: 
+[2025-08-01 17:22:54] [INFO] Epoch: 14/100
+[2025-08-01 17:22:54] [INFO] Training starts: 
+[2025-08-01 17:22:54] [INFO] Training epoch 14
+[2025-08-01 17:23:08] [INFO] Train Epoch: 14, Average Training Metric:0.430329 = 344.263471/800.000000, Acc: 0.9584, [784/1355 (58%)]	
+[2025-08-01 17:23:10] [INFO] Train Epoch: 14, Average Training Metric:0.431236 = 584.325324/1355.000000, Acc: 0.9578]	
+[2025-08-01 17:23:10] [INFO] Learning rate: 0.00475
+[2025-08-01 17:23:11] [INFO] Validation starts: 
+[2025-08-01 17:23:11] [INFO] Epoch: 14
+[2025-08-01 17:23:11] [INFO] Validation begins: 
+[2025-08-01 17:23:11] [INFO] Validation set size: 290
+[2025-08-01 17:23:11] [INFO] Validation batch size: 16
+[2025-08-01 17:23:11] [INFO] Validation steps: 19
+[2025-08-01 17:23:24] [INFO] Validate Epoch: 14, Average Validation Metric:0.166351 = 48.241847/290.000000, Acc: 0.9396]	
+[2025-08-01 17:23:24] [INFO] Validation ends: 
+[2025-08-01 17:23:24] [INFO] Validation ends: 
+[2025-08-01 17:23:24] [INFO] Training ends: 
+[2025-08-01 17:23:24] [INFO] Epoch: 15/100
+[2025-08-01 17:23:24] [INFO] Training starts: 
+[2025-08-01 17:23:24] [INFO] Training epoch 15
+[2025-08-01 17:23:39] [INFO] Train Epoch: 15, Average Training Metric:0.423109 = 338.487452/800.000000, Acc: 0.9586, [784/1355 (58%)]	
+[2025-08-01 17:23:41] [INFO] Train Epoch: 15, Average Training Metric:0.442171 = 599.142123/1355.000000, Acc: 0.9563]	
+[2025-08-01 17:23:41] [INFO] Learning rate: 0.00475
+[2025-08-01 17:23:41] [INFO] Validation starts: 
+[2025-08-01 17:23:41] [INFO] Epoch: 15
+[2025-08-01 17:23:41] [INFO] Validation begins: 
+[2025-08-01 17:23:41] [INFO] Validation set size: 290
+[2025-08-01 17:23:41] [INFO] Validation batch size: 16
+[2025-08-01 17:23:41] [INFO] Validation steps: 19
+[2025-08-01 17:23:55] [INFO] Validate Epoch: 15, Average Validation Metric:0.142413 = 41.299905/290.000000, Acc: 0.9457]	
+[2025-08-01 17:23:55] [INFO] Validation ends: 
+[2025-08-01 17:23:55] [INFO] Validation ends: 
+[2025-08-01 17:23:55] [INFO] Training ends: 
+[2025-08-01 17:23:55] [INFO] Epoch: 16/100
+[2025-08-01 17:23:55] [INFO] Training starts: 
+[2025-08-01 17:23:55] [INFO] Training epoch 16
+[2025-08-01 17:24:10] [INFO] Train Epoch: 16, Average Training Metric:0.387678 = 310.142488/800.000000, Acc: 0.9615, [784/1355 (58%)]	
+[2025-08-01 17:24:12] [INFO] Train Epoch: 16, Average Training Metric:0.399929 = 541.903553/1355.000000, Acc: 0.9606]	
+[2025-08-01 17:24:12] [INFO] Learning rate: 0.00475
+[2025-08-01 17:24:13] [INFO] Validation starts: 
+[2025-08-01 17:24:13] [INFO] Epoch: 16
+[2025-08-01 17:24:13] [INFO] Validation begins: 
+[2025-08-01 17:24:13] [INFO] Validation set size: 290
+[2025-08-01 17:24:13] [INFO] Validation batch size: 16
+[2025-08-01 17:24:13] [INFO] Validation steps: 19
+[2025-08-01 17:24:26] [INFO] Validate Epoch: 16, Average Validation Metric:0.154819 = 44.897601/290.000000, Acc: 0.9458]	
+[2025-08-01 17:24:26] [INFO] Validation ends: 
+[2025-08-01 17:24:26] [INFO] Validation ends: 
+[2025-08-01 17:24:26] [INFO] Training ends: 
+[2025-08-01 17:24:26] [INFO] Epoch: 17/100
+[2025-08-01 17:24:26] [INFO] Training starts: 
+[2025-08-01 17:24:26] [INFO] Training epoch 17
+[2025-08-01 17:24:44] [INFO] Train Epoch: 17, Average Training Metric:0.397267 = 317.813929/800.000000, Acc: 0.9605, [784/1355 (58%)]	
+[2025-08-01 17:24:46] [INFO] Train Epoch: 17, Average Training Metric:0.398927 = 540.546389/1355.000000, Acc: 0.9608]	
+[2025-08-01 17:24:46] [INFO] Learning rate: 0.00475
+[2025-08-01 17:24:46] [INFO] Validation starts: 
+[2025-08-01 17:24:46] [INFO] Epoch: 17
+[2025-08-01 17:24:46] [INFO] Validation begins: 
+[2025-08-01 17:24:46] [INFO] Validation set size: 290
+[2025-08-01 17:24:46] [INFO] Validation batch size: 16
+[2025-08-01 17:24:46] [INFO] Validation steps: 19
+[2025-08-01 17:25:00] [INFO] Validate Epoch: 17, Average Validation Metric:0.146070 = 42.360335/290.000000, Acc: 0.9448]	
+[2025-08-01 17:25:00] [INFO] Validation ends: 
+[2025-08-01 17:25:00] [INFO] Validation ends: 
+[2025-08-01 17:25:00] [INFO] Training ends: 
+[2025-08-01 17:25:00] [INFO] Epoch: 18/100
+[2025-08-01 17:25:00] [INFO] Training starts: 
+[2025-08-01 17:25:00] [INFO] Training epoch 18
+[2025-08-01 17:25:15] [INFO] Train Epoch: 18, Average Training Metric:0.372870 = 298.295672/800.000000, Acc: 0.9634, [784/1355 (58%)]	
+[2025-08-01 17:25:17] [INFO] Train Epoch: 18, Average Training Metric:0.379496 = 514.217247/1355.000000, Acc: 0.9624]	
+[2025-08-01 17:25:17] [INFO] Learning rate: 0.00475
+[2025-08-01 17:25:17] [INFO] Validation starts: 
+[2025-08-01 17:25:17] [INFO] Epoch: 18
+[2025-08-01 17:25:17] [INFO] Validation begins: 
+[2025-08-01 17:25:17] [INFO] Validation set size: 290
+[2025-08-01 17:25:17] [INFO] Validation batch size: 16
+[2025-08-01 17:25:17] [INFO] Validation steps: 19
+[2025-08-01 17:25:31] [INFO] Validate Epoch: 18, Average Validation Metric:0.145632 = 42.233263/290.000000, Acc: 0.9407]	
+[2025-08-01 17:25:31] [INFO] Validation ends: 
+[2025-08-01 17:25:31] [INFO] Validation ends: 
+[2025-08-01 17:25:31] [INFO] Training ends: 
+[2025-08-01 17:25:31] [INFO] Epoch: 19/100
+[2025-08-01 17:25:31] [INFO] Training starts: 
+[2025-08-01 17:25:31] [INFO] Training epoch 19
+[2025-08-01 17:25:46] [INFO] Train Epoch: 19, Average Training Metric:0.382256 = 305.804436/800.000000, Acc: 0.9629, [784/1355 (58%)]	
+[2025-08-01 17:25:49] [INFO] Train Epoch: 19, Average Training Metric:0.397532 = 538.656237/1355.000000, Acc: 0.9611]	
+[2025-08-01 17:25:49] [INFO] Learning rate: 0.00475
+[2025-08-01 17:25:49] [INFO] Validation starts: 
+[2025-08-01 17:25:49] [INFO] Epoch: 19
+[2025-08-01 17:25:49] [INFO] Validation begins: 
+[2025-08-01 17:25:49] [INFO] Validation set size: 290
+[2025-08-01 17:25:49] [INFO] Validation batch size: 16
+[2025-08-01 17:25:49] [INFO] Validation steps: 19
+[2025-08-01 17:26:03] [INFO] Validate Epoch: 19, Average Validation Metric:0.171869 = 49.842136/290.000000, Acc: 0.9425]	
+[2025-08-01 17:26:03] [INFO] Validation ends: 
+[2025-08-01 17:26:03] [INFO] Validation ends: 
+[2025-08-01 17:26:03] [INFO] Training ends: 
+[2025-08-01 17:26:03] [INFO] Epoch: 20/100
+[2025-08-01 17:26:03] [INFO] Training starts: 
+[2025-08-01 17:26:03] [INFO] Training epoch 20
+[2025-08-01 17:26:18] [INFO] Train Epoch: 20, Average Training Metric:0.432049 = 345.639480/800.000000, Acc: 0.9583, [784/1355 (58%)]	
+[2025-08-01 17:26:20] [INFO] Train Epoch: 20, Average Training Metric:0.434307 = 588.485553/1355.000000, Acc: 0.9580]	
+[2025-08-01 17:26:20] [INFO] Learning rate: 0.0045125
+[2025-08-01 17:26:20] [INFO] Validation starts: 
+[2025-08-01 17:26:20] [INFO] Epoch: 20
+[2025-08-01 17:26:20] [INFO] Validation begins: 
+[2025-08-01 17:26:20] [INFO] Validation set size: 290
+[2025-08-01 17:26:20] [INFO] Validation batch size: 16
+[2025-08-01 17:26:20] [INFO] Validation steps: 19
+[2025-08-01 17:26:36] [INFO] Validate Epoch: 20, Average Validation Metric:0.145234 = 42.117827/290.000000, Acc: 0.9478]	
+[2025-08-01 17:26:36] [INFO] Validation ends: 
+[2025-08-01 17:26:36] [INFO] Validation ends: 
+[2025-08-01 17:26:36] [INFO] Training ends: 
+[2025-08-01 17:26:36] [INFO] Epoch: 21/100
+[2025-08-01 17:26:36] [INFO] Training starts: 
+[2025-08-01 17:26:36] [INFO] Training epoch 21
+[2025-08-01 17:26:51] [INFO] Train Epoch: 21, Average Training Metric:0.375200 = 300.159738/800.000000, Acc: 0.9632, [784/1355 (58%)]	
+[2025-08-01 17:26:53] [INFO] Train Epoch: 21, Average Training Metric:0.377263 = 511.191265/1355.000000, Acc: 0.9626]	
+[2025-08-01 17:26:53] [INFO] Learning rate: 0.0045125
+[2025-08-01 17:26:53] [INFO] Validation starts: 
+[2025-08-01 17:26:53] [INFO] Epoch: 21
+[2025-08-01 17:26:53] [INFO] Validation begins: 
+[2025-08-01 17:26:53] [INFO] Validation set size: 290
+[2025-08-01 17:26:53] [INFO] Validation batch size: 16
+[2025-08-01 17:26:53] [INFO] Validation steps: 19
+[2025-08-01 17:27:07] [INFO] Validate Epoch: 21, Average Validation Metric:0.149485 = 43.350675/290.000000, Acc: 0.9476]	
+[2025-08-01 17:27:07] [INFO] Validation ends: 
+[2025-08-01 17:27:07] [INFO] Validation ends: 
+[2025-08-01 17:27:07] [INFO] Training ends: 
+[2025-08-01 17:27:07] [INFO] Epoch: 22/100
+[2025-08-01 17:27:07] [INFO] Training starts: 
+[2025-08-01 17:27:07] [INFO] Training epoch 22
+[2025-08-01 17:27:22] [INFO] Train Epoch: 22, Average Training Metric:0.343280 = 274.624174/800.000000, Acc: 0.9660, [784/1355 (58%)]	
+[2025-08-01 17:27:24] [INFO] Train Epoch: 22, Average Training Metric:0.359027 = 486.481468/1355.000000, Acc: 0.9647]	
+[2025-08-01 17:27:24] [INFO] Learning rate: 0.0045125
+[2025-08-01 17:27:24] [INFO] Validation starts: 
+[2025-08-01 17:27:24] [INFO] Epoch: 22
+[2025-08-01 17:27:24] [INFO] Validation begins: 
+[2025-08-01 17:27:24] [INFO] Validation set size: 290
+[2025-08-01 17:27:24] [INFO] Validation batch size: 16
+[2025-08-01 17:27:24] [INFO] Validation steps: 19
+[2025-08-01 17:27:40] [INFO] Validate Epoch: 22, Average Validation Metric:0.159013 = 46.113717/290.000000, Acc: 0.9438]	
+[2025-08-01 17:27:40] [INFO] Validation ends: 
+[2025-08-01 17:27:40] [INFO] Validation ends: 
+[2025-08-01 17:27:40] [INFO] Training ends: 
+[2025-08-01 17:27:40] [INFO] Epoch: 23/100
+[2025-08-01 17:27:40] [INFO] Training starts: 
+[2025-08-01 17:27:40] [INFO] Training epoch 23
+[2025-08-01 17:27:55] [INFO] Train Epoch: 23, Average Training Metric:0.356134 = 284.906969/800.000000, Acc: 0.9655, [784/1355 (58%)]	
+[2025-08-01 17:27:57] [INFO] Train Epoch: 23, Average Training Metric:0.362279 = 490.887697/1355.000000, Acc: 0.9652]	
+[2025-08-01 17:27:57] [INFO] Learning rate: 0.0045125
+[2025-08-01 17:27:57] [INFO] Validation starts: 
+[2025-08-01 17:27:57] [INFO] Epoch: 23
+[2025-08-01 17:27:57] [INFO] Validation begins: 
+[2025-08-01 17:27:57] [INFO] Validation set size: 290
+[2025-08-01 17:27:57] [INFO] Validation batch size: 16
+[2025-08-01 17:27:57] [INFO] Validation steps: 19
+[2025-08-01 17:28:12] [INFO] Validate Epoch: 23, Average Validation Metric:0.165539 = 48.006262/290.000000, Acc: 0.9462]	
+[2025-08-01 17:28:12] [INFO] Validation ends: 
+[2025-08-01 17:28:12] [INFO] Validation ends: 
+[2025-08-01 17:28:12] [INFO] Training ends: 
+[2025-08-01 17:28:12] [INFO] Epoch: 24/100
+[2025-08-01 17:28:12] [INFO] Training starts: 
+[2025-08-01 17:28:12] [INFO] Training epoch 24
+[2025-08-01 17:28:27] [INFO] Train Epoch: 24, Average Training Metric:0.331015 = 264.811642/800.000000, Acc: 0.9683, [784/1355 (58%)]	
+[2025-08-01 17:28:29] [INFO] Train Epoch: 24, Average Training Metric:0.339851 = 460.497658/1355.000000, Acc: 0.9669]	
+[2025-08-01 17:28:29] [INFO] Learning rate: 0.0045125
+[2025-08-01 17:28:29] [INFO] Validation starts: 
+[2025-08-01 17:28:29] [INFO] Epoch: 24
+[2025-08-01 17:28:29] [INFO] Validation begins: 
+[2025-08-01 17:28:29] [INFO] Validation set size: 290
+[2025-08-01 17:28:29] [INFO] Validation batch size: 16
+[2025-08-01 17:28:29] [INFO] Validation steps: 19
+[2025-08-01 17:28:43] [INFO] Validate Epoch: 24, Average Validation Metric:0.171019 = 49.595455/290.000000, Acc: 0.9438]	
+[2025-08-01 17:28:43] [INFO] Validation ends: 
+[2025-08-01 17:28:43] [INFO] Validation ends: 
+[2025-08-01 17:28:43] [INFO] Training ends: 
+[2025-08-01 17:28:43] [INFO] Epoch: 25/100
+[2025-08-01 17:28:43] [INFO] Training starts: 
+[2025-08-01 17:28:43] [INFO] Training epoch 25
+[2025-08-01 17:28:57] [INFO] Train Epoch: 25, Average Training Metric:0.339634 = 271.707495/800.000000, Acc: 0.9670, [784/1355 (58%)]	
+[2025-08-01 17:29:00] [INFO] Train Epoch: 25, Average Training Metric:0.350533 = 474.972134/1355.000000, Acc: 0.9659]	
+[2025-08-01 17:29:00] [INFO] Learning rate: 0.0045125
+[2025-08-01 17:29:00] [INFO] Validation starts: 
+[2025-08-01 17:29:00] [INFO] Epoch: 25
+[2025-08-01 17:29:00] [INFO] Validation begins: 
+[2025-08-01 17:29:00] [INFO] Validation set size: 290
+[2025-08-01 17:29:00] [INFO] Validation batch size: 16
+[2025-08-01 17:29:00] [INFO] Validation steps: 19
+[2025-08-01 17:29:14] [INFO] Validate Epoch: 25, Average Validation Metric:0.165835 = 48.092117/290.000000, Acc: 0.9407]	
+[2025-08-01 17:29:14] [INFO] Validation ends: 
+[2025-08-01 17:29:14] [INFO] Validation ends: 
+[2025-08-01 17:29:14] [INFO] Training ends: 
+[2025-08-01 17:29:14] [INFO] Epoch: 26/100
+[2025-08-01 17:29:14] [INFO] Training starts: 
+[2025-08-01 17:29:14] [INFO] Training epoch 26
+[2025-08-01 17:29:28] [INFO] Train Epoch: 26, Average Training Metric:0.363680 = 290.944083/800.000000, Acc: 0.9650, [784/1355 (58%)]	
+[2025-08-01 17:29:30] [INFO] Train Epoch: 26, Average Training Metric:0.373019 = 505.441099/1355.000000, Acc: 0.9638]	
+[2025-08-01 17:29:30] [INFO] Learning rate: 0.0045125
+[2025-08-01 17:29:30] [INFO] Validation starts: 
+[2025-08-01 17:29:30] [INFO] Epoch: 26
+[2025-08-01 17:29:30] [INFO] Validation begins: 
+[2025-08-01 17:29:30] [INFO] Validation set size: 290
+[2025-08-01 17:29:30] [INFO] Validation batch size: 16
+[2025-08-01 17:29:30] [INFO] Validation steps: 19
+[2025-08-01 17:29:44] [INFO] Validate Epoch: 26, Average Validation Metric:0.154247 = 44.731682/290.000000, Acc: 0.9436]	
+[2025-08-01 17:29:44] [INFO] Validation ends: 
+[2025-08-01 17:29:44] [INFO] Validation ends: 
+[2025-08-01 17:29:44] [INFO] Training ends: 
+[2025-08-01 17:29:44] [INFO] Epoch: 27/100
+[2025-08-01 17:29:44] [INFO] Training starts: 
+[2025-08-01 17:29:44] [INFO] Training epoch 27
+[2025-08-01 17:29:59] [INFO] Train Epoch: 27, Average Training Metric:0.363145 = 290.516229/800.000000, Acc: 0.9648, [784/1355 (58%)]	
+[2025-08-01 17:30:01] [INFO] Train Epoch: 27, Average Training Metric:0.366501 = 496.608984/1355.000000, Acc: 0.9643]	
+[2025-08-01 17:30:01] [INFO] Learning rate: 0.0045125
+[2025-08-01 17:30:01] [INFO] Validation starts: 
+[2025-08-01 17:30:01] [INFO] Epoch: 27
+[2025-08-01 17:30:01] [INFO] Validation begins: 
+[2025-08-01 17:30:01] [INFO] Validation set size: 290
+[2025-08-01 17:30:01] [INFO] Validation batch size: 16
+[2025-08-01 17:30:01] [INFO] Validation steps: 19
+[2025-08-01 17:30:15] [INFO] Validate Epoch: 27, Average Validation Metric:0.164714 = 47.767104/290.000000, Acc: 0.9428]	
+[2025-08-01 17:30:15] [INFO] Validation ends: 
+[2025-08-01 17:30:15] [INFO] Validation ends: 
+[2025-08-01 17:30:15] [INFO] Training ends: 
+[2025-08-01 17:30:15] [INFO] Epoch: 28/100
+[2025-08-01 17:30:15] [INFO] Training starts: 
+[2025-08-01 17:30:15] [INFO] Training epoch 28
+[2025-08-01 17:30:29] [INFO] Train Epoch: 28, Average Training Metric:0.366950 = 293.560054/800.000000, Acc: 0.9631, [784/1355 (58%)]	
+[2025-08-01 17:30:31] [INFO] Train Epoch: 28, Average Training Metric:0.366629 = 496.782407/1355.000000, Acc: 0.9640]	
+[2025-08-01 17:30:31] [INFO] Learning rate: 0.0045125
+[2025-08-01 17:30:31] [INFO] Validation starts: 
+[2025-08-01 17:30:31] [INFO] Epoch: 28
+[2025-08-01 17:30:31] [INFO] Validation begins: 
+[2025-08-01 17:30:31] [INFO] Validation set size: 290
+[2025-08-01 17:30:31] [INFO] Validation batch size: 16
+[2025-08-01 17:30:31] [INFO] Validation steps: 19
+[2025-08-01 17:30:45] [INFO] Validate Epoch: 28, Average Validation Metric:0.203268 = 58.947614/290.000000, Acc: 0.9374]	
+[2025-08-01 17:30:45] [INFO] Validation ends: 
+[2025-08-01 17:30:45] [INFO] Validation ends: 
+[2025-08-01 17:30:45] [INFO] Training ends: 
+[2025-08-01 17:30:45] [INFO] Epoch: 29/100
+[2025-08-01 17:30:45] [INFO] Training starts: 
+[2025-08-01 17:30:45] [INFO] Training epoch 29
+[2025-08-01 17:31:02] [INFO] Train Epoch: 29, Average Training Metric:0.340669 = 272.535561/800.000000, Acc: 0.9677, [784/1355 (58%)]	
+[2025-08-01 17:31:05] [INFO] Train Epoch: 29, Average Training Metric:0.355759 = 482.053575/1355.000000, Acc: 0.9660]	
+[2025-08-01 17:31:05] [INFO] Learning rate: 0.0045125
+[2025-08-01 17:31:05] [INFO] Validation starts: 
+[2025-08-01 17:31:05] [INFO] Epoch: 29
+[2025-08-01 17:31:05] [INFO] Validation begins: 
+[2025-08-01 17:31:05] [INFO] Validation set size: 290
+[2025-08-01 17:31:05] [INFO] Validation batch size: 16
+[2025-08-01 17:31:05] [INFO] Validation steps: 19
+[2025-08-01 17:31:18] [INFO] Validate Epoch: 29, Average Validation Metric:0.158579 = 45.987785/290.000000, Acc: 0.9452]	
+[2025-08-01 17:31:18] [INFO] Validation ends: 
+[2025-08-01 17:31:18] [INFO] Validation ends: 
+[2025-08-01 17:31:18] [INFO] Training ends: 
+[2025-08-01 17:31:18] [INFO] Epoch: 30/100
+[2025-08-01 17:31:18] [INFO] Training starts: 
+[2025-08-01 17:31:18] [INFO] Training epoch 30
+[2025-08-01 17:31:33] [INFO] Train Epoch: 30, Average Training Metric:0.332591 = 266.072609/800.000000, Acc: 0.9683, [784/1355 (58%)]	
+[2025-08-01 17:31:35] [INFO] Train Epoch: 30, Average Training Metric:0.333539 = 451.945696/1355.000000, Acc: 0.9677]	
+[2025-08-01 17:31:35] [INFO] Learning rate: 0.004286875
+[2025-08-01 17:31:35] [INFO] Validation starts: 
+[2025-08-01 17:31:35] [INFO] Epoch: 30
+[2025-08-01 17:31:35] [INFO] Validation begins: 
+[2025-08-01 17:31:35] [INFO] Validation set size: 290
+[2025-08-01 17:31:35] [INFO] Validation batch size: 16
+[2025-08-01 17:31:35] [INFO] Validation steps: 19
+[2025-08-01 17:31:49] [INFO] Validate Epoch: 30, Average Validation Metric:0.180521 = 52.351037/290.000000, Acc: 0.9433]	
+[2025-08-01 17:31:49] [INFO] Validation ends: 
+[2025-08-01 17:31:49] [INFO] Validation ends: 
+[2025-08-01 17:31:49] [INFO] Training ends: 
+[2025-08-01 17:31:49] [INFO] Epoch: 31/100
+[2025-08-01 17:31:49] [INFO] Training starts: 
+[2025-08-01 17:31:49] [INFO] Training epoch 31
+[2025-08-01 17:32:04] [INFO] Train Epoch: 31, Average Training Metric:0.332893 = 266.314073/800.000000, Acc: 0.9681, [784/1355 (58%)]	
+[2025-08-01 17:32:06] [INFO] Train Epoch: 31, Average Training Metric:0.338256 = 458.336366/1355.000000, Acc: 0.9674]	
+[2025-08-01 17:32:06] [INFO] Learning rate: 0.004286875
+[2025-08-01 17:32:06] [INFO] Validation starts: 
+[2025-08-01 17:32:06] [INFO] Epoch: 31
+[2025-08-01 17:32:06] [INFO] Validation begins: 
+[2025-08-01 17:32:06] [INFO] Validation set size: 290
+[2025-08-01 17:32:06] [INFO] Validation batch size: 16
+[2025-08-01 17:32:06] [INFO] Validation steps: 19
+[2025-08-01 17:32:20] [INFO] Validate Epoch: 31, Average Validation Metric:0.186219 = 54.003626/290.000000, Acc: 0.9387]	
+[2025-08-01 17:32:20] [INFO] Validation ends: 
+[2025-08-01 17:32:20] [INFO] Validation ends: 
+[2025-08-01 17:32:20] [INFO] Training ends: 
+[2025-08-01 17:32:20] [INFO] Epoch: 32/100
+[2025-08-01 17:32:20] [INFO] Training starts: 
+[2025-08-01 17:32:20] [INFO] Training epoch 32
+[2025-08-01 17:32:35] [INFO] Train Epoch: 32, Average Training Metric:0.306246 = 244.996463/800.000000, Acc: 0.9712, [784/1355 (58%)]	
+[2025-08-01 17:32:37] [INFO] Train Epoch: 32, Average Training Metric:0.304312 = 412.343203/1355.000000, Acc: 0.9715]	
+[2025-08-01 17:32:37] [INFO] Learning rate: 0.004286875
+[2025-08-01 17:32:37] [INFO] Validation starts: 
+[2025-08-01 17:32:37] [INFO] Epoch: 32
+[2025-08-01 17:32:37] [INFO] Validation begins: 
+[2025-08-01 17:32:37] [INFO] Validation set size: 290
+[2025-08-01 17:32:37] [INFO] Validation batch size: 16
+[2025-08-01 17:32:37] [INFO] Validation steps: 19
+[2025-08-01 17:32:51] [INFO] Validate Epoch: 32, Average Validation Metric:0.170800 = 49.532118/290.000000, Acc: 0.9430]	
+[2025-08-01 17:32:51] [INFO] Validation ends: 
+[2025-08-01 17:32:51] [INFO] Validation ends: 
+[2025-08-01 17:32:51] [INFO] Training ends: 
+[2025-08-01 17:32:51] [INFO] Epoch: 33/100
+[2025-08-01 17:32:51] [INFO] Training starts: 
+[2025-08-01 17:32:51] [INFO] Training epoch 33
+[2025-08-01 17:33:06] [INFO] Train Epoch: 33, Average Training Metric:0.309955 = 247.963966/800.000000, Acc: 0.9708, [784/1355 (58%)]	
+[2025-08-01 17:33:08] [INFO] Train Epoch: 33, Average Training Metric:0.320364 = 434.092998/1355.000000, Acc: 0.9695]	
+[2025-08-01 17:33:08] [INFO] Learning rate: 0.004286875
+[2025-08-01 17:33:08] [INFO] Validation starts: 
+[2025-08-01 17:33:08] [INFO] Epoch: 33
+[2025-08-01 17:33:08] [INFO] Validation begins: 
+[2025-08-01 17:33:08] [INFO] Validation set size: 290
+[2025-08-01 17:33:08] [INFO] Validation batch size: 16
+[2025-08-01 17:33:08] [INFO] Validation steps: 19
+[2025-08-01 17:33:22] [INFO] Validate Epoch: 33, Average Validation Metric:0.170678 = 49.496585/290.000000, Acc: 0.9453]	
+[2025-08-01 17:33:22] [INFO] Validation ends: 
+[2025-08-01 17:33:22] [INFO] Validation ends: 
+[2025-08-01 17:33:22] [INFO] Training ends: 
+[2025-08-01 17:33:22] [INFO] Epoch: 34/100
+[2025-08-01 17:33:22] [INFO] Training starts: 
+[2025-08-01 17:33:22] [INFO] Training epoch 34
+[2025-08-01 17:33:37] [INFO] Train Epoch: 34, Average Training Metric:0.302738 = 242.190038/800.000000, Acc: 0.9705, [784/1355 (58%)]	
+[2025-08-01 17:33:39] [INFO] Train Epoch: 34, Average Training Metric:0.308247 = 417.675036/1355.000000, Acc: 0.9705]	
+[2025-08-01 17:33:39] [INFO] Learning rate: 0.004286875
+[2025-08-01 17:33:39] [INFO] Validation starts: 
+[2025-08-01 17:33:39] [INFO] Epoch: 34
+[2025-08-01 17:33:39] [INFO] Validation begins: 
+[2025-08-01 17:33:39] [INFO] Validation set size: 290
+[2025-08-01 17:33:39] [INFO] Validation batch size: 16
+[2025-08-01 17:33:39] [INFO] Validation steps: 19
+[2025-08-01 17:33:53] [INFO] Validate Epoch: 34, Average Validation Metric:0.286020 = 82.945668/290.000000, Acc: 0.9467]	
+[2025-08-01 17:33:53] [INFO] Validation ends: 
+[2025-08-01 17:33:53] [INFO] Validation ends: 
+[2025-08-01 17:33:53] [INFO] Training ends: 
+[2025-08-01 17:33:53] [INFO] Epoch: 35/100
+[2025-08-01 17:33:53] [INFO] Training starts: 
+[2025-08-01 17:33:53] [INFO] Training epoch 35
+[2025-08-01 17:34:08] [INFO] Train Epoch: 35, Average Training Metric:0.292977 = 234.381564/800.000000, Acc: 0.9724, [784/1355 (58%)]	
+[2025-08-01 17:34:10] [INFO] Train Epoch: 35, Average Training Metric:0.300983 = 407.831288/1355.000000, Acc: 0.9718]	
+[2025-08-01 17:34:10] [INFO] Learning rate: 0.004286875
+[2025-08-01 17:34:10] [INFO] Validation starts: 
+[2025-08-01 17:34:10] [INFO] Epoch: 35
+[2025-08-01 17:34:10] [INFO] Validation begins: 
+[2025-08-01 17:34:10] [INFO] Validation set size: 290
+[2025-08-01 17:34:10] [INFO] Validation batch size: 16
+[2025-08-01 17:34:10] [INFO] Validation steps: 19
+[2025-08-01 17:34:24] [INFO] Validate Epoch: 35, Average Validation Metric:0.163471 = 47.406658/290.000000, Acc: 0.9396]	
+[2025-08-01 17:34:24] [INFO] Validation ends: 
+[2025-08-01 17:34:24] [INFO] Validation ends: 
+[2025-08-01 17:34:24] [INFO] Training ends: 
+[2025-08-01 17:34:24] [INFO] Epoch: 36/100
+[2025-08-01 17:34:24] [INFO] Training starts: 
+[2025-08-01 17:34:24] [INFO] Training epoch 36
+[2025-08-01 17:34:38] [INFO] Train Epoch: 36, Average Training Metric:0.302040 = 241.631859/800.000000, Acc: 0.9712, [784/1355 (58%)]	
+[2025-08-01 17:34:41] [INFO] Train Epoch: 36, Average Training Metric:0.305476 = 413.920419/1355.000000, Acc: 0.9710]	
+[2025-08-01 17:34:41] [INFO] Learning rate: 0.004286875
+[2025-08-01 17:34:41] [INFO] Validation starts: 
+[2025-08-01 17:34:41] [INFO] Epoch: 36
+[2025-08-01 17:34:41] [INFO] Validation begins: 
+[2025-08-01 17:34:41] [INFO] Validation set size: 290
+[2025-08-01 17:34:41] [INFO] Validation batch size: 16
+[2025-08-01 17:34:41] [INFO] Validation steps: 19
+[2025-08-01 17:34:55] [INFO] Validate Epoch: 36, Average Validation Metric:0.176126 = 51.076632/290.000000, Acc: 0.9419]	
+[2025-08-01 17:34:55] [INFO] Validation ends: 
+[2025-08-01 17:34:55] [INFO] Validation ends: 
+[2025-08-01 17:34:55] [INFO] Training ends: 
+[2025-08-01 17:34:55] [INFO] Epoch: 37/100
+[2025-08-01 17:34:55] [INFO] Training starts: 
+[2025-08-01 17:34:55] [INFO] Training epoch 37
+[2025-08-01 17:35:10] [INFO] Train Epoch: 37, Average Training Metric:0.306293 = 245.034555/800.000000, Acc: 0.9714, [784/1355 (58%)]	
+[2025-08-01 17:35:12] [INFO] Train Epoch: 37, Average Training Metric:0.307114 = 416.139128/1355.000000, Acc: 0.9710]	
+[2025-08-01 17:35:12] [INFO] Learning rate: 0.004286875
+[2025-08-01 17:35:12] [INFO] Validation starts: 
+[2025-08-01 17:35:12] [INFO] Epoch: 37
+[2025-08-01 17:35:12] [INFO] Validation begins: 
+[2025-08-01 17:35:12] [INFO] Validation set size: 290
+[2025-08-01 17:35:12] [INFO] Validation batch size: 16
+[2025-08-01 17:35:12] [INFO] Validation steps: 19
+[2025-08-01 17:35:25] [INFO] Validate Epoch: 37, Average Validation Metric:0.205353 = 59.552341/290.000000, Acc: 0.9406]	
+[2025-08-01 17:35:25] [INFO] Validation ends: 
+[2025-08-01 17:35:25] [INFO] Validation ends: 
+[2025-08-01 17:35:25] [INFO] Training ends: 
+[2025-08-01 17:35:25] [INFO] Epoch: 38/100
+[2025-08-01 17:35:25] [INFO] Training starts: 
+[2025-08-01 17:35:25] [INFO] Training epoch 38
+[2025-08-01 17:35:40] [INFO] Train Epoch: 38, Average Training Metric:0.308654 = 246.922871/800.000000, Acc: 0.9705, [784/1355 (58%)]	
+[2025-08-01 17:35:42] [INFO] Train Epoch: 38, Average Training Metric:0.308024 = 417.372782/1355.000000, Acc: 0.9707]	
+[2025-08-01 17:35:42] [INFO] Learning rate: 0.004286875
+[2025-08-01 17:35:42] [INFO] Validation starts: 
+[2025-08-01 17:35:42] [INFO] Epoch: 38
+[2025-08-01 17:35:42] [INFO] Validation begins: 
+[2025-08-01 17:35:42] [INFO] Validation set size: 290
+[2025-08-01 17:35:42] [INFO] Validation batch size: 16
+[2025-08-01 17:35:42] [INFO] Validation steps: 19
+[2025-08-01 17:35:56] [INFO] Validate Epoch: 38, Average Validation Metric:0.212611 = 61.657242/290.000000, Acc: 0.9395]	
+[2025-08-01 17:35:56] [INFO] Validation ends: 
+[2025-08-01 17:35:56] [INFO] Validation ends: 
+[2025-08-01 17:35:56] [INFO] Training ends: 
+[2025-08-01 17:35:56] [INFO] Epoch: 39/100
+[2025-08-01 17:35:56] [INFO] Training starts: 
+[2025-08-01 17:35:56] [INFO] Training epoch 39
+[2025-08-01 17:36:11] [INFO] Train Epoch: 39, Average Training Metric:0.305434 = 244.346900/800.000000, Acc: 0.9709, [784/1355 (58%)]	
+[2025-08-01 17:36:13] [INFO] Train Epoch: 39, Average Training Metric:0.315673 = 427.736492/1355.000000, Acc: 0.9698]	
+[2025-08-01 17:36:13] [INFO] Learning rate: 0.004286875
+[2025-08-01 17:36:13] [INFO] Validation starts: 
+[2025-08-01 17:36:13] [INFO] Epoch: 39
+[2025-08-01 17:36:13] [INFO] Validation begins: 
+[2025-08-01 17:36:13] [INFO] Validation set size: 290
+[2025-08-01 17:36:13] [INFO] Validation batch size: 16
+[2025-08-01 17:36:13] [INFO] Validation steps: 19
+[2025-08-01 17:36:27] [INFO] Validate Epoch: 39, Average Validation Metric:0.187851 = 54.476873/290.000000, Acc: 0.9463]	
+[2025-08-01 17:36:27] [INFO] Validation ends: 
+[2025-08-01 17:36:27] [INFO] Validation ends: 
+[2025-08-01 17:36:27] [INFO] Training ends: 
+[2025-08-01 17:36:27] [INFO] Epoch: 40/100
+[2025-08-01 17:36:27] [INFO] Training starts: 
+[2025-08-01 17:36:27] [INFO] Training epoch 40
+[2025-08-01 17:36:41] [INFO] Train Epoch: 40, Average Training Metric:0.289601 = 231.680712/800.000000, Acc: 0.9723, [784/1355 (58%)]	
+[2025-08-01 17:36:43] [INFO] Train Epoch: 40, Average Training Metric:0.286973 = 388.848231/1355.000000, Acc: 0.9726]	
+[2025-08-01 17:36:43] [INFO] Learning rate: 0.00407253125
+[2025-08-01 17:36:43] [INFO] Validation starts: 
+[2025-08-01 17:36:43] [INFO] Epoch: 40
+[2025-08-01 17:36:43] [INFO] Validation begins: 
+[2025-08-01 17:36:43] [INFO] Validation set size: 290
+[2025-08-01 17:36:43] [INFO] Validation batch size: 16
+[2025-08-01 17:36:43] [INFO] Validation steps: 19
+[2025-08-01 17:36:57] [INFO] Validate Epoch: 40, Average Validation Metric:0.188536 = 54.675516/290.000000, Acc: 0.9449]	
+[2025-08-01 17:36:57] [INFO] Validation ends: 
+[2025-08-01 17:36:57] [INFO] Validation ends: 
+[2025-08-01 17:36:57] [INFO] Training ends: 
+[2025-08-01 17:36:57] [INFO] Epoch: 41/100
+[2025-08-01 17:36:57] [INFO] Training starts: 
+[2025-08-01 17:36:57] [INFO] Training epoch 41
+[2025-08-01 17:37:12] [INFO] Train Epoch: 41, Average Training Metric:0.272422 = 217.937968/800.000000, Acc: 0.9743, [784/1355 (58%)]	
+[2025-08-01 17:37:14] [INFO] Train Epoch: 41, Average Training Metric:0.299193 = 405.406609/1355.000000, Acc: 0.9720]	
+[2025-08-01 17:37:14] [INFO] Learning rate: 0.00407253125
+[2025-08-01 17:37:14] [INFO] Validation starts: 
+[2025-08-01 17:37:14] [INFO] Epoch: 41
+[2025-08-01 17:37:14] [INFO] Validation begins: 
+[2025-08-01 17:37:14] [INFO] Validation set size: 290
+[2025-08-01 17:37:14] [INFO] Validation batch size: 16
+[2025-08-01 17:37:14] [INFO] Validation steps: 19
+[2025-08-01 17:37:28] [INFO] Validate Epoch: 41, Average Validation Metric:0.166330 = 48.235746/290.000000, Acc: 0.9433]	
+[2025-08-01 17:37:28] [INFO] Validation ends: 
+[2025-08-01 17:37:28] [INFO] Validation ends: 
+[2025-08-01 17:37:28] [INFO] Training ends: 
+[2025-08-01 17:37:28] [INFO] Epoch: 42/100
+[2025-08-01 17:37:28] [INFO] Training starts: 
+[2025-08-01 17:37:28] [INFO] Training epoch 42
+[2025-08-01 17:37:43] [INFO] Train Epoch: 42, Average Training Metric:0.294730 = 235.784289/800.000000, Acc: 0.9718, [784/1355 (58%)]	
+[2025-08-01 17:37:45] [INFO] Train Epoch: 42, Average Training Metric:0.301356 = 408.337514/1355.000000, Acc: 0.9709]	
+[2025-08-01 17:37:45] [INFO] Learning rate: 0.00407253125
+[2025-08-01 17:37:45] [INFO] Validation starts: 
+[2025-08-01 17:37:45] [INFO] Epoch: 42
+[2025-08-01 17:37:45] [INFO] Validation begins: 
+[2025-08-01 17:37:45] [INFO] Validation set size: 290
+[2025-08-01 17:37:45] [INFO] Validation batch size: 16
+[2025-08-01 17:37:45] [INFO] Validation steps: 19
+[2025-08-01 17:37:59] [INFO] Validate Epoch: 42, Average Validation Metric:0.190908 = 55.363265/290.000000, Acc: 0.9419]	
+[2025-08-01 17:37:59] [INFO] Validation ends: 
+[2025-08-01 17:37:59] [INFO] Validation ends: 
+[2025-08-01 17:37:59] [INFO] Training ends: 
+[2025-08-01 17:37:59] [INFO] Epoch: 43/100
+[2025-08-01 17:37:59] [INFO] Training starts: 
+[2025-08-01 17:37:59] [INFO] Training epoch 43
+[2025-08-01 17:38:14] [INFO] Train Epoch: 43, Average Training Metric:0.266916 = 213.533185/800.000000, Acc: 0.9755, [784/1355 (58%)]	
+[2025-08-01 17:38:16] [INFO] Train Epoch: 43, Average Training Metric:0.282897 = 383.325555/1355.000000, Acc: 0.9736]	
+[2025-08-01 17:38:16] [INFO] Learning rate: 0.00407253125
+[2025-08-01 17:38:16] [INFO] Validation starts: 
+[2025-08-01 17:38:16] [INFO] Epoch: 43
+[2025-08-01 17:38:16] [INFO] Validation begins: 
+[2025-08-01 17:38:16] [INFO] Validation set size: 290
+[2025-08-01 17:38:16] [INFO] Validation batch size: 16
+[2025-08-01 17:38:16] [INFO] Validation steps: 19
+[2025-08-01 17:38:30] [INFO] Validate Epoch: 43, Average Validation Metric:0.182438 = 52.906935/290.000000, Acc: 0.9411]	
+[2025-08-01 17:38:30] [INFO] Validation ends: 
+[2025-08-01 17:38:30] [INFO] Validation ends: 
+[2025-08-01 17:38:30] [INFO] Training ends: 
+[2025-08-01 17:38:30] [INFO] Epoch: 44/100
+[2025-08-01 17:38:30] [INFO] Training starts: 
+[2025-08-01 17:38:30] [INFO] Training epoch 44
+[2025-08-01 17:38:45] [INFO] Train Epoch: 44, Average Training Metric:0.263604 = 210.882961/800.000000, Acc: 0.9760, [784/1355 (58%)]	
+[2025-08-01 17:38:47] [INFO] Train Epoch: 44, Average Training Metric:0.268988 = 364.478773/1355.000000, Acc: 0.9746]	
+[2025-08-01 17:38:47] [INFO] Learning rate: 0.00407253125
+[2025-08-01 17:38:47] [INFO] Validation starts: 
+[2025-08-01 17:38:47] [INFO] Epoch: 44
+[2025-08-01 17:38:47] [INFO] Validation begins: 
+[2025-08-01 17:38:47] [INFO] Validation set size: 290
+[2025-08-01 17:38:47] [INFO] Validation batch size: 16
+[2025-08-01 17:38:47] [INFO] Validation steps: 19
+[2025-08-01 17:39:01] [INFO] Validate Epoch: 44, Average Validation Metric:0.195713 = 56.756805/290.000000, Acc: 0.9431]	
+[2025-08-01 17:39:01] [INFO] Validation ends: 
+[2025-08-01 17:39:01] [INFO] Validation ends: 
+[2025-08-01 17:39:01] [INFO] Training ends: 
+[2025-08-01 17:39:01] [INFO] Epoch: 45/100
+[2025-08-01 17:39:01] [INFO] Training starts: 
+[2025-08-01 17:39:01] [INFO] Training epoch 45
+[2025-08-01 17:39:16] [INFO] Train Epoch: 45, Average Training Metric:0.280193 = 224.154435/800.000000, Acc: 0.9731, [784/1355 (58%)]	
+[2025-08-01 17:39:18] [INFO] Train Epoch: 45, Average Training Metric:0.280171 = 379.631956/1355.000000, Acc: 0.9733]	
+[2025-08-01 17:39:18] [INFO] Learning rate: 0.00407253125
+[2025-08-01 17:39:18] [INFO] Validation starts: 
+[2025-08-01 17:39:18] [INFO] Epoch: 45
+[2025-08-01 17:39:18] [INFO] Validation begins: 
+[2025-08-01 17:39:18] [INFO] Validation set size: 290
+[2025-08-01 17:39:18] [INFO] Validation batch size: 16
+[2025-08-01 17:39:18] [INFO] Validation steps: 19
+[2025-08-01 17:39:32] [INFO] Validate Epoch: 45, Average Validation Metric:0.190580 = 55.268113/290.000000, Acc: 0.9408]	
+[2025-08-01 17:39:32] [INFO] Validation ends: 
+[2025-08-01 17:39:32] [INFO] Validation ends: 
+[2025-08-01 17:39:32] [INFO] Training ends: 
+[2025-08-01 17:39:32] [INFO] Epoch: 46/100
+[2025-08-01 17:39:32] [INFO] Training starts: 
+[2025-08-01 17:39:32] [INFO] Training epoch 46
+[2025-08-01 17:39:47] [INFO] Train Epoch: 46, Average Training Metric:0.298043 = 238.434319/800.000000, Acc: 0.9723, [784/1355 (58%)]	
+[2025-08-01 17:39:49] [INFO] Train Epoch: 46, Average Training Metric:0.304268 = 412.283631/1355.000000, Acc: 0.9714]	
+[2025-08-01 17:39:49] [INFO] Learning rate: 0.00407253125
+[2025-08-01 17:39:50] [INFO] Validation starts: 
+[2025-08-01 17:39:50] [INFO] Epoch: 46
+[2025-08-01 17:39:50] [INFO] Validation begins: 
+[2025-08-01 17:39:50] [INFO] Validation set size: 290
+[2025-08-01 17:39:50] [INFO] Validation batch size: 16
+[2025-08-01 17:39:50] [INFO] Validation steps: 19
+[2025-08-01 17:40:04] [INFO] Validate Epoch: 46, Average Validation Metric:0.168849 = 48.966126/290.000000, Acc: 0.9435]	
+[2025-08-01 17:40:04] [INFO] Validation ends: 
+[2025-08-01 17:40:04] [INFO] Validation ends: 
+[2025-08-01 17:40:04] [INFO] Training ends: 
+[2025-08-01 17:40:04] [INFO] Epoch: 47/100
+[2025-08-01 17:40:04] [INFO] Training starts: 
+[2025-08-01 17:40:04] [INFO] Training epoch 47
+[2025-08-01 17:40:18] [INFO] Train Epoch: 47, Average Training Metric:0.285337 = 228.269233/800.000000, Acc: 0.9732, [784/1355 (58%)]	
+[2025-08-01 17:40:20] [INFO] Train Epoch: 47, Average Training Metric:0.293949 = 398.300648/1355.000000, Acc: 0.9726]	
+[2025-08-01 17:40:20] [INFO] Learning rate: 0.00407253125
+[2025-08-01 17:40:20] [INFO] Validation starts: 
+[2025-08-01 17:40:20] [INFO] Epoch: 47
+[2025-08-01 17:40:20] [INFO] Validation begins: 
+[2025-08-01 17:40:20] [INFO] Validation set size: 290
+[2025-08-01 17:40:20] [INFO] Validation batch size: 16
+[2025-08-01 17:40:20] [INFO] Validation steps: 19
+[2025-08-01 17:40:34] [INFO] Validate Epoch: 47, Average Validation Metric:0.204548 = 59.318791/290.000000, Acc: 0.9438]	
+[2025-08-01 17:40:34] [INFO] Validation ends: 
+[2025-08-01 17:40:34] [INFO] Validation ends: 
+[2025-08-01 17:40:34] [INFO] Training ends: 
+[2025-08-01 17:40:34] [INFO] Epoch: 48/100
+[2025-08-01 17:40:34] [INFO] Training starts: 
+[2025-08-01 17:40:34] [INFO] Training epoch 48
+[2025-08-01 17:40:49] [INFO] Train Epoch: 48, Average Training Metric:0.261696 = 209.357197/800.000000, Acc: 0.9751, [784/1355 (58%)]	
+[2025-08-01 17:40:51] [INFO] Train Epoch: 48, Average Training Metric:0.276685 = 374.907776/1355.000000, Acc: 0.9738]	
+[2025-08-01 17:40:51] [INFO] Learning rate: 0.00407253125
+[2025-08-01 17:40:51] [INFO] Validation starts: 
+[2025-08-01 17:40:51] [INFO] Epoch: 48
+[2025-08-01 17:40:51] [INFO] Validation begins: 
+[2025-08-01 17:40:51] [INFO] Validation set size: 290
+[2025-08-01 17:40:51] [INFO] Validation batch size: 16
+[2025-08-01 17:40:51] [INFO] Validation steps: 19
+[2025-08-01 17:41:05] [INFO] Validate Epoch: 48, Average Validation Metric:0.239293 = 69.394859/290.000000, Acc: 0.9452]	
+[2025-08-01 17:41:05] [INFO] Validation ends: 
+[2025-08-01 17:41:05] [INFO] Validation ends: 
+[2025-08-01 17:41:05] [INFO] Training ends: 
+[2025-08-01 17:41:05] [INFO] Epoch: 49/100
+[2025-08-01 17:41:05] [INFO] Training starts: 
+[2025-08-01 17:41:05] [INFO] Training epoch 49
+[2025-08-01 17:41:20] [INFO] Train Epoch: 49, Average Training Metric:0.270075 = 216.059882/800.000000, Acc: 0.9746, [784/1355 (58%)]	
+[2025-08-01 17:41:22] [INFO] Train Epoch: 49, Average Training Metric:0.276657 = 374.869774/1355.000000, Acc: 0.9739]	
+[2025-08-01 17:41:22] [INFO] Learning rate: 0.00407253125
+[2025-08-01 17:41:22] [INFO] Validation starts: 
+[2025-08-01 17:41:22] [INFO] Epoch: 49
+[2025-08-01 17:41:22] [INFO] Validation begins: 
+[2025-08-01 17:41:22] [INFO] Validation set size: 290
+[2025-08-01 17:41:22] [INFO] Validation batch size: 16
+[2025-08-01 17:41:22] [INFO] Validation steps: 19
+[2025-08-01 17:41:36] [INFO] Validate Epoch: 49, Average Validation Metric:0.217158 = 62.975894/290.000000, Acc: 0.9429]	
+[2025-08-01 17:41:36] [INFO] Validation ends: 
+[2025-08-01 17:41:36] [INFO] Validation ends: 
+[2025-08-01 17:41:36] [INFO] Training ends: 
+[2025-08-01 17:41:36] [INFO] Epoch: 50/100
+[2025-08-01 17:41:36] [INFO] Training starts: 
+[2025-08-01 17:41:36] [INFO] Training epoch 50

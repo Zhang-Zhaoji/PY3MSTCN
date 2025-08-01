@@ -33,6 +33,9 @@ class Trainer(object):
         self.val_interval = self.model_cfg.val_interval
         self.result_path = self.model_cfg.result_path
         self.epochs  = self.model_cfg.epoch
+        self.num_stages = self.model_cfg.num_stages
+        self.num_layers = self.model_cfg.num_layers
+
 
         self.model_dest = model_dest if model_dest else self.result_path
         self.model_name = self.model_cfg.model_name
@@ -105,7 +108,6 @@ class Trainer(object):
             train_metrics.update(loss.item(), data.size(0))
             loss.backward()
             self.optimizer.step()
-
             _, predicted = torch.max(output[-1].data, 1)
             correct += ((predicted == target).float()).sum().item()
             total += 208 * data.size(0)# torch.sum(mask[:, 0, :]).item()
@@ -116,9 +118,9 @@ class Trainer(object):
         self.scheduler.step()
         if self.save_model:
             
-            if pathlib.exists(os.path.join(self.result_path, f'model_epoch_{epoch - self.max_save_model}.pth')):
+            if os.path.isfile(os.path.join(self.result_path, f'model_epoch_{epoch - self.max_save_model}.pth')):
                 os.remove(os.path.join(self.result_path, f'model_epoch_{epoch - self.max_save_model}.pth'))   
-            if pathlib.exists(os.path.join(self.result_path, f"optimizer_epoch_{epoch- self.max_save_model}.pth")):
+            if os.path.isfile(os.path.join(self.result_path, f"optimizer_epoch_{epoch- self.max_save_model}.pth")):
                 os.remove(os.path.join(self.result_path, f"optimizer_epoch_{epoch- self.max_save_model}.pth"))         
               
             torch.save(self.model.state_dict(), os.path.join(self.result_path, f"model_epoch_{epoch}.pth"))
@@ -135,11 +137,11 @@ class Trainer(object):
         correct = 0
         total = 0
         with torch.no_grad():
-            for batch_idx, (data, target) in enumerate(tqdm.tqdm(self.val_loader),total=len(self.val_loader)):
+            for batch_idx, (data, target) in enumerate(tqdm.tqdm(self.val_loader,total=len(self.val_loader))):
                 data, target = data.to(self.device), target.to(self.device)
                 output = self.model(data)
                 metric = metric_function(output, target)
-                _, predicted = torch.max(output[-1].data, 1)
+                _, predicted = torch.max(output.data, 1)
                 correct += (predicted == target).float().sum().item()
                 total += 208*data.size(0)#torch.sum(mask[:, 0, :]).item()
                 val_metric.update(metric.item(), data.size(0))
@@ -157,10 +159,10 @@ class Trainer(object):
         self.logger.info(f"Test steps: {len(test_dataloader)}")
         test_metric = AverageMeter("Average Test Metric")
         with torch.no_grad():
-            for batch_idx, (data, target, mask) in tqdm.tqdm(enumerate(test_dataloader),total = len(test_dataloader)):
-                data, target, mask = data.to(self.device), target.to(self.device), mask.to(self.device)
-                output = self.model(data, mask)
-                metric = metric_function(output, target, mask)
+            for batch_idx, (data, target) in enumerate( tqdm.tqdm(test_dataloader,total = len(test_dataloader))):
+                data, target = data.to(self.device), target.to(self.device)
+                output = self.model(data)
+                metric = metric_function(output, target)
                 test_metric.update(metric.item(), data.size(0))
                 if batch_idx % 10 == 0:
                     self.logger.info(f"Test step: {batch_idx} / {len(test_dataloader)}, " + str(test_metric))
@@ -205,7 +207,7 @@ class Trainer(object):
             self.train(idx, train_log_interval)
             if idx % self.val_interval == self.val_interval - 1:
                 self.logger.info("Validation starts: ")
-                self.validate(idx, val_log_interval)
+                self.validate(idx, self.criterion, val_log_interval)
                 self.logger.info("Validation ends: ")
             self.logger.info("Training ends: ")
 

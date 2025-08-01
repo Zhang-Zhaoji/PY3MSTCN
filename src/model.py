@@ -81,11 +81,11 @@ class ActionSegmentationLoss(nn.Module):
     copied from MS-TCN
     """
 
-    def __init__(self, ignore_index=255, ce_weight=1.0, stages = 2):
+    def __init__(self, ignore_index=255, ce_weight=1.0, stages = 4):
         super().__init__()
         self.criterions = []
         self.weights = []
-        for stage in range(stages):
+        for _stage in range(stages):
             self.criterions.append(nn.CrossEntropyLoss(ignore_index=ignore_index))
             self.weights.append(ce_weight)
 
@@ -95,8 +95,8 @@ class ActionSegmentationLoss(nn.Module):
             sys.exit(1)
 
     def forward(self, preds, gts):
-        print(preds.shape)
-        print(gts.shape)
+        # print(preds.shape)
+        # print(gts.shape)
         # sys.exit(1)
         loss = 0.
         if isinstance(preds, list):

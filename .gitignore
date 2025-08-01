@@ -1,3 +1,6 @@
 data/RGBdataset/
 data/Saldataset/
 src/__pycache__/
+clipped_videos/
+raw_videos/
+*.pth
