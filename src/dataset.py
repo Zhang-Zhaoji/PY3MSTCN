@@ -462,7 +462,7 @@ class CausalityInTrafficAccident(Dataset):
         # return rgb_feat, flow_feat, causality_mask, cause_loc, effect_loc, label, annos[0]
         # else:
         # return rgb_feat, flow_feat, causality_mask, cause_loc, effect_loc
-        return {'feature':rgb_feat, 'label':causality_mask} #[208*1024 & 208]
+        return {'feature':torch.permute(rgb_feat, (1,0)), 'label':causality_mask} #[208*1024 & 208] -> [1024, 208] & [208]
     
 def collate_fn(sample):
     feat_list = [s['feature'] for s in sample]
@@ -473,15 +473,15 @@ def collate_fn(sample):
     labels = torch.stack(label_list, dim=0)
     
     # 创建mask张量来标识有效位置
-    batch_size = len(sample)
-    sequence_length = labels.size(1)  # 假设labels是(batch_size, sequence_length)
+    # batch_size = len(sample)
+    # sequence_length = labels.size(1)  # 假设labels是(batch_size, sequence_length)
     
     # 由于代码中没有提供num_classes信息，这里需要从上下文获取
     # 可以通过sample中的数据推断num_classes
-    num_classes = labels.max() + 1 if labels.numel() > 0 else 1
+    # num_classes = labels.max() + 1 if labels.numel() > 0 else 1
     
     # 创建mask，标识哪些位置是有效标签（非填充）
-    mask = torch.ones(batch_size, num_classes, sequence_length, dtype=torch.float)
+    # mask = torch.ones(batch_size, num_classes, sequence_length, dtype=torch.float)
     
     # 对于每个样本，标记有效标签位置
     # for i in range(batch_size):
@@ -494,4 +494,4 @@ def collate_fn(sample):
         #         mask[i, class_idx, j] = 1.0
 
     # return {'feature': features, 'label': labels, 'mask': mask}
-    return features, labels, mask   
+    return features, labels# , mask   

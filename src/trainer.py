@@ -7,7 +7,7 @@ import os
 import pathlib
 from logger import Logger 
 from config import Config
-from model import build_from_cfg, MSTCN_criterion
+from model import build_from_cfg, MSTCN_criterion, ActionSegmentationLoss
 from utils import AverageMeter
 from tensorboardX import SummaryWriter
 
@@ -15,7 +15,7 @@ class Trainer(object):
     def __init__(self,   model_cfg:Config,
                          train_loader:torch.utils.data.DataLoader, 
                          val_loader:torch.utils.data.DataLoader,
-                         criterion:nn.Module = MSTCN_criterion, 
+                         criterion:nn.Module = ActionSegmentationLoss(), 
                          device:torch.device = None, 
                          logfile_dest:str=None,
                          model_dest:str=None,
@@ -97,18 +97,18 @@ class Trainer(object):
         train_metrics = AverageMeter("Average Training Metric")
         correct = 0
         total = 0
-        for batch_idx, (data, target, mask) in tqdm.tqdm(enumerate(self.train_loader),total = len(self.train_loader)):
-            data, target, mask = data.to(self.device), target.to(self.device), mask.to(self.device)
+        for batch_idx, (data, target) in enumerate(tqdm.tqdm(self.train_loader,total = len(self.train_loader))):
+            data, target = data.to(self.device), target.to(self.device)
             self.optimizer.zero_grad()
-            output = self.model(data, mask)
+            output = self.model(data)
             loss = self.criterion(output, target)
             train_metrics.update(loss.item(), data.size(0))
             loss.backward()
             self.optimizer.step()
 
             _, predicted = torch.max(output[-1].data, 1)
-            correct += ((predicted == target).float()*mask[:, 0, :].squeeze(1)).sum().item()
-            total += torch.sum(mask[:, 0, :]).item()
+            correct += ((predicted == target).float()).sum().item()
+            total += 208 * data.size(0)# torch.sum(mask[:, 0, :]).item()
             if batch_idx % log_interval == log_interval - 1:
                 self.logger.info(f"Train Epoch: {epoch}, {str(train_metrics)}, Acc: {correct/total:.4f}, [{batch_idx * len(data)}/{len(self.train_loader.dataset)} ({100. * batch_idx / len(self.train_loader):.0f}%)]\t")
         self.logger.info(f"Train Epoch: {epoch}, {str(train_metrics)}, Acc: {correct/total:.4f}]\t")
@@ -135,13 +135,13 @@ class Trainer(object):
         correct = 0
         total = 0
         with torch.no_grad():
-            for batch_idx, (data, target, mask) in tqdm.tqdm(enumerate(self.val_loader),total=len(self.val_loader)):
-                data, target, mask = data.to(self.device), target.to(self.device), mask.to(self.device)
-                output = self.model(data, mask)
-                metric = metric_function(output, target, mask)
+            for batch_idx, (data, target) in enumerate(tqdm.tqdm(self.val_loader),total=len(self.val_loader)):
+                data, target = data.to(self.device), target.to(self.device)
+                output = self.model(data)
+                metric = metric_function(output, target)
                 _, predicted = torch.max(output[-1].data, 1)
-                correct += ((predicted == target).float()*mask[:, 0, :].squeeze(1)).sum().item()
-                total += torch.sum(mask[:, 0, :]).item()
+                correct += (predicted == target).float().sum().item()
+                total += 208*data.size(0)#torch.sum(mask[:, 0, :]).item()
                 val_metric.update(metric.item(), data.size(0))
                 if batch_idx % log_interval == log_interval-1:
                     self.logger.info(f"Validation step: {batch_idx} / {len(self.val_loader)}, {str(val_metric)}, Acc: {correct/total:.4f} ")

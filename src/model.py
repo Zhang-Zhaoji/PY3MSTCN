@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from config import Config
+import sys
 
 class SingleStageModel(nn.Module):
     def __init__(self, num_layers, num_f_maps, dim, num_classes, *args, **kwargs) -> None:
@@ -42,13 +43,24 @@ class MultiStageModel(nn.Module):
         self.stage1 = SingleStageModel(num_layers, num_f_maps, dim, num_classes)
         self.stages = nn.ModuleList([SingleStageModel(num_layers, num_f_maps, num_classes, num_classes) for _ in range(num_stages-1)])
     
-    def forward(self, x:torch.Tensor, mask:torch.Tensor) -> torch.Tensor:
+    def forward(self, x:torch.Tensor, mask:torch.Tensor = None) -> torch.Tensor:
         out = self.stage1(x, mask)
-        outputs = out.unsqueeze(0)
-        for s in self.stages:
-            out = s(F.softmax(out, dim=1) * mask[:,0:1, :], mask)
-            outputs = torch.cat((outputs, out.unsqueeze(0)), dim=0)
-        return outputs
+        if self.training:
+            outputs = out.unsqueeze(0)
+            for s in self.stages:
+                if mask is None:
+                    out = s(F.softmax(out, dim=1))
+                else:
+                    out = s(F.softmax(out, dim=1) * mask[:,0:1, :], mask)
+                outputs = torch.cat((outputs, out.unsqueeze(0)), dim=0)
+            return outputs
+        else:
+            for s in self.stages:
+                if mask is None:
+                    out = s(F.softmax(out, dim=1))
+                else:
+                    out = s(F.softmax(out, dim=1) * mask[:,0:1, :], mask)
+            return out
 
 
 def MSTCN_criterion(output:torch.Tensor, target:torch.Tensor, mask:torch.Tensor)->torch.Tensor:
@@ -62,3 +74,47 @@ def build_from_cfg(cfg:Config) -> nn.Module:
     if cfg.resume:
         model = torch.load(cfg.resume)
     return model
+
+
+class ActionSegmentationLoss(nn.Module):
+    """
+    copied from MS-TCN
+    """
+
+    def __init__(self, ignore_index=255, ce_weight=1.0, stages = 2):
+        super().__init__()
+        self.criterions = []
+        self.weights = []
+        for stage in range(stages):
+            self.criterions.append(nn.CrossEntropyLoss(ignore_index=ignore_index))
+            self.weights.append(ce_weight)
+
+
+        if len(self.criterions) == 0:
+            print("You have to choose at least one loss function.")
+            sys.exit(1)
+
+    def forward(self, preds, gts):
+        print(preds.shape)
+        print(gts.shape)
+        # sys.exit(1)
+        loss = 0.
+        if isinstance(preds, list):
+            idx = 0
+            for criterion, weight in zip(self.criterions, self.weights):
+                loss += weight * criterion(preds[idx], gts)
+                idx += 1
+            return loss
+        elif isinstance(preds, torch.Tensor):
+            if len(preds.shape) == 4:
+                idx = 0
+                for criterion, weight in zip(self.criterions, self.weights):
+                    loss += weight * criterion(preds[idx,:,:,:], gts)
+                    idx += 1
+                return loss
+            elif len(preds.shape) == 3:
+                return self.criterions[0](preds, gts)
+        if isinstance(preds, torch.Tensor):
+            raise ValueError(f"preds should be list or torch.Tensor, not {type(preds).__name__} with {preds.shape} shape.")
+        else: 
+            raise ValueError(f"Unknown object type. preds should be list or torch.Tensor, not {type(preds).__name__}")

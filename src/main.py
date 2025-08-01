@@ -65,8 +65,8 @@ if __name__ == '__main__':
     parser.add_argument('--new_length', type=int, default=1)    
     parser.add_argument('--feed_type', type=str, default="multi-label",choices=["multi-label", "detection", "classification"])
     parser.add_argument('--dataset_ver', type=str, default='Mar9th')
-    parser.add_argument('--num_layers', type=int, default=3)
-    parser.add_argument('--num_stages', type=int, default=2)
+    parser.add_argument('--num_layers', type=int, default=10)
+    parser.add_argument('--num_stages', type=int, default=4)
     parser.add_argument('--positive_thres', type=float, default=0.4)
     
     args = parser.parse_args()

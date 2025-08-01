@@ -21,3 +21,4 @@ class AverageMeter(object):
     
     def __str__(self):
         return f'{self.name}:{self.avg:.6f} = {self.sum:.6f}/{self.count:.6f}'
+    
