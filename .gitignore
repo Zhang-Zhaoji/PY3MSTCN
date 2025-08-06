@@ -1,6 +1,14 @@
-data/RGBdataset/
+# data/RGBdataset/
 data/Saldataset/
+clipped_mgfs/
+clipped_videos/
+clipped_sm/
+mgf_vids/
+sm_vids/
 src/__pycache__/
 clipped_videos/
 raw_videos/
+npz_mgfs/
+npz_sms/
 *.pth
+*.pt

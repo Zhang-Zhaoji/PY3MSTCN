@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from config import Config
 import sys
+import math
 
 class SingleStageModel(nn.Module):
     def __init__(self, num_layers, num_f_maps, dim, num_classes, *args, **kwargs) -> None:
@@ -61,6 +62,62 @@ class MultiStageModel(nn.Module):
                 else:
                     out = s(F.softmax(out, dim=1) * mask[:,0:1, :], mask)
             return out
+        
+
+
+class Squeeze2Stage(nn.Module):
+    def __init__(self, in_ch=512, hid_ch=768, out_ch=1024):
+        super().__init__()
+        groups = math.gcd(hid_ch, 32)
+        # 1) 7×7 → 3×3，通道 hid_ch
+        self.down1 = nn.Conv2d(in_ch, hid_ch, 3, stride=2, padding=1, groups=groups)
+        # 2) 3×3 → 1×1，通道 hid_ch
+        self.act1 = nn.GELU()
+        self.down2 = nn.Conv2d(hid_ch, hid_ch, 3, stride=3, padding=0, groups=groups)
+        self.act2 = nn.GELU()
+        # 3) 1×1 → 1024
+        self.expand = nn.Conv2d(hid_ch, out_ch, 1)
+
+    def forward(self, x):          # x: [B, 25088, 280]
+        x = x.transpose(1, 2)      # x: [B, 280, 25088]
+        B, T, _ = x.shape
+        x = x.reshape(B*T, 512, 7, 7) # [BT,512,7,7]
+        x = self.down1(x)          # [BT,768,3,3]
+        x = self.act1(x)
+        x = self.down2(x)          # [BT,768,1,1]
+        x = self.act2(x)
+        x = self.expand(x)         # [BT,1024,1,1]
+        x = x.flatten(1)           # [BT,1024]
+        x = x.reshape(B, -1, T)    # [B,1024,T]
+        return x
+
+
+
+class SalMultiStageModel(MultiStageModel):
+    def __init__(self, num_stages, num_layers, num_f_maps, dim, num_classes, pre_process_dim = 512, *args, **kwargs) -> None:
+        super().__init__(num_stages, num_layers, num_f_maps, dim, num_classes, *args, **kwargs)
+        self.preprocess = Squeeze2Stage(pre_process_dim, 728, dim)
+    
+    def forward(self, x:torch.Tensor, mask:torch.Tensor = None) -> torch.Tensor:
+        # [B,C,T]
+        x = self.preprocess(x)
+        out = self.stage1(x, mask)
+        if self.training: 
+            outputs = out.unsqueeze(0)
+            for s in self.stages:
+                if mask is None:
+                    out = s(F.softmax(out, dim=1))
+                else:
+                    out = s(F.softmax(out, dim=1) * mask[:,0:1, :], mask)
+                outputs = torch.cat((outputs, out.unsqueeze(0)), dim=0)
+            return outputs
+        else:
+            for s in self.stages:
+                if mask is None:
+                    out = s(F.softmax(out, dim=1))
+                else:
+                    out = s(F.softmax(out, dim=1) * mask[:,0:1, :], mask)
+            return out
 
 
 def MSTCN_criterion(output:torch.Tensor, target:torch.Tensor, mask:torch.Tensor)->torch.Tensor:
@@ -69,8 +126,11 @@ def MSTCN_criterion(output:torch.Tensor, target:torch.Tensor, mask:torch.Tensor)
     return loss
 
 
-def build_from_cfg(cfg:Config) -> nn.Module:
-    model = MultiStageModel(cfg.num_stages, cfg.num_layers, cfg.num_f_maps, cfg.dim, cfg.num_classes)
+def build_from_cfg(cfg:Config, if_sal = False) -> nn.Module:
+    if if_sal:
+        model = SalMultiStageModel(cfg.num_stages, cfg.num_layers, cfg.num_f_maps, cfg.dim, cfg.num_classes)
+    else:
+        model = MultiStageModel(cfg.num_stages, cfg.num_layers, cfg.num_f_maps, cfg.dim, cfg.num_classes)
     if cfg.resume:
         model = torch.load(cfg.resume)
     return model
