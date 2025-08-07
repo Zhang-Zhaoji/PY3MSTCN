@@ -1,7 +1,7 @@
 from config import Config
-from trainer import Trainer
+from trainer_Sal import Trainer
 from torch.utils.data import Dataset, DataLoader
-from dataset import CausalityInTrafficAccident, collate_fn
+from datasetSM import CausalityInTrafficAccident, collate_fn
 import argparse
 import json
 
@@ -19,8 +19,8 @@ def main(args:argparse.ArgumentParser):
         dataset_train = CausalityInTrafficAccident(p, split='train')
         dataset_val   = CausalityInTrafficAccident(p, split='val', test_mode=True)
         dataset_test  = []
-        dataloader_train = DataLoader(dataset_train, batch_size=p['batch_size'], shuffle=True, num_workers=p['num_workers'],collate_fn=collate_fn,pin_memory=True)
-        dataloader_val = DataLoader(dataset_val, batch_size=p['batch_size'], num_workers=p['num_workers'],collate_fn=collate_fn,pin_memory=True)
+        dataloader_train = DataLoader(dataset_train, batch_size=p['batch_size'], shuffle=True, num_workers=p['num_workers'],collate_fn=collate_fn,pin_memory=False)
+        dataloader_val = DataLoader(dataset_val, batch_size=p['batch_size'], num_workers=p['num_workers'],collate_fn=collate_fn,pin_memory=False)
         dataloader_test = None
     elif args.mode == 'test':
         dataset_train = []
@@ -50,20 +50,20 @@ def main(args:argparse.ArgumentParser):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg_path', type=str, default='cfgs/v1-0-0.json')
+    parser.add_argument('--cfg_path', type=str, default='cfgs/v1-0-2.json')
     parser.add_argument('--logfile_dest', type=str, default='./logs')
     parser.add_argument('--model_dest', type=str, default='./model')
     parser.add_argument('--wandb_project', type=str, default='MyMSTCN')
     parser.add_argument('--wandb_entity', type=str, default='')
     parser.add_argument('--train_loader', type=str, default='./train_loader.pkl')
-    parser.add_argument('--num_workers', type=int, default=2) # 4
-    parser.add_argument('--batch_size', type=int, default=16) # 16
+    parser.add_argument('--num_workers', type=int, default=1) # 4
+    parser.add_argument('--batch_size', type=int, default=1) # 16
     parser.add_argument('--mode',type=str, default='train', choices=['train', 'test', 'predict'])
     parser.add_argument('--resume_model_path', type=str, default=None)
     parser.add_argument('--resume_optimizer_path', type=str, default=None)
-    parser.add_argument('--feature', type=str, default="Mar9th")
-    parser.add_argument('--feature_folder', type=str, default="RGBdataset")
-    parser.add_argument('--input_size', type=int, default=1024)
+    parser.add_argument('--feature', type=str, default="SMfeature")
+    parser.add_argument('--feature_folder', type=str, default="Saldataset")
+    parser.add_argument('--input_size', type=int, default=25088)
     parser.add_argument('--hidden_size', type=int, default=256)
     parser.add_argument('--num_segments', type=int, default=4)
     parser.add_argument('--new_length', type=int, default=1)    

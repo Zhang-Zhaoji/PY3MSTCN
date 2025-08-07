@@ -1,0 +1,31 @@
+{
+  "model_name": "v1-0-0",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 5,
+  "lr": 0.005,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 4,
+  "num_layers": 10,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 100
+}
+[2025-08-07 13:59:46] [INFO] Training model with config: 
+[2025-08-07 13:59:46] [INFO] {'model_name': 'v1-0-0', 'save_model': True, 'result_path': './rsts', 'max_save_model': 5, 'lr': 0.005, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 4, 'num_layers': 10, 'num_f_maps': 128, 'dim': 1024, 'epochs': 100}
+[2025-08-07 13:59:46] [INFO] Using device: 
+[2025-08-07 13:59:46] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-08-07 13:59:46] [INFO] Loading model
+[2025-08-07 13:59:46] [INFO] loading model successfully
+[2025-08-07 13:59:46] [INFO] building optimizer with optimizer:Adam
+[2025-08-07 13:59:46] [INFO] building scheduler with scheduler:StepLR
+[2025-08-07 13:59:46] [INFO] Starting training loop
+[2025-08-07 13:59:46] [INFO] Epoch: 0/100
+[2025-08-07 13:59:46] [INFO] Training starts: 
+[2025-08-07 13:59:46] [INFO] Training epoch 0

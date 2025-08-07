@@ -1,9 +1,9 @@
 {
-    "model_name": "v1-0-1",
+    "model_name": "v1-0-2",
     "save_model":true,
-    "result_path": "./rsts/MGF-v1-0-1",
+    "result_path": "./rsts/SM-v1-0-2",
     "max_save_model": 3,
-    "lr":0.001,
+    "lr":0.005,
     "lr_decay":0.95,
     "lr_decay_step": 10,
     "weight_decay": 5e-4,

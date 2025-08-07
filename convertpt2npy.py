@@ -3,8 +3,8 @@ import torch
 import numpy as np
 import os
 
-pt_path = 'data/Saldataset/MGFfeature.pt'
-save_dir = 'data/Saldataset/MGFfeature_npy'
+pt_path = 'data/Saldataset/SMfeature.pt'
+save_dir = 'data/Saldataset/SMfeature_npy'
 
 os.makedirs(save_dir, exist_ok=True)
 print(f"Loading {pt_path}")

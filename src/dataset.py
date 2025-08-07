@@ -248,7 +248,7 @@ class CausalityInTrafficAccident(Dataset):
         else:
             flow_feat = torch.zeros(0)
 
-        return rgb_feat, flow_feat      
+        return rgb_feat, flow_feat, _rgb_feat.size(0)      
 
     def get_det_labels(self, idx):
         annos = self.annos[idx]
@@ -362,10 +362,12 @@ class CausalityInTrafficAccident(Dataset):
 
 
     def feed_multi_label(self, idx):
+        
         annos = self.annos[idx]
         vid_name = annos[0]
-        seq_length = self.seq_length
-        vid_length = self.vid_length
+        # seq_length = self.seq_length
+        video_start, video_end = annos[0][1:3]
+        vid_length = video_end - video_start
 
         #########
         # input #
@@ -374,7 +376,8 @@ class CausalityInTrafficAccident(Dataset):
         # rgb_feat = torch.zeros(seq_length, rgb.size(1))
         # rgb_feat[0:rgb.size(0), :] = rgb
 
-        rgb_feat, flow_feat = self.get_feature(idx)
+        rgb_feat, flow_feat, actual_len = self.get_feature(idx)
+        seq_length = actual_len
         # if(self.use_flip and random.random() > 0.5):
         #     if(self.use_rgb):
         #         rgb_feat = self.feat_rgb_flip[idx, :, :]
@@ -405,15 +408,15 @@ class CausalityInTrafficAccident(Dataset):
         ##########
         # labels #
         ##########
-        cause_loc = torch.Tensor([annos[1][1], annos[1][2]])/vid_length
-        effect_loc = torch.Tensor([annos[2][1], annos[2][2]])/vid_length
+        # cause_loc = torch.Tensor([annos[1][1], annos[1][2]])/vid_length
+        # effect_loc = torch.Tensor([annos[2][1], annos[2][2]])/vid_length
         #causality_loc = torch.Tensor([annos[1][1], annos[1][2], annos[2][1], annos[2][2]])/vid_length
         
         ################################################
         # cause label for attention calibration label 
         ################################################        
-        cause_start_time = annos[1][1]/vid_length*seq_length
-        cause_end_time = annos[1][2]/vid_length*seq_length
+        cause_start_time = (annos[1][1])/vid_length*seq_length
+        cause_end_time = (annos[1][2])/vid_length*seq_length
         cause_start_idx = int(round(cause_start_time))
         cause_end_idx = int(round(cause_end_time))+1
         if(cause_end_idx > seq_length):
@@ -423,8 +426,8 @@ class CausalityInTrafficAccident(Dataset):
         ################################################
         # effect label for attention calibration label 
         ################################################        
-        effect_start_time = annos[2][1]/vid_length*seq_length
-        effect_end_time = annos[2][2]/vid_length*seq_length
+        effect_start_time = (annos[2][1])/vid_length*seq_length
+        effect_end_time = (annos[2][2])/vid_length*seq_length
 
         effect_start_idx = int(round(effect_start_time))
         effect_end_idx = int(round(effect_end_time)) + 1
@@ -436,8 +439,8 @@ class CausalityInTrafficAccident(Dataset):
         # cause-effect label for attention calibration label 
         ######################################################
         
-
-        causality_mask = torch.zeros(seq_length).long()
+        clip_length = 208
+        causality_mask = torch.zeros(clip_length).long()
         if(int(math.floor(cause_end_time) == int(math.floor(effect_start_time)))):
             effect_portion = math.ceil(effect_start_time) - effect_start_time
             cause_portion = cause_end_time - math.floor(cause_end_time)
@@ -458,40 +461,27 @@ class CausalityInTrafficAccident(Dataset):
         # print(causality_mask.size()) [208]
         # sys.exit(1)
 
+        video_mask = torch.zeros(clip_length)
+        video_mask[:seq_length] = 1
+
+
         # label = torch.Tensor([annos[1][3], annos[2][3]])
         # return rgb_feat, flow_feat, causality_mask, cause_loc, effect_loc, label, annos[0]
         # else:
         # return rgb_feat, flow_feat, causality_mask, cause_loc, effect_loc
-        return {'feature':torch.permute(rgb_feat, (1,0)), 'label':causality_mask} #[208*1024 & 208] -> [1024, 208] & [208]
+        return {'feature':torch.permute(rgb_feat, (1,0)), 'label':causality_mask, 'mask':video_mask} #[208*1024 & 208] -> [1024, 208] & [208]
     
 def collate_fn(sample):
     feat_list = [s['feature'] for s in sample]
     label_list = [s['label'] for s in sample]
+    mask_list = [s['mask'] for s in sample]
+
     # merge features from tuple of 2D tensor to 3D tensor
     features = torch.stack(feat_list, dim=0)
     # merge labels from tuple of 1D tensor to 2D tensor
     labels = torch.stack(label_list, dim=0)
-    
-    # 创建mask张量来标识有效位置
-    # batch_size = len(sample)
-    # sequence_length = labels.size(1)  # 假设labels是(batch_size, sequence_length)
-    
-    # 由于代码中没有提供num_classes信息，这里需要从上下文获取
-    # 可以通过sample中的数据推断num_classes
-    # num_classes = labels.max() + 1 if labels.numel() > 0 else 1
-    
-    # 创建mask，标识哪些位置是有效标签（非填充）
-    # mask = torch.ones(batch_size, num_classes, sequence_length, dtype=torch.float)
-    
-    # 对于每个样本，标记有效标签位置
-    # for i in range(batch_size):
-        # 假设-100表示填充/无效标签（PyTorch常用约定）
-        # valid_positions = (label_list[i] != -100)  # 获取有效位置
-        # 对于每个有效位置，标记对应类别的mask
-        # for j in range(len(label_list[i])):
-        #     if valid_positions[j]:  # 如果是有效位置
-        #         class_idx = label_list[i][j].item()
-        #         mask[i, class_idx, j] = 1.0
+
+    masks = torch.stack(mask_list, dim=0)
 
     # return {'feature': features, 'label': labels, 'mask': mask}
-    return features, labels# , mask   
+    return features, labels , masks   

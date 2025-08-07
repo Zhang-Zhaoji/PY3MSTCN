@@ -1,0 +1,66 @@
+{
+  "model_name": "v1-0-2",
+  "save_model": true,
+  "result_path": "./rsts/SM-v1-0-2",
+  "max_save_model": 3,
+  "lr": 0.005,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0005,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 4,
+  "num_layers": 10,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 100
+}
+[2025-08-07 11:50:52] [INFO] Training model with config: 
+[2025-08-07 11:50:52] [INFO] {'model_name': 'v1-0-2', 'save_model': True, 'result_path': './rsts/SM-v1-0-2', 'max_save_model': 3, 'lr': 0.005, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0005, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 4, 'num_layers': 10, 'num_f_maps': 128, 'dim': 1024, 'epochs': 100}
+[2025-08-07 11:50:52] [INFO] Using device: 
+[2025-08-07 11:50:53] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-08-07 11:50:53] [INFO] Loading model
+[2025-08-07 11:50:53] [INFO] loading model successfully
+[2025-08-07 11:50:53] [INFO] building optimizer with optimizer:Adam
+[2025-08-07 11:50:53] [INFO] building scheduler with scheduler:StepLR
+[2025-08-07 11:50:53] [INFO] Starting training loop
+[2025-08-07 11:50:53] [INFO] Epoch: 0/100
+[2025-08-07 11:50:53] [INFO] Training starts: 
+[2025-08-07 11:50:53] [INFO] Training epoch 0
+[2025-08-07 11:51:02] [INFO] Train Epoch: 0, Average Training Metric:4.133546 = 206.677309/50.000000, Acc: 0.9313, [49/1355 (4%)]	
+[2025-08-07 11:51:05] [INFO] Train Epoch: 0, Average Training Metric:4.105270 = 410.527032/100.000000, Acc: 0.9337, [99/1355 (7%)]	
+[2025-08-07 11:51:07] [INFO] Train Epoch: 0, Average Training Metric:4.071467 = 610.720104/150.000000, Acc: 0.9341, [149/1355 (11%)]	
+[2025-08-07 11:51:10] [INFO] Train Epoch: 0, Average Training Metric:4.068655 = 813.730960/200.000000, Acc: 0.9361, [199/1355 (15%)]	
+[2025-08-07 11:51:12] [INFO] Train Epoch: 0, Average Training Metric:4.055158 = 1013.789593/250.000000, Acc: 0.9362, [249/1355 (18%)]	
+[2025-08-07 11:51:15] [INFO] Train Epoch: 0, Average Training Metric:4.118477 = 1235.543061/300.000000, Acc: 0.9364, [299/1355 (22%)]	
+[2025-08-07 11:51:17] [INFO] Train Epoch: 0, Average Training Metric:4.217752 = 1476.213131/350.000000, Acc: 0.9365, [349/1355 (26%)]	
+[2025-08-07 11:51:19] [INFO] Train Epoch: 0, Average Training Metric:4.223571 = 1689.428441/400.000000, Acc: 0.9358, [399/1355 (29%)]	
+[2025-08-07 11:51:22] [INFO] Train Epoch: 0, Average Training Metric:4.194438 = 1887.497197/450.000000, Acc: 0.9365, [449/1355 (33%)]	
+[2025-08-07 11:51:24] [INFO] Train Epoch: 0, Average Training Metric:4.170069 = 2085.034372/500.000000, Acc: 0.9359, [499/1355 (37%)]	
+[2025-08-07 11:51:27] [INFO] Train Epoch: 0, Average Training Metric:4.147674 = 2281.220963/550.000000, Acc: 0.9347, [549/1355 (41%)]	
+[2025-08-07 11:51:29] [INFO] Train Epoch: 0, Average Training Metric:4.131695 = 2479.017151/600.000000, Acc: 0.9346, [599/1355 (44%)]	
+[2025-08-07 11:51:32] [INFO] Train Epoch: 0, Average Training Metric:4.116903 = 2675.986819/650.000000, Acc: 0.9349, [649/1355 (48%)]	
+[2025-08-07 11:51:34] [INFO] Train Epoch: 0, Average Training Metric:4.111925 = 2878.347728/700.000000, Acc: 0.9344, [699/1355 (52%)]	
+[2025-08-07 11:51:36] [INFO] Train Epoch: 0, Average Training Metric:4.093143 = 3069.856885/750.000000, Acc: 0.9347, [749/1355 (55%)]	
+[2025-08-07 11:51:39] [INFO] Train Epoch: 0, Average Training Metric:4.086517 = 3269.213274/800.000000, Acc: 0.9344, [799/1355 (59%)]	
+[2025-08-07 11:51:41] [INFO] Train Epoch: 0, Average Training Metric:4.079050 = 3467.192634/850.000000, Acc: 0.9348, [849/1355 (63%)]	
+[2025-08-07 11:51:44] [INFO] Train Epoch: 0, Average Training Metric:4.075303 = 3667.772798/900.000000, Acc: 0.9348, [899/1355 (66%)]	
+[2025-08-07 11:51:46] [INFO] Train Epoch: 0, Average Training Metric:4.068474 = 3865.050002/950.000000, Acc: 0.9351, [949/1355 (70%)]	
+[2025-08-07 11:51:49] [INFO] Train Epoch: 0, Average Training Metric:4.061525 = 4061.524961/1000.000000, Acc: 0.9353, [999/1355 (74%)]	
+[2025-08-07 11:51:51] [INFO] Train Epoch: 0, Average Training Metric:4.057222 = 4260.082682/1050.000000, Acc: 0.9356, [1049/1355 (77%)]	
+[2025-08-07 11:51:54] [INFO] Train Epoch: 0, Average Training Metric:4.049811 = 4454.791871/1100.000000, Acc: 0.9357, [1099/1355 (81%)]	
+[2025-08-07 11:51:56] [INFO] Train Epoch: 0, Average Training Metric:4.046661 = 4653.660145/1150.000000, Acc: 0.9359, [1149/1355 (85%)]	
+[2025-08-07 11:51:58] [INFO] Train Epoch: 0, Average Training Metric:4.047189 = 4856.626490/1200.000000, Acc: 0.9355, [1199/1355 (88%)]	
+[2025-08-07 11:52:01] [INFO] Train Epoch: 0, Average Training Metric:4.046736 = 5058.420163/1250.000000, Acc: 0.9355, [1249/1355 (92%)]	
+[2025-08-07 11:52:03] [INFO] Train Epoch: 0, Average Training Metric:4.042201 = 5254.861134/1300.000000, Acc: 0.9354, [1299/1355 (96%)]	
+[2025-08-07 11:52:06] [INFO] Train Epoch: 0, Average Training Metric:4.038603 = 5452.114441/1350.000000, Acc: 0.9354, [1349/1355 (100%)]	
+[2025-08-07 11:52:07] [INFO] Train Epoch: 0, Average Training Metric:4.038157 = 5471.702189/1355.000000, Acc: 0.9355]	
+[2025-08-07 11:52:07] [INFO] Learning rate: 0.005
+[2025-08-07 11:52:07] [INFO] Validation starts: 
+[2025-08-07 11:52:07] [INFO] Epoch: 0
+[2025-08-07 11:52:07] [INFO] Validation begins: 
+[2025-08-07 11:52:07] [INFO] Validation set size: 264
+[2025-08-07 11:52:07] [INFO] Validation batch size: 1
+[2025-08-07 11:52:07] [INFO] Validation steps: 264

@@ -57,7 +57,7 @@ if __name__ == '__main__':
     parser.add_argument('--wandb_entity', type=str, default='')
     parser.add_argument('--train_loader', type=str, default='./train_loader.pkl')
     parser.add_argument('--num_workers', type=int, default=2) # 4
-    parser.add_argument('--batch_size', type=int, default=12) # 16
+    parser.add_argument('--batch_size', type=int, default=16) # 16
     parser.add_argument('--mode',type=str, default='train', choices=['train', 'test', 'predict'])
     parser.add_argument('--resume_model_path', type=str, default=None)
     parser.add_argument('--resume_optimizer_path', type=str, default=None)

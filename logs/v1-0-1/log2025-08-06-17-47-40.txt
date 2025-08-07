@@ -1,0 +1,47 @@
+{
+  "model_name": "v1-0-1",
+  "save_model": true,
+  "result_path": "./rsts/MGF-v1-0-1",
+  "max_save_model": 3,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0005,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 4,
+  "num_layers": 10,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 100
+}
+[2025-08-06 17:47:40] [INFO] Training model with config: 
+[2025-08-06 17:47:40] [INFO] {'model_name': 'v1-0-1', 'save_model': True, 'result_path': './rsts/MGF-v1-0-1', 'max_save_model': 3, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0005, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 4, 'num_layers': 10, 'num_f_maps': 128, 'dim': 1024, 'epochs': 100}
+[2025-08-06 17:47:40] [INFO] Using device: 
+[2025-08-06 17:47:41] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-08-06 17:47:41] [INFO] Loading model
+[2025-08-06 17:47:41] [INFO] loading model successfully
+[2025-08-06 17:47:41] [INFO] building optimizer with optimizer:Adam
+[2025-08-06 17:47:41] [INFO] building scheduler with scheduler:StepLR
+[2025-08-06 17:47:41] [INFO] Starting training loop
+[2025-08-06 17:47:41] [INFO] Epoch: 0/100
+[2025-08-06 17:47:41] [INFO] Training starts: 
+[2025-08-06 17:47:41] [INFO] Training epoch 0
+[2025-08-06 17:49:18] [INFO] Train Epoch: 0, Average Training Metric:0.946588 = 757.270220/800.000000, Acc: 0.9296, [784/1355 (58%)]	
+[2025-08-06 17:50:15] [INFO] Train Epoch: 0, Average Training Metric:0.848293 = 1149.437330/1355.000000, Acc: 0.9315]	
+[2025-08-06 17:50:15] [INFO] Learning rate: 0.001
+[2025-08-06 17:50:15] [INFO] Validation starts: 
+[2025-08-06 17:50:15] [INFO] Epoch: 0
+[2025-08-06 17:50:15] [INFO] Validation begins: 
+[2025-08-06 17:50:15] [INFO] Validation set size: 264
+[2025-08-06 17:50:15] [INFO] Validation batch size: 16
+[2025-08-06 17:50:15] [INFO] Validation steps: 17
+[2025-08-06 17:50:36] [INFO] Validate Epoch: 0, Average Validation Metric:0.180190 = 47.570153/264.000000, Acc: 0.9332]	
+[2025-08-06 17:50:36] [INFO] Validation ends: 
+[2025-08-06 17:50:36] [INFO] Validation ends: 
+[2025-08-06 17:50:36] [INFO] Training ends: 
+[2025-08-06 17:50:36] [INFO] Epoch: 1/100
+[2025-08-06 17:50:36] [INFO] Training starts: 
+[2025-08-06 17:50:36] [INFO] Training epoch 1

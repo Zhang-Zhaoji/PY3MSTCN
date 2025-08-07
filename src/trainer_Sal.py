@@ -7,9 +7,12 @@ import os
 import pathlib
 from logger import Logger 
 from config import Config
-from model import build_from_cfg, MSTCN_criterion, ActionSegmentationLoss
+from model import build_from_cfg, ActionSegmentationLoss
 from utils import AverageMeter
-from tensorboardX import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
+import time
+# from timm.utils.model_ema import ModelEmaV2
+TF_ENABLE_ONEDNN_OPTS=0
 
 class Trainer(object):
     def __init__(self,   model_cfg:Config,
@@ -32,14 +35,19 @@ class Trainer(object):
         self.max_save_model = self.model_cfg.max_save_model
         self.val_interval = self.model_cfg.val_interval
         self.result_path = self.model_cfg.result_path
+        rst_path = pathlib.Path(self.result_path)
+        rst_path.mkdir(parents=True, exist_ok=True)
         self.epochs  = self.model_cfg.epoch
         self.num_stages = self.model_cfg.num_stages
         self.num_layers = self.model_cfg.num_layers
 
 
         self.model_dest = model_dest if model_dest else self.result_path
+        pathlib.Path(self.model_dest).mkdir(parents=True, exist_ok=True)
         self.model_name = self.model_cfg.model_name
         self.model_path = os.path.join(self.model_dest, self.model_name, datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
+        self.tb_writer = SummaryWriter(log_dir=os.path.join(self.model_path, "tb_logs", datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
+        pathlib.Path(self.model_path).mkdir(parents=True, exist_ok=True)
 
         self.logger = Logger(model_cfg, logfile_dest= logfile_dest, wandb_project= wandb_project, wandb_entity= wandb_entity) 
         self.logger.info("Training model with config: ")
@@ -57,8 +65,10 @@ class Trainer(object):
         self.logger.info("Loading model")
         
         try:
-            self.model = build_from_cfg(self.model_cfg, True)
+            self.model = build_from_cfg(self.model_cfg)
+            # self.ema = ModelEmaV2(self.model, decay=0.999)
             self.model.to(self.device)
+            # self.ema.module.to(self.device)
         except Exception as e:
             self.logger.error("Error loading model: ")
             self.logger.error(e)
@@ -84,6 +94,8 @@ class Trainer(object):
                 self.logger.info("Resume success.")
             else:
                 raise ValueError(f"resume_model_path: {resume_model_path} or resume_optimizer_path:{resume_model_path} not provided")
+        dummy = torch.randn(1, *self.train_loader.dataset[0][0].shape).to(self.device)
+        self.tb_writer.add_graph(self.model, dummy)
     def resume(self):
         self.logger.info("Resuming model")
         assert self.resume_model_path and self.resume_optimizer_path
@@ -100,34 +112,41 @@ class Trainer(object):
         train_metrics = AverageMeter("Average Training Metric")
         correct = 0
         total = 0
-        for batch_idx, (data, target) in enumerate(tqdm.tqdm(self.train_loader,total = len(self.train_loader))):
-            data, target = data.to(self.device), target.to(self.device)
+        epoch_start = time.time()
+        for batch_idx, (data, target, mask) in enumerate(tqdm.tqdm(self.train_loader,total = len(self.train_loader))):
+            data, target, mask = data.to(self.device), target.to(self.device), mask.to(self.device)
             self.optimizer.zero_grad()
             output = self.model(data)
-            loss = self.criterion(output, target)
+            loss = self.criterion(output, target, mask)
             train_metrics.update(loss.item(), data.size(0))
+            # with torch.autograd.detect_anomaly():
             loss.backward()
             self.optimizer.step()
+            # self.ema.update(self.model)
             _, predicted = torch.max(output[-1].data, 1)
-            correct += ((predicted == target).float()).sum().item()
-            total += 208 * data.size(0)# torch.sum(mask[:, 0, :]).item()
+            correct += ((predicted == target)*mask).float().sum().item()
+            total += torch.sum(mask).item()
             if batch_idx % log_interval == log_interval - 1:
                 self.logger.info(f"Train Epoch: {epoch}, {str(train_metrics)}, Acc: {correct/total:.4f}, [{batch_idx * len(data)}/{len(self.train_loader.dataset)} ({100. * batch_idx / len(self.train_loader):.0f}%)]\t")
         self.logger.info(f"Train Epoch: {epoch}, {str(train_metrics)}, Acc: {correct/total:.4f}]\t")
         self.logger.info(f"Learning rate: {self.scheduler.get_last_lr()[0]}")
         self.scheduler.step()
-        if self.save_model:
-            
-            if os.path.isfile(os.path.join(self.result_path, f'model_epoch_{epoch - self.max_save_model}.pth')):
-                os.remove(os.path.join(self.result_path, f'model_epoch_{epoch - self.max_save_model}.pth'))   
-            if os.path.isfile(os.path.join(self.result_path, f"optimizer_epoch_{epoch- self.max_save_model}.pth")):
-                os.remove(os.path.join(self.result_path, f"optimizer_epoch_{epoch- self.max_save_model}.pth"))         
-              
-            torch.save(self.model.state_dict(), os.path.join(self.result_path, f"model_epoch_{epoch}.pth"))
-            torch.save(self.optimizer.state_dict(), os.path.join(self.result_path, f"optimizer_epoch_{epoch}.pth"))
+        epoch_time = time.time() - epoch_start 
+        self.tb_writer.add_scalar("Train/Loss_epoch", train_metrics.avg, epoch)
+        self.tb_writer.add_scalar("Train/Accuracy_epoch", correct / total, epoch)
+        self.tb_writer.add_scalar("Train/LR", self.scheduler.get_last_lr()[0], epoch)
+        self.tb_writer.add_scalar("Train/Time", epoch_time, epoch)
+        self.tb_writer.add_scalar("Train/SamplesPerSec", total / epoch_time, epoch)
+        if self.save_model: 
+            if os.path.exists(os.path.join(self.result_path, f"checkpoint{epoch-self.max_save_model}.pth")):
+                os.remove(os.path.join(self.result_path, f"checkpoint{epoch-self.max_save_model}.pth"))
+            torch.save({'model_state_dict':self.model.state_dict(),
+                        # 'ema_state_dict':self.ema.module.state_dict(),
+                        'optimizer':self.optimizer.state_dict()}, os.path.join(self.result_path, f"checkpoint{epoch}.pth"))
 
     def validate(self, epoch:int, metric_function:callable, log_interval:int=20):
         self.model.eval()
+        # self.ema.module.eval()
         self.logger.info(f"Epoch: {epoch}")
         self.logger.info("Validation begins: ")
         self.logger.info(f"Validation set size: {len(self.val_loader.dataset)}")
@@ -137,16 +156,19 @@ class Trainer(object):
         correct = 0
         total = 0
         with torch.no_grad():
-            for batch_idx, (data, target) in enumerate(tqdm.tqdm(self.val_loader,total=len(self.val_loader))):
-                data, target = data.to(self.device), target.to(self.device)
+            for batch_idx, (data, target, mask) in enumerate(tqdm.tqdm(self.val_loader,total=len(self.val_loader))):
+                data, target, mask = data.to(self.device), target.to(self.device), mask.to(self.device)
+                # output = self.ema.module(data)
                 output = self.model(data)
-                metric = metric_function(output, target)
+                metric = metric_function(output, target, mask)
                 _, predicted = torch.max(output.data, 1)
-                correct += (predicted == target).float().sum().item()
-                total += 208*data.size(0)#torch.sum(mask[:, 0, :]).item()
+                correct += ((predicted == target)*mask).float().sum().item()
+                total += torch.sum(mask).item()
                 val_metric.update(metric.item(), data.size(0))
                 if batch_idx % log_interval == log_interval-1:
                     self.logger.info(f"Validation step: {batch_idx} / {len(self.val_loader)}, {str(val_metric)}, Acc: {correct/total:.4f} ")
+            self.tb_writer.add_scalar("Val/Loss_epoch", val_metric.avg, epoch)
+            self.tb_writer.add_scalar("Val/Accuracy_epoch", correct / total, epoch)
             self.logger.info(f"Validate Epoch: {epoch}, {str(val_metric)}, Acc: {correct/total:.4f}]\t")
             self.logger.info("Validation ends: ")
 
@@ -205,11 +227,16 @@ class Trainer(object):
             self.logger.info(f"Epoch: {idx}/{epochs}")
             self.logger.info("Training starts: ")
             self.train(idx, train_log_interval)
+            self.logger.info("Training ends: ")
             if idx % self.val_interval == self.val_interval - 1:
                 self.logger.info("Validation starts: ")
                 self.validate(idx, self.criterion, val_log_interval)
                 self.logger.info("Validation ends: ")
-            self.logger.info("Training ends: ")
+            if idx % 5 == 4:   # 每 5 个 epoch 写一次
+                for name, param in self.model.named_parameters():
+                    if param.grad is not None:
+                        self.tb_writer.add_histogram(f"Grad/{name}", param.grad, idx)
+                    self.tb_writer.add_histogram(f"Weight/{name}", param, idx)
 
 
 
