@@ -38,7 +38,7 @@ import pdb
 class CausalityInTrafficAccident(Dataset):
     """Causality In Traffic Accident Dataset."""
     
-    def __init__(self, p, split, test_mode=False):
+    def __init__(self, p, split, test_mode=False, load_data = True):
         DATA_ROOT = 'data'
         self.feature = p['feature']
         self.split = split
@@ -79,105 +79,53 @@ class CausalityInTrafficAccident(Dataset):
             self.use_flow = False
             self.use_rgb = True
 
-        dv = p['dataset_ver']
-        self.anno_dir = os.path.join(DATA_ROOT, f'annotation-{dv}-25fps.pkl')
-        
-        with open(self.anno_dir, 'rb') as f:
-            self.annos = pickle.load(f)
-           
-            feat_rgb = torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-rgb-fps25-{dv}.pt'))
-            if(self.use_flow):
-                feat_flow= torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-flow-fps25-{dv}.pt'))
 
-            if(self.use_flip):
-                feat_rgb_flip = torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-rgb-flip-fps25-{dv}.pt'))
+        if load_data:
+            dv = p['dataset_ver']
+            self.anno_dir = os.path.join(DATA_ROOT, f'annotation-{dv}-25fps.pkl')
+            # for not conflict with the saliency map code
+            with open(self.anno_dir, 'rb') as f:
+                self.annos = pickle.load(f)
+
+                feat_rgb = torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-rgb-fps25-{dv}.pt'))
                 if(self.use_flow):
-                    feat_flow_flip = torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-flow-flip-fps25-{dv}.pt'))
+                    feat_flow= torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-flow-fps25-{dv}.pt'))
 
-            start_idx = data_length[0]
-            end_idx = data_length[1]
-
-            if(p['use_randperm'] > 0):
-                torch.manual_seed(p['use_randperm'])
-                indices = torch.randperm(len(self.annos))
-                L = indices.numpy().tolist()
-                # #if(dv == 'Nov3rd' or dv == 'Nov3th'):
-                # if(self.feed_type == 'detection' or self.feed_type == 'multi-label'):
-                #     feat_rgb = feat_rgb[indices, :]
-                #     if(self.use_flow):
-                #         feat_flow = feat_flow[indices, :]
-                    
-                #     if(self.use_flip):
-                #         feat_rgb_flip = feat_rgb_flip[indices, :]
-                #         if(self.use_flow):
-                #             feat_flow_flip = feat_flow_flip[indices, :]
-
-                # #elif(dv == 'Mar9th'):
-                # elif(self.feed_type == 'classification'):
-                #     indices = indices.tolist()
-                #     remap = lambda I,arr: [arr[i] for i in I]
-                #     feat_rgb = remap(indices, feat_rgb)
-                #     if(self.use_flow):
-                #         feat_flow = remap(indices, feat_flow)
-                    
-                #     if(self.use_flip):
-                #         feat_rgb_flip = remap(indices, feat_rgb_flip)
-                #         if(self.use_flow):
-                #             feat_flow_flip = remap(indices, feat_flow_flip)
-                # else:
-                #     assert(False)
-                #if(dv == 'Nov3rd' or dv == 'Nov3th'):
-
-                indices = indices.tolist()
-                remap = lambda I,arr: [arr[i] for i in I]
-                feat_rgb = remap(indices, feat_rgb)
-                if(self.use_flow):
-                    feat_flow = remap(indices, feat_flow)
-                
                 if(self.use_flip):
-                    feat_rgb_flip = remap(indices, feat_rgb_flip)
+                    feat_rgb_flip = torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-rgb-flip-fps25-{dv}.pt'))
                     if(self.use_flow):
-                        feat_flow_flip = remap(indices, feat_flow_flip)
-                
-                self.annos = [self.annos[L[l]] for l in range(0, len(self.annos))]
+                        feat_flow_flip = torch.load(os.path.join(DATA_ROOT,p['feature_folder'], f'i3d-flow-flip-fps25-{dv}.pt'))
 
-            self.annos = self.annos[start_idx:end_idx]
-            self.feat_rgb = feat_rgb[start_idx:end_idx]
-            if(self.use_flow):
-                self.feat_flow = feat_flow[start_idx:end_idx]
-            
-            if(self.use_flip):
-                self.feat_rgb_flip = feat_rgb_flip[start_idx:end_idx]
+                start_idx = data_length[0]
+                end_idx = data_length[1]
+
+                if(p['use_randperm'] > 0):
+                    torch.manual_seed(p['use_randperm'])
+                    indices = torch.randperm(len(self.annos))
+                    L = indices.numpy().tolist()
+                    indices = indices.tolist()
+                    remap = lambda I,arr: [arr[i] for i in I]
+                    feat_rgb = remap(indices, feat_rgb)
+                    if(self.use_flow):
+                        feat_flow = remap(indices, feat_flow)
+
+                    if(self.use_flip):
+                        feat_rgb_flip = remap(indices, feat_rgb_flip)
+                        if(self.use_flow):
+                            feat_flow_flip = remap(indices, feat_flow_flip)
+
+                    self.annos = [self.annos[L[l]] for l in range(0, len(self.annos))]
+
+                self.annos = self.annos[start_idx:end_idx]
+                self.feat_rgb = feat_rgb[start_idx:end_idx]
                 if(self.use_flow):
-                    self.feat_flow_flip = feat_flow_flip[start_idx:end_idx]
+                    self.feat_flow = feat_flow[start_idx:end_idx]
 
-            # self.feat_rgb = feat_rgb[start_idx:end_idx, :, :]
-            # if(self.use_flow):
-            #     self.feat_flow = feat_flow[start_idx:end_idx, :, :]
-            
-            # if(self.use_flip):
-            #     self.feat_rgb_flip = feat_rgb_flip[start_idx:end_idx, :, :]
-            #     if(self.use_flow):
-            #         self.feat_flow_flip = feat_flow_flip[start_idx:end_idx, :, :]
+                if(self.use_flip):
+                    self.feat_rgb_flip = feat_rgb_flip[start_idx:end_idx]
+                    if(self.use_flow):
+                        self.feat_flow_flip = feat_flow_flip[start_idx:end_idx]
 
-        if(self.feed_type == 'detection'):
-            self.positive_thres = p['positive_thres']
-            # scales = torch.Tensor((p['proposal_scales'])).unsqueeze(0).unsqueeze(1) # 1 x scale x 1
-            # scales = scales / self.seq_length * self.vid_length
-            
-            # boxes = torch.Tensor([j for j in range(0, self.seq_length)]).unsqueeze(0).unsqueeze(2)
-            # boxes = boxes / self.seq_length * self.vid_length
-            # boxes = boxes.repeat(2, 1, len(p['proposal_scales'])) # start/end, num_scales, temporal_length
-# 
-            # #print('ssd size', scales.size(), boxes.size())
-# 
-            # boxes[0, :, :] = boxes[0, :, :] - scales/2 # start time
-            # boxes[1, :, :] = boxes[1, :, :] + scales/2 # end time
-# 
-            # self.boxes = boxes.cuda(p['device'])
-
-            # iou_bg = torch.ones(self.boxes.size(1), self.boxes.size(2)) * self.positive_thres
-            # self.iou_bg = iou_bg.cuda(p['device'])
 
 
     def __len__(self):
@@ -417,32 +365,27 @@ class CausalityInTrafficAccident(Dataset):
         ################################################        
         cause_start_time = (annos[1][1])/vid_length*seq_length
         cause_end_time = (annos[1][2])/vid_length*seq_length
-        cause_start_idx = int(round(cause_start_time))
-        cause_end_idx = int(round(cause_end_time))+1
+        cause_start_idx = math.floor(cause_start_time)#int(round(cause_start_time))
+        cause_end_idx = math.ceil(cause_end_time)
         if(cause_end_idx > seq_length):
             cause_end_idx = seq_length
-        
-
         ################################################
         # effect label for attention calibration label 
         ################################################        
         effect_start_time = (annos[2][1])/vid_length*seq_length
         effect_end_time = (annos[2][2])/vid_length*seq_length
-
-        effect_start_idx = int(round(effect_start_time))
-        effect_end_idx = int(round(effect_end_time)) + 1
+        effect_start_idx = math.floor(effect_start_time)# int(round(effect_start_time))
+        effect_end_idx = math.ceil(effect_end_time)# int(round(effect_end_time)) + 1
         if(effect_end_idx > seq_length):
             effect_end_idx = seq_length
-        
-
         ######################################################
         # cause-effect label for attention calibration label 
         ######################################################
         
         clip_length = 208
         causality_mask = torch.zeros(clip_length).long()
-        if(int(math.floor(cause_end_time) == int(math.floor(effect_start_time)))):
-            effect_portion = math.ceil(effect_start_time) - effect_start_time
+        if(cause_end_idx == effect_start_idx):
+            effect_portion = effect_start_idx - effect_start_time
             cause_portion = cause_end_time - math.floor(cause_end_time)
             if(effect_portion > cause_portion):
                 effect_start_idx = int(math.floor(cause_end_time))
@@ -454,17 +397,18 @@ class CausalityInTrafficAccident(Dataset):
         #if(self.pred_type == 'both'):
         causality_mask[cause_start_idx:cause_end_idx] = 1
         causality_mask[effect_start_idx:effect_end_idx] = 2
-        # 这个好像才是label，那么mask是啥？？
+        causality_mask[cause_start_idx] = math.ceil(cause_start_time) - cause_start_idx
+        causality_mask[effect_start_idx] = math.ceil(effect_start_time) - effect_start_idx
+        causality_mask[math.floor(cause_end_time)] = cause_end_idx - math.floor(cause_end_time)
+        causality_mask[math.floor(effect_end_time)] = effect_end_idx - math.floor(effect_end_time)
+        causality_mask = torch.clamp(causality_mask, 0, 2)
         # print('rgb_feat.size():') 
         # print(rgb_feat.size()) [208, 1024]
         # print('causality_mask.size():')
         # print(causality_mask.size()) [208]
         # sys.exit(1)
-
         video_mask = torch.zeros(clip_length)
         video_mask[:seq_length] = 1
-
-
         # label = torch.Tensor([annos[1][3], annos[2][3]])
         # return rgb_feat, flow_feat, causality_mask, cause_loc, effect_loc, label, annos[0]
         # else:

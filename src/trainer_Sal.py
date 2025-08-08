@@ -12,7 +12,6 @@ from utils import AverageMeter
 from torch.utils.tensorboard import SummaryWriter
 import time
 # from timm.utils.model_ema import ModelEmaV2
-TF_ENABLE_ONEDNN_OPTS=0
 
 class Trainer(object):
     def __init__(self,   model_cfg:Config,
@@ -46,7 +45,7 @@ class Trainer(object):
         pathlib.Path(self.model_dest).mkdir(parents=True, exist_ok=True)
         self.model_name = self.model_cfg.model_name
         self.model_path = os.path.join(self.model_dest, self.model_name, datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
-        self.tb_writer = SummaryWriter(log_dir=os.path.join(self.model_path, "tb_logs", datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
+        self.tb_writer = SummaryWriter(log_dir=os.path.join(self.model_path, "tb_logs" + datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
         pathlib.Path(self.model_path).mkdir(parents=True, exist_ok=True)
 
         self.logger = Logger(model_cfg, logfile_dest= logfile_dest, wandb_project= wandb_project, wandb_entity= wandb_entity) 
@@ -94,7 +93,7 @@ class Trainer(object):
                 self.logger.info("Resume success.")
             else:
                 raise ValueError(f"resume_model_path: {resume_model_path} or resume_optimizer_path:{resume_model_path} not provided")
-        dummy = torch.randn(1, *self.train_loader.dataset[0][0].shape).to(self.device)
+        dummy = torch.randn(1, *self.train_loader.dataset[0]['feature'].shape).to(self.device)
         self.tb_writer.add_graph(self.model, dummy)
     def resume(self):
         self.logger.info("Resuming model")

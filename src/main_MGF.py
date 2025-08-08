@@ -1,9 +1,13 @@
+import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
 from config import Config
 from trainer_Sal import Trainer
 from torch.utils.data import Dataset, DataLoader
 from datasetSM import CausalityInTrafficAccident, collate_fn
 import argparse
 import json
+
 
 def main(args:argparse.ArgumentParser):
     p = vars(args)
