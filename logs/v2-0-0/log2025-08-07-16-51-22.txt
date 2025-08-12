@@ -1,0 +1,34 @@
+{
+  "model_name": "v2-0-0",
+  "save_model": true,
+  "result_path": "./rsts/v2-0-0",
+  "max_save_model": 3,
+  "lr": 0.0001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 15,
+  "weight_decay": 0.01,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 200
+}
+[2025-08-07 16:51:22] [INFO] Training model with config: 
+[2025-08-07 16:51:22] [INFO] {'model_name': 'v2-0-0', 'save_model': True, 'result_path': './rsts/v2-0-0', 'max_save_model': 3, 'lr': 0.0001, 'lr_decay': 0.95, 'lr_decay_step': 15, 'weight_decay': 0.01, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 128, 'dim': 1024, 'epochs': 200}
+[2025-08-07 16:51:22] [INFO] Using device: 
+[2025-08-07 16:51:22] [INFO] Using GPU: NVIDIA A100 80GB PCIe
+[2025-08-07 16:51:22] [INFO] Loading model
+[2025-08-07 16:51:25] [INFO] loading model successfully
+[2025-08-07 16:51:25] [INFO] building optimizer with optimizer:Adam
+[2025-08-07 16:51:25] [INFO] building scheduler with scheduler:StepLR
+[2025-08-07 16:51:26] [INFO] Starting training loop
+[2025-08-07 16:51:26] [INFO] Epoch: 0/100
+[2025-08-07 16:51:26] [INFO] Training starts: 
+[2025-08-07 16:51:26] [INFO] Training epoch 0
+[2025-08-07 16:51:27] [INFO] Train Epoch: 0, Average Training Metric:1.269991 = 1015.992886/800.000000, Acc: 0.6596, [784/1355 (58%)]	
+[2025-08-07 16:51:27] [INFO] Train Epoch: 0, Average Training Metric:1.267570 = 1717.556871/1355.000000, Acc: 0.6988]	
+[2025-08-07 16:51:27] [INFO] Learning rate: 0.0001

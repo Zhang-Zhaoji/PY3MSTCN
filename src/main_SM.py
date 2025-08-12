@@ -54,7 +54,7 @@ def main(args:argparse.ArgumentParser):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg_path', type=str, default='cfgs/v1-0-2.json')
+    parser.add_argument('--cfg_path', type=str, default='cfgs/v2-2-32.json')
     parser.add_argument('--logfile_dest', type=str, default='./logs')
     parser.add_argument('--model_dest', type=str, default='./model')
     parser.add_argument('--wandb_project', type=str, default='MyMSTCN')

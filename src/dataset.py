@@ -47,7 +47,7 @@ class CausalityInTrafficAccident(Dataset):
         elif split == 'val':
             data_length = (1355, 1355 + 290)
         elif split == 'test':
-            data_length = (1355 + 290, 1355 + 290 + 290)
+            data_length = (1355, 1355 + 290 + 290)# (1355 + 290, 1355 + 290 + 290)
         p['use_randperm'] = 7802
 
         self.feed_type = p['feed_type']
@@ -126,8 +126,6 @@ class CausalityInTrafficAccident(Dataset):
                     if(self.use_flow):
                         self.feat_flow_flip = feat_flow_flip[start_idx:end_idx]
 
-
-
     def __len__(self):
             return len(self.annos)
         
@@ -182,20 +180,27 @@ class CausalityInTrafficAccident(Dataset):
                 _rgb_feat = self.feat_rgb[idx]
             if(self.use_flow):
                 _flow_feat = self.feat_flow[idx, :, :]
-        
+        if self.split == 'train':
+            scale = np.random.uniform(0.7, 1.3)
+            new_len = int(_rgb_feat.size(0) * scale)
+            _rgb_feat = F.interpolate(_rgb_feat.unsqueeze(0).transpose(1,2),size=new_len, mode='linear', align_corners=False).squeeze(0).transpose(0,1)
+            # add some noise
+            _rgb_feat += torch.randn_like(_rgb_feat) * 0.1 * torch.std(_rgb_feat, dim=-1, keepdim=True).clamp_min(1e-5)
+            mask_ratio = 0.2
+            mask = torch.rand(_rgb_feat.size(0)) < mask_ratio
+            _rgb_feat[mask] = 0    
+
+
         # zero-padding
         if(self.use_rgb):
             rgb_feat = torch.zeros(self.seq_length, self.feature_dim)        
-            rgb_feat[0:_rgb_feat.size(0), :] = _rgb_feat
+            rgb_feat[0:min(self.seq_length,_rgb_feat.size(0)), :] = _rgb_feat[0:min(self.seq_length,_rgb_feat.size(0)),:]
         else:
             rgb_feat = torch.zeros(0)
 
         if(self.use_flow):
-            flow_feat = torch.zeros(self.seq_length, self.feature_dim)
-            flow_feat[0:_flow_feat.size(0), :] = _flow_feat
-        else:
-            flow_feat = torch.zeros(0)
-
+            print('no flow lol')
+        flow_feat = 0
         return rgb_feat, flow_feat, _rgb_feat.size(0)      
 
     def get_det_labels(self, idx):

@@ -1,0 +1,19 @@
+{
+    "model_name": "v2-2-256",
+    "save_model":true,
+    "result_path": "./rsts/SMv2-2-256",
+    "max_save_model": 3,
+    "lr":0.001,
+    "lr_decay":0.95,
+    "lr_decay_step": 15,
+    "weight_decay": 0.01,
+    "optimizer": "AdamW",
+    "scheduler": "StepLR",
+    "resume": "",
+    "num_classes": 3,
+    "num_stages": 4,
+    "num_layers": 10,
+    "num_f_maps": 128,
+    "dim":1024,
+    "epochs": 100
+}

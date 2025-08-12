@@ -1,0 +1,107 @@
+{
+  "model_name": "v2-1-128",
+  "save_model": true,
+  "result_path": "./rsts/MGFv2-1-128",
+  "max_save_model": 3,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 15,
+  "weight_decay": 0.01,
+  "optimizer": "AdamW",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 4,
+  "num_layers": 10,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 100
+}
+[2025-08-11 17:08:16] [INFO] Training model with config: 
+[2025-08-11 17:08:16] [INFO] {'model_name': 'v2-1-128', 'save_model': True, 'result_path': './rsts/MGFv2-1-128', 'max_save_model': 3, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 15, 'weight_decay': 0.01, 'optimizer': 'AdamW', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 4, 'num_layers': 10, 'num_f_maps': 128, 'dim': 1024, 'epochs': 100}
+[2025-08-11 17:08:16] [INFO] Using device: 
+[2025-08-11 17:08:16] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-08-11 17:08:16] [INFO] Loading model
+[2025-08-11 17:08:17] [INFO] loading model successfully
+[2025-08-11 17:08:17] [INFO] building optimizer with optimizer:AdamW
+[2025-08-11 17:08:17] [INFO] building scheduler with scheduler:StepLR
+[2025-08-11 17:08:17] [INFO] Resuming model
+[2025-08-11 17:08:17] [INFO] resume model from model\v2-1-128\2025-08-09-18-16-48\best_model.pth
+[2025-08-11 17:08:17] [INFO] Resume success.
+[2025-08-11 17:08:17] [INFO] Test begins: 
+[2025-08-11 17:08:17] [INFO] Test set size: 543
+[2025-08-11 17:08:17] [INFO] Test batch size: 1
+[2025-08-11 17:08:17] [INFO] Test steps: 543
+[2025-08-11 17:08:31] [INFO] Test step: 0 / 543, Average Test Metric:0.619267 = 0.619267/1.000000, Acc: 0.8182, Cause IoU: 0.1250, Effect IoU: 0.7273
+[2025-08-11 17:08:31] [INFO] Test step: 10 / 543, Average Test Metric:0.644874 = 7.093615/11.000000, Acc: 0.6667, Cause IoU: 0.0633, Effect IoU: 0.2353
+[2025-08-11 17:08:32] [INFO] Test step: 20 / 543, Average Test Metric:0.650822 = 13.667269/21.000000, Acc: 0.6760, Cause IoU: 0.0762, Effect IoU: 0.2290
+[2025-08-11 17:08:33] [INFO] Test step: 30 / 543, Average Test Metric:0.648397 = 20.100307/31.000000, Acc: 0.6950, Cause IoU: 0.0791, Effect IoU: 0.2001
+[2025-08-11 17:08:34] [INFO] Test step: 40 / 543, Average Test Metric:0.649635 = 26.635018/41.000000, Acc: 0.6728, Cause IoU: 0.0623, Effect IoU: 0.1713
+[2025-08-11 17:08:35] [INFO] Test step: 50 / 543, Average Test Metric:0.652801 = 33.292862/51.000000, Acc: 0.6567, Cause IoU: 0.0618, Effect IoU: 0.1603
+[2025-08-11 17:08:35] [INFO] Test step: 60 / 543, Average Test Metric:0.650204 = 39.662443/61.000000, Acc: 0.6594, Cause IoU: 0.0715, Effect IoU: 0.1638
+[2025-08-11 17:08:36] [INFO] Test step: 70 / 543, Average Test Metric:0.649292 = 46.099731/71.000000, Acc: 0.6617, Cause IoU: 0.0804, Effect IoU: 0.1698
+[2025-08-11 17:08:37] [INFO] Test step: 80 / 543, Average Test Metric:0.649416 = 52.602716/81.000000, Acc: 0.6711, Cause IoU: 0.0918, Effect IoU: 0.1857
+[2025-08-11 17:08:37] [INFO] Test step: 90 / 543, Average Test Metric:0.648834 = 59.043875/91.000000, Acc: 0.6668, Cause IoU: 0.0861, Effect IoU: 0.1843
+[2025-08-11 17:08:38] [INFO] Test step: 100 / 543, Average Test Metric:0.649129 = 65.561998/101.000000, Acc: 0.6692, Cause IoU: 0.0871, Effect IoU: 0.1955
+[2025-08-11 17:08:38] [INFO] Test step: 110 / 543, Average Test Metric:0.649862 = 72.134631/111.000000, Acc: 0.6639, Cause IoU: 0.0843, Effect IoU: 0.1932
+[2025-08-11 17:08:39] [INFO] Test step: 120 / 543, Average Test Metric:0.649759 = 78.620813/121.000000, Acc: 0.6696, Cause IoU: 0.0893, Effect IoU: 0.2092
+[2025-08-11 17:08:39] [INFO] Test step: 130 / 543, Average Test Metric:0.649726 = 85.114050/131.000000, Acc: 0.6687, Cause IoU: 0.0877, Effect IoU: 0.2038
+[2025-08-11 17:08:40] [INFO] Test step: 140 / 543, Average Test Metric:0.650202 = 91.678497/141.000000, Acc: 0.6722, Cause IoU: 0.0869, Effect IoU: 0.1972
+[2025-08-11 17:08:41] [INFO] Test step: 150 / 543, Average Test Metric:0.650970 = 98.296456/151.000000, Acc: 0.6663, Cause IoU: 0.0864, Effect IoU: 0.1974
+[2025-08-11 17:08:41] [INFO] Test step: 160 / 543, Average Test Metric:0.649703 = 104.602142/161.000000, Acc: 0.6690, Cause IoU: 0.0888, Effect IoU: 0.1983
+[2025-08-11 17:08:42] [INFO] Test step: 170 / 543, Average Test Metric:0.649387 = 111.045210/171.000000, Acc: 0.6692, Cause IoU: 0.0918, Effect IoU: 0.2048
+[2025-08-11 17:08:42] [INFO] Test step: 180 / 543, Average Test Metric:0.649550 = 117.568528/181.000000, Acc: 0.6668, Cause IoU: 0.0909, Effect IoU: 0.2050
+[2025-08-11 17:08:43] [INFO] Test step: 190 / 543, Average Test Metric:0.650355 = 124.217785/191.000000, Acc: 0.6646, Cause IoU: 0.0907, Effect IoU: 0.2027
+[2025-08-11 17:08:44] [INFO] Test step: 200 / 543, Average Test Metric:0.650230 = 130.696327/201.000000, Acc: 0.6643, Cause IoU: 0.0887, Effect IoU: 0.1979
+[2025-08-11 17:08:44] [INFO] Test step: 210 / 543, Average Test Metric:0.649456 = 137.035113/211.000000, Acc: 0.6666, Cause IoU: 0.0917, Effect IoU: 0.2070
+[2025-08-11 17:08:45] [INFO] Test step: 220 / 543, Average Test Metric:0.650557 = 143.773054/221.000000, Acc: 0.6659, Cause IoU: 0.0934, Effect IoU: 0.2050
+[2025-08-11 17:08:45] [INFO] Test step: 230 / 543, Average Test Metric:0.650400 = 150.242335/231.000000, Acc: 0.6680, Cause IoU: 0.0932, Effect IoU: 0.2035
+[2025-08-11 17:08:46] [INFO] Test step: 240 / 543, Average Test Metric:0.650206 = 156.699667/241.000000, Acc: 0.6664, Cause IoU: 0.0894, Effect IoU: 0.2023
+[2025-08-11 17:08:47] [INFO] Test step: 250 / 543, Average Test Metric:0.650685 = 163.321880/251.000000, Acc: 0.6646, Cause IoU: 0.0882, Effect IoU: 0.2006
+[2025-08-11 17:08:47] [INFO] Test step: 260 / 543, Average Test Metric:0.650347 = 169.740628/261.000000, Acc: 0.6649, Cause IoU: 0.0887, Effect IoU: 0.1998
+[2025-08-11 17:08:48] [INFO] Test step: 270 / 543, Average Test Metric:0.650355 = 176.246214/271.000000, Acc: 0.6645, Cause IoU: 0.0929, Effect IoU: 0.2016
+[2025-08-11 17:08:48] [INFO] Test step: 280 / 543, Average Test Metric:0.649520 = 182.515251/281.000000, Acc: 0.6661, Cause IoU: 0.0971, Effect IoU: 0.2033
+[2025-08-11 17:08:49] [INFO] Test step: 290 / 543, Average Test Metric:0.649661 = 189.051329/291.000000, Acc: 0.6646, Cause IoU: 0.0962, Effect IoU: 0.2037
+[2025-08-11 17:08:49] [INFO] Test step: 300 / 543, Average Test Metric:0.649695 = 195.558139/301.000000, Acc: 0.6626, Cause IoU: 0.0964, Effect IoU: 0.2026
+[2025-08-11 17:08:50] [INFO] Test step: 310 / 543, Average Test Metric:0.649899 = 202.118518/311.000000, Acc: 0.6626, Cause IoU: 0.0982, Effect IoU: 0.2031
+[2025-08-11 17:08:51] [INFO] Test step: 320 / 543, Average Test Metric:0.649618 = 208.527422/321.000000, Acc: 0.6645, Cause IoU: 0.0997, Effect IoU: 0.2057
+[2025-08-11 17:08:51] [INFO] Test step: 330 / 543, Average Test Metric:0.648946 = 214.801052/331.000000, Acc: 0.6667, Cause IoU: 0.1021, Effect IoU: 0.2070
+[2025-08-11 17:08:52] [INFO] Test step: 340 / 543, Average Test Metric:0.648847 = 221.256719/341.000000, Acc: 0.6665, Cause IoU: 0.1050, Effect IoU: 0.2084
+[2025-08-11 17:08:52] [INFO] Test step: 350 / 543, Average Test Metric:0.648783 = 227.723003/351.000000, Acc: 0.6661, Cause IoU: 0.1051, Effect IoU: 0.2114
+[2025-08-11 17:08:53] [INFO] Test step: 360 / 543, Average Test Metric:0.648469 = 234.097290/361.000000, Acc: 0.6671, Cause IoU: 0.1079, Effect IoU: 0.2144
+[2025-08-11 17:08:53] [INFO] Test step: 370 / 543, Average Test Metric:0.648603 = 240.631816/371.000000, Acc: 0.6689, Cause IoU: 0.1069, Effect IoU: 0.2151
+[2025-08-11 17:08:54] [INFO] Test step: 380 / 543, Average Test Metric:0.648688 = 247.150109/381.000000, Acc: 0.6690, Cause IoU: 0.1086, Effect IoU: 0.2154
+[2025-08-11 17:08:55] [INFO] Test step: 390 / 543, Average Test Metric:0.648377 = 253.515376/391.000000, Acc: 0.6688, Cause IoU: 0.1085, Effect IoU: 0.2148
+[2025-08-11 17:08:55] [INFO] Test step: 400 / 543, Average Test Metric:0.648462 = 260.033385/401.000000, Acc: 0.6698, Cause IoU: 0.1092, Effect IoU: 0.2149
+[2025-08-11 17:08:56] [INFO] Test step: 410 / 543, Average Test Metric:0.647852 = 266.267074/411.000000, Acc: 0.6716, Cause IoU: 0.1093, Effect IoU: 0.2153
+[2025-08-11 17:08:56] [INFO] Test step: 420 / 543, Average Test Metric:0.647732 = 272.695186/421.000000, Acc: 0.6717, Cause IoU: 0.1094, Effect IoU: 0.2145
+[2025-08-11 17:08:57] [INFO] Test step: 430 / 543, Average Test Metric:0.647407 = 279.032502/431.000000, Acc: 0.6742, Cause IoU: 0.1093, Effect IoU: 0.2163
+[2025-08-11 17:08:58] [INFO] Test step: 440 / 543, Average Test Metric:0.647522 = 285.557242/441.000000, Acc: 0.6740, Cause IoU: 0.1092, Effect IoU: 0.2175
+[2025-08-11 17:08:58] [INFO] Test step: 450 / 543, Average Test Metric:0.647329 = 291.945578/451.000000, Acc: 0.6743, Cause IoU: 0.1097, Effect IoU: 0.2181
+[2025-08-11 17:08:59] [INFO] Test step: 460 / 543, Average Test Metric:0.647634 = 298.559345/461.000000, Acc: 0.6735, Cause IoU: 0.1093, Effect IoU: 0.2171
+[2025-08-11 17:08:59] [INFO] Test step: 470 / 543, Average Test Metric:0.647701 = 305.067268/471.000000, Acc: 0.6735, Cause IoU: 0.1072, Effect IoU: 0.2147
+[2025-08-11 17:09:00] [INFO] Test step: 480 / 543, Average Test Metric:0.647980 = 311.678177/481.000000, Acc: 0.6729, Cause IoU: 0.1072, Effect IoU: 0.2140
+[2025-08-11 17:09:01] [INFO] Test step: 490 / 543, Average Test Metric:0.648017 = 318.176495/491.000000, Acc: 0.6722, Cause IoU: 0.1076, Effect IoU: 0.2133
+[2025-08-11 17:09:01] [INFO] Test step: 500 / 543, Average Test Metric:0.648367 = 324.831932/501.000000, Acc: 0.6716, Cause IoU: 0.1070, Effect IoU: 0.2133
+[2025-08-11 17:09:02] [INFO] Test step: 510 / 543, Average Test Metric:0.648026 = 331.141215/511.000000, Acc: 0.6729, Cause IoU: 0.1103, Effect IoU: 0.2133
+[2025-08-11 17:09:02] [INFO] Test step: 520 / 543, Average Test Metric:0.648089 = 337.654561/521.000000, Acc: 0.6725, Cause IoU: 0.1103, Effect IoU: 0.2128
+[2025-08-11 17:09:03] [INFO] Test step: 530 / 543, Average Test Metric:0.647955 = 344.064013/531.000000, Acc: 0.6723, Cause IoU: 0.1127, Effect IoU: 0.2136
+[2025-08-11 17:09:03] [INFO] Test step: 540 / 543, Average Test Metric:0.647936 = 350.533478/541.000000, Acc: 0.6720, Cause IoU: 0.1133, Effect IoU: 0.2132
+[2025-08-11 17:09:06] [INFO] Test Results: Average Test Metric:0.648085 = 351.910155/543.000000, Acc: 0.6725, Cause IoU: 0.1129, Effect IoU: 0.2125
+[2025-08-11 17:09:06] [INFO] Test Key IoU Thresholds:
+[2025-08-11 17:09:06] [INFO] Cause IoU:
+[2025-08-11 17:09:06] [INFO]   IoU > 0.1: 0.3278
+[2025-08-11 17:09:06] [INFO]   IoU > 0.3: 0.1731
+[2025-08-11 17:09:06] [INFO]   IoU > 0.5: 0.0534
+[2025-08-11 17:09:06] [INFO]   IoU > 0.7: 0.0037
+[2025-08-11 17:09:06] [INFO] Effect IoU:
+[2025-08-11 17:09:06] [INFO]   IoU > 0.1: 0.5230
+[2025-08-11 17:09:06] [INFO]   IoU > 0.3: 0.3462
+[2025-08-11 17:09:06] [INFO]   IoU > 0.5: 0.1326
+[2025-08-11 17:09:06] [INFO]   IoU > 0.7: 0.0442
+[2025-08-11 17:09:06] [INFO] Combined IoU:
+[2025-08-11 17:09:06] [INFO]   IoU > 0.1: 0.4254
+[2025-08-11 17:09:06] [INFO]   IoU > 0.3: 0.2597
+[2025-08-11 17:09:06] [INFO]   IoU > 0.5: 0.0930
+[2025-08-11 17:09:06] [INFO]   IoU > 0.7: 0.0239
+[2025-08-11 17:09:06] [INFO] Test ends: 

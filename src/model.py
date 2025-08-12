@@ -25,17 +25,19 @@ class SingleStageModel(nn.Module):
             return self.conv_out(x) * mask[:,0:1,:] # so what is this mask?
 
 class DilatedResidualLayer(nn.Module):
-    def __init__(self, dilation, in_channels, out_channels) -> None:
+    def __init__(self, dilation, in_channels, out_channels, drop_path=0.2) -> None:
         super().__init__()
         self.conv_dilated = nn.Conv1d(in_channels, out_channels, 3, padding=dilation, dilation=dilation)
         self.conv_1x1 = nn.Conv1d(out_channels, out_channels, 1)
-        self.dropout = nn.Dropout()
+        # self.dropout = nn.Dropout()
+        self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
         
 
     def forward(self, x:torch.Tensor, mask:torch.Tensor=None) -> torch.Tensor:
         out = F.relu(self.conv_dilated(x))
         out = self.conv_1x1(out) 
-        out = self.dropout(out)
+        # out = self.dropout(out)
+        out = self.drop_path(out)
         if mask is None:
             return x+out
         else:
@@ -135,8 +137,8 @@ class SalMultiStageModel(MultiStageModel):
     def __init__(self, num_stages, num_layers, num_f_maps, dim, num_classes, pre_process_dim = 512, *args, **kwargs) -> None:
         super().__init__(num_stages, num_layers, num_f_maps, dim, num_classes, *args, **kwargs)
         #self.preprocess = Squeeze2Stage()
-        #self.preprocess = Squeeze1Stage()
-        self.preprocess = Squeeze0Stage()
+        self.preprocess = Squeeze1Stage()
+        # self.preprocess = Squeeze0Stage()
     
     def forward(self, x:torch.Tensor, mask:torch.Tensor = None) -> torch.Tensor:
         # [B,C,T]
@@ -188,7 +190,7 @@ def MSTCN_criterion(output:torch.Tensor, target:torch.Tensor)->torch.Tensor:
     # MSE 正则（logp 与 one-hot）
     onehot = F.one_hot(target, output.size(1)).permute(0, 2, 1).float()
     mse = F.mse_loss(logp.nan_to_num(), onehot, reduction='none').clamp(0, 16).mean()
-    return focal + 0.15 * mse
+    return focal + mse * 0.15
 
 
 def build_from_cfg(cfg:Config, if_sal = True) -> nn.Module:

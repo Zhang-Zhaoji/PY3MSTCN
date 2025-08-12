@@ -12,3 +12,6 @@ npz_mgfs/
 npz_sms/
 *.pth
 *.pt
+*.0
+model/
+privatersts/

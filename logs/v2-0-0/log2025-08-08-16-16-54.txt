@@ -1,0 +1,26 @@
+{
+  "model_name": "v2-0-0",
+  "save_model": true,
+  "result_path": "./rsts/v2-0-0",
+  "max_save_model": 3,
+  "lr": 0.0001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 15,
+  "weight_decay": 0.01,
+  "optimizer": "AdamW",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 200
+}
+[2025-08-08 16:16:54] [INFO] Training model with config: 
+[2025-08-08 16:16:54] [INFO] {'model_name': 'v2-0-0', 'save_model': True, 'result_path': './rsts/v2-0-0', 'max_save_model': 3, 'lr': 0.0001, 'lr_decay': 0.95, 'lr_decay_step': 15, 'weight_decay': 0.01, 'optimizer': 'AdamW', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 128, 'dim': 1024, 'epochs': 200}
+[2025-08-08 16:16:54] [INFO] Using device: 
+[2025-08-08 16:16:54] [INFO] Using GPU: NVIDIA A100 80GB PCIe
+[2025-08-08 16:16:54] [INFO] Loading model
+[2025-08-08 16:16:54] [ERROR] Error loading model: 
+[2025-08-08 16:16:54] [ERROR] name 'ModelEmaV2' is not defined

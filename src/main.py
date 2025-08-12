@@ -7,6 +7,10 @@ from torch.utils.data import Dataset, DataLoader
 from dataset import CausalityInTrafficAccident, collate_fn
 import argparse
 import json
+import torch
+torch.manual_seed(7802)
+torch.cuda.manual_seed(7802)
+torch.cuda.manual_seed_all(7802)
 
 
 def main(args:argparse.ArgumentParser):
@@ -31,7 +35,7 @@ def main(args:argparse.ArgumentParser):
         dataset_val   = []
         dataset_test  = CausalityInTrafficAccident(p, split='test', test_mode=True)
         dataloader_train, dataloader_val = None, None
-        dataloader_test = DataLoader(dataset_test, batch_size=p['batch_size'], num_workers=p['num_workers'])
+        dataloader_test = DataLoader(dataset_test, batch_size=1, num_workers=1)
     elif args.mode == 'predict':
         raise NotImplementedError('predict mode is not implemented yet')
     else:
@@ -54,7 +58,7 @@ def main(args:argparse.ArgumentParser):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg_path', type=str, default='cfgs/v1-0-0.json')
+    parser.add_argument('--cfg_path', type=str, default='cfgs/v2-0-0.json')
     parser.add_argument('--logfile_dest', type=str, default='./logs')
     parser.add_argument('--model_dest', type=str, default='./model')
     parser.add_argument('--wandb_project', type=str, default='MyMSTCN')
@@ -74,6 +78,7 @@ if __name__ == '__main__':
     parser.add_argument('--feed_type', type=str, default="multi-label",choices=["multi-label", "detection", "classification"])
     parser.add_argument('--dataset_ver', type=str, default='Mar9th')
     parser.add_argument('--positive_thres', type=float, default=0.4)
+    parser.add_argument('--prediction_save_path', type = str, default='./prediction/v2-0-128')
     
     args = parser.parse_args()
     main(args)

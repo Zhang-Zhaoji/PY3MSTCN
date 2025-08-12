@@ -23,7 +23,7 @@ class CausalityInTrafficAccident(dataset.CausalityInTrafficAccident):
         elif split == 'val':
             data_length = (1355, 1355 + 264)
         elif split == 'test':
-            data_length = (1355 + 264, 1355 + 264 + 279)
+            data_length = (1355, 1355 + 264 + 279)# (1355 + 264, 1355 + 264 + 279)
         p['use_randperm'] = 7802
         self.feat_dir = os.path.join(DATA_ROOT, p['feature_folder'], f'{self.feature}_npy')
         self.feed_type = p['feed_type']
@@ -100,6 +100,12 @@ class CausalityInTrafficAccident(dataset.CausalityInTrafficAccident):
         rgb_path = os.path.join(self.feat_dir, f'{global_idx}.npy')
         _rgb_feat = np.load(rgb_path)#, mmap_mode='r')
         _rgb_feat = torch.from_numpy(_rgb_feat.astype(np.float32))
+
+        # add some noise:
+        _rgb_feat += torch.randn_like(_rgb_feat) * 0.05 * torch.std(_rgb_feat, dim=-1, keepdim=True).clamp_min(1e-5)
+        mask_ratio = 0.1
+        mask = torch.rand(_rgb_feat.size(0)) < mask_ratio
+        _rgb_feat[mask] = 0
 
         rgb_feat = torch.zeros(self.seq_length, self.feature_dim)
         assert _rgb_feat.size(0) <= self.seq_length

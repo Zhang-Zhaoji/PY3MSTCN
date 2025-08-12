@@ -1,0 +1,40 @@
+{
+  "model_name": "v1-0-2",
+  "save_model": true,
+  "result_path": "./rsts/MGF-v1-0-2",
+  "max_save_model": 3,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 10,
+  "weight_decay": 0.0005,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 4,
+  "num_layers": 10,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 100
+}
+[2025-08-07 11:00:39] [INFO] Training model with config: 
+[2025-08-07 11:00:39] [INFO] {'model_name': 'v1-0-2', 'save_model': True, 'result_path': './rsts/MGF-v1-0-2', 'max_save_model': 3, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 10, 'weight_decay': 0.0005, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 4, 'num_layers': 10, 'num_f_maps': 128, 'dim': 1024, 'epochs': 100}
+[2025-08-07 11:00:39] [INFO] Using device: 
+[2025-08-07 11:00:39] [INFO] Using GPU: NVIDIA A100 80GB PCIe
+[2025-08-07 11:00:39] [INFO] Loading model
+[2025-08-07 11:00:42] [INFO] loading model successfully
+[2025-08-07 11:00:42] [INFO] building optimizer with optimizer:Adam
+[2025-08-07 11:00:42] [INFO] building scheduler with scheduler:StepLR
+[2025-08-07 11:00:42] [INFO] Starting training loop
+[2025-08-07 11:00:42] [INFO] Epoch: 0/100
+[2025-08-07 11:00:42] [INFO] Training starts: 
+[2025-08-07 11:00:42] [INFO] Training epoch 0
+[2025-08-07 11:00:51] [INFO] Train Epoch: 0, Average Training Metric:0.960169 = 768.135594/800.000000, Acc: 0.9298, [784/1355 (58%)]	
+[2025-08-07 11:00:56] [INFO] Train Epoch: 0, Average Training Metric:0.854321 = 1157.604379/1355.000000, Acc: 0.9318]	
+[2025-08-07 11:00:56] [INFO] Learning rate: 0.001
+[2025-08-07 11:00:56] [INFO] Validation starts: 
+[2025-08-07 11:00:56] [INFO] Epoch: 0
+[2025-08-07 11:00:56] [INFO] Validation begins: 
+[2025-08-07 11:00:56] [INFO] Validation set size: 264
+[2025-08-07 11:00:56] [INFO] Validation batch size: 16
+[2025-08-07 11:00:56] [INFO] Validation steps: 17

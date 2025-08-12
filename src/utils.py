@@ -1,4 +1,5 @@
 import torch
+from typing import List, Tuple
 
 
 class AverageMeter(object):
@@ -45,7 +46,7 @@ def _count_iou(pred_label:torch.Tensor, _cls:int, cls_gt:torch.Tensor)->torch.Te
     iou = inter / (union + 1e-8)
     return iou
 
-def compute_exact_iou(output:torch.Tensor, cls_gt:torch.Tensor, temporal_mask:torch.Tensor, predtype:str='both') -> torch.Tensor|tuple[torch.Tensor, torch.Tensor]: 
+def compute_exact_iou(output:torch.Tensor, cls_gt:torch.Tensor, temporal_mask:torch.Tensor, predtype:str='both') -> Tuple[torch.Tensor, torch.Tensor]: 
     """
     output: [B, C, T], prediction logits
     cls_gt: [B, T], 0 for background, 1 for foreground
@@ -60,7 +61,7 @@ def compute_exact_iou(output:torch.Tensor, cls_gt:torch.Tensor, temporal_mask:to
     elif predtype == 'effect':
         return _count_iou(valid_label, 2, cls_gt)
 
-def compute_temporalIoU(iou_set:list[torch.Tensor]) -> torch.Tensor:
+def compute_temporalIoU(iou_set:List[torch.Tensor]) -> torch.Tensor:
     """
     analyze a series of IOU, compute the amount of each class prediction iou over some threshold
     params:
@@ -72,7 +73,7 @@ def compute_temporalIoU(iou_set:list[torch.Tensor]) -> torch.Tensor:
     """
     cnt = torch.zeros(9)
     for bi in range(0,len(iou_set)):
-        for thr in range(0,10):
+        for thr in range(1,10):
             if iou_set[bi] > thr/10:
                 cnt[thr-1] += 1
     cnt /= len(iou_set)

@@ -1,0 +1,56 @@
+{
+  "model_name": "v1-0-0",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 3,
+  "lr": 0.001,
+  "lr_decay": 0.9,
+  "lr_decay_step": 10,
+  "weight_decay": 0.001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 4,
+  "num_layers": 10,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 100
+}
+[2025-08-08 15:22:42] [INFO] Training model with config: 
+[2025-08-08 15:22:42] [INFO] {'model_name': 'v1-0-0', 'save_model': True, 'result_path': './rsts', 'max_save_model': 3, 'lr': 0.001, 'lr_decay': 0.9, 'lr_decay_step': 10, 'weight_decay': 0.001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 4, 'num_layers': 10, 'num_f_maps': 128, 'dim': 1024, 'epochs': 100}
+[2025-08-08 15:22:42] [INFO] Using device: 
+[2025-08-08 15:22:42] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-08-08 15:22:42] [INFO] Loading model
+[2025-08-08 15:22:42] [INFO] loading model successfully
+[2025-08-08 15:22:42] [INFO] building optimizer with optimizer:Adam
+[2025-08-08 15:22:42] [INFO] building scheduler with scheduler:StepLR
+[2025-08-08 15:22:43] [INFO] Starting training loop
+[2025-08-08 15:22:43] [INFO] Epoch: 0/100
+[2025-08-08 15:22:43] [INFO] Training starts: 
+[2025-08-08 15:22:43] [INFO] Training epoch 0
+[2025-08-08 15:23:08] [INFO] Train Epoch: 0, Average Training Metric:2.556049 = 2044.839298/800.000000, Acc: 0.7029, Cause IoU: 0.0158, Effect IoU: 0.0133, [784/1355 (58%)]	
+[2025-08-08 15:23:11] [INFO] Train Epoch: 0, Average Training Metric:2.544075 = 3447.222260/1355.000000, Acc: 0.7190, Cause IoU: 0.0096, Effect IoU: 0.0133]	
+[2025-08-08 15:23:11] [INFO] Learning rate: 0.001
+[2025-08-08 15:23:11] [INFO] Cause  0.1 ~ 0.9 iou: tensor([0.0458, 0.0118, 0.0015, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0731])
+[2025-08-08 15:23:11] [INFO] Effect 0.1 ~ 0.9 iou: tensor([0.0635, 0.0236, 0.0037, 0.0015, 0.0000, 0.0000, 0.0000, 0.0000, 0.0959])
+[2025-08-08 15:23:11] [INFO] Both   0.1 ~ 0.9 iou: tensor([0.0546, 0.0177, 0.0026, 0.0007, 0.0000, 0.0000, 0.0000, 0.0000, 0.0845])
+[2025-08-08 15:23:11] [INFO] Key IoU Thresholds:
+[2025-08-08 15:23:11] [INFO] Cause IoU:
+[2025-08-08 15:23:11] [INFO]   IoU > 0.1: 0.0458
+[2025-08-08 15:23:11] [INFO]   IoU > 0.3: 0.0015
+[2025-08-08 15:23:11] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:23:11] [INFO]   IoU > 0.9: 0.0731
+[2025-08-08 15:23:11] [INFO] Effect IoU:
+[2025-08-08 15:23:11] [INFO]   IoU > 0.1: 0.0635
+[2025-08-08 15:23:11] [INFO]   IoU > 0.3: 0.0037
+[2025-08-08 15:23:11] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:23:11] [INFO]   IoU > 0.9: 0.0959
+[2025-08-08 15:23:11] [INFO] Epoch time: 27.88s
+[2025-08-08 15:23:11] [INFO] Training ends: 
+[2025-08-08 15:23:11] [INFO] Validation starts: 
+[2025-08-08 15:23:11] [INFO] Epoch: 0
+[2025-08-08 15:23:11] [INFO] Validation begins: 
+[2025-08-08 15:23:11] [INFO] Validation set size: 290
+[2025-08-08 15:23:11] [INFO] Validation batch size: 16
+[2025-08-08 15:23:11] [INFO] Validation steps: 19

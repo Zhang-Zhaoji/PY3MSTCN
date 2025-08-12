@@ -1,0 +1,150 @@
+{
+  "model_name": "v2-0-0",
+  "save_model": true,
+  "result_path": "./rsts",
+  "max_save_model": 3,
+  "lr": 0.001,
+  "lr_decay": 0.9,
+  "lr_decay_step": 15,
+  "weight_decay": 0.001,
+  "optimizer": "Adam",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 2,
+  "num_layers": 3,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 100
+}
+[2025-08-08 15:37:30] [INFO] Training model with config: 
+[2025-08-08 15:37:30] [INFO] {'model_name': 'v2-0-0', 'save_model': True, 'result_path': './rsts', 'max_save_model': 3, 'lr': 0.001, 'lr_decay': 0.9, 'lr_decay_step': 15, 'weight_decay': 0.001, 'optimizer': 'Adam', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 2, 'num_layers': 3, 'num_f_maps': 128, 'dim': 1024, 'epochs': 100}
+[2025-08-08 15:37:30] [INFO] Using device: 
+[2025-08-08 15:37:30] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-08-08 15:37:30] [INFO] Loading model
+[2025-08-08 15:37:30] [INFO] loading model successfully
+[2025-08-08 15:37:30] [INFO] building optimizer with optimizer:Adam
+[2025-08-08 15:37:30] [INFO] building scheduler with scheduler:StepLR
+[2025-08-08 15:37:31] [INFO] Starting training loop
+[2025-08-08 15:37:31] [INFO] Epoch: 0/100
+[2025-08-08 15:37:31] [INFO] Training starts: 
+[2025-08-08 15:37:31] [INFO] Training epoch 0
+[2025-08-08 15:37:55] [INFO] Train Epoch: 0, Average Training Metric:1.268106 = 1014.484810/800.000000, Acc: 0.7326, Cause IoU: 0.0021, Effect IoU: 0.0061, [784/1355 (58%)]	
+[2025-08-08 15:37:58] [INFO] Train Epoch: 0, Average Training Metric:1.266254 = 1715.774165/1355.000000, Acc: 0.7425, Cause IoU: 0.0012, Effect IoU: 0.0036]	
+[2025-08-08 15:37:58] [INFO] Learning rate: 0.001
+[2025-08-08 15:37:58] [INFO] Cause  0.1 ~ 0.9 iou: tensor([0.0066, 0.0030, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000])
+[2025-08-08 15:37:58] [INFO] Effect 0.1 ~ 0.9 iou: tensor([0.0170, 0.0037, 0.0007, 0.0007, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000])
+[2025-08-08 15:37:58] [INFO] Both   0.1 ~ 0.9 iou: tensor([0.0118, 0.0033, 0.0004, 0.0004, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000])
+[2025-08-08 15:37:58] [INFO] Key IoU Thresholds:
+[2025-08-08 15:37:58] [INFO] Cause IoU:
+[2025-08-08 15:37:58] [INFO]   IoU > 0.1: 0.0066
+[2025-08-08 15:37:58] [INFO]   IoU > 0.3: 0.0000
+[2025-08-08 15:37:58] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:37:58] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:37:58] [INFO] Effect IoU:
+[2025-08-08 15:37:58] [INFO]   IoU > 0.1: 0.0170
+[2025-08-08 15:37:58] [INFO]   IoU > 0.3: 0.0007
+[2025-08-08 15:37:58] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:37:58] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:37:58] [INFO] Epoch time: 27.10s
+[2025-08-08 15:37:58] [INFO] Training ends: 
+[2025-08-08 15:37:58] [INFO] Validation starts: 
+[2025-08-08 15:37:58] [INFO] Epoch: 0
+[2025-08-08 15:37:58] [INFO] Validation begins: 
+[2025-08-08 15:37:58] [INFO] Validation set size: 290
+[2025-08-08 15:37:58] [INFO] Validation batch size: 16
+[2025-08-08 15:37:58] [INFO] Validation steps: 19
+[2025-08-08 15:38:22] [INFO] Validate Epoch: 0, Average Validation Metric:0.631184 = 183.043275/290.000000, Acc: 0.7551, Cause IoU: 0.0000, Effect IoU: 0.0000]	
+[2025-08-08 15:38:22] [INFO] Validation Key IoU Thresholds:
+[2025-08-08 15:38:22] [INFO] Cause IoU:
+[2025-08-08 15:38:22] [INFO]   IoU > 0.1: 0.0000
+[2025-08-08 15:38:22] [INFO]   IoU > 0.3: 0.0000
+[2025-08-08 15:38:22] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:38:22] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:38:22] [INFO] Effect IoU:
+[2025-08-08 15:38:22] [INFO]   IoU > 0.1: 0.0000
+[2025-08-08 15:38:22] [INFO]   IoU > 0.3: 0.0000
+[2025-08-08 15:38:22] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:38:22] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:38:22] [INFO] Combined IoU:
+[2025-08-08 15:38:22] [INFO]   IoU > 0.1: 0.0000
+[2025-08-08 15:38:22] [INFO]   IoU > 0.3: 0.0000
+[2025-08-08 15:38:22] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:38:22] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:38:22] [INFO] Validation ends: 
+[2025-08-08 15:38:22] [INFO] Validation ends: 
+[2025-08-08 15:38:22] [INFO] Epoch: 1/100
+[2025-08-08 15:38:22] [INFO] Training starts: 
+[2025-08-08 15:38:22] [INFO] Training epoch 1
+[2025-08-08 15:38:45] [INFO] Train Epoch: 1, Average Training Metric:1.263992 = 1011.193933/800.000000, Acc: 0.7492, Cause IoU: 0.0000, Effect IoU: 0.0000, [784/1355 (58%)]	
+[2025-08-08 15:38:47] [INFO] Train Epoch: 1, Average Training Metric:1.262411 = 1710.566561/1355.000000, Acc: 0.7526, Cause IoU: 0.0000, Effect IoU: 0.0000]	
+[2025-08-08 15:38:47] [INFO] Learning rate: 0.001
+[2025-08-08 15:38:47] [INFO] Cause  0.1 ~ 0.9 iou: tensor([0., 0., 0., 0., 0., 0., 0., 0., 0.])
+[2025-08-08 15:38:47] [INFO] Effect 0.1 ~ 0.9 iou: tensor([0., 0., 0., 0., 0., 0., 0., 0., 0.])
+[2025-08-08 15:38:47] [INFO] Both   0.1 ~ 0.9 iou: tensor([0., 0., 0., 0., 0., 0., 0., 0., 0.])
+[2025-08-08 15:38:47] [INFO] Key IoU Thresholds:
+[2025-08-08 15:38:47] [INFO] Cause IoU:
+[2025-08-08 15:38:47] [INFO]   IoU > 0.1: 0.0000
+[2025-08-08 15:38:47] [INFO]   IoU > 0.3: 0.0000
+[2025-08-08 15:38:47] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:38:47] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:38:47] [INFO] Effect IoU:
+[2025-08-08 15:38:47] [INFO]   IoU > 0.1: 0.0000
+[2025-08-08 15:38:47] [INFO]   IoU > 0.3: 0.0000
+[2025-08-08 15:38:47] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:38:47] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:38:47] [INFO] Epoch time: 24.96s
+[2025-08-08 15:38:47] [INFO] Training ends: 
+[2025-08-08 15:38:47] [INFO] Validation starts: 
+[2025-08-08 15:38:47] [INFO] Epoch: 1
+[2025-08-08 15:38:47] [INFO] Validation begins: 
+[2025-08-08 15:38:47] [INFO] Validation set size: 290
+[2025-08-08 15:38:47] [INFO] Validation batch size: 16
+[2025-08-08 15:38:47] [INFO] Validation steps: 19
+[2025-08-08 15:39:09] [INFO] Validate Epoch: 1, Average Validation Metric:0.630344 = 182.799763/290.000000, Acc: 0.7551, Cause IoU: 0.0000, Effect IoU: 0.0000]	
+[2025-08-08 15:39:09] [INFO] Validation Key IoU Thresholds:
+[2025-08-08 15:39:09] [INFO] Cause IoU:
+[2025-08-08 15:39:09] [INFO]   IoU > 0.1: 0.0000
+[2025-08-08 15:39:09] [INFO]   IoU > 0.3: 0.0000
+[2025-08-08 15:39:09] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:39:09] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:39:09] [INFO] Effect IoU:
+[2025-08-08 15:39:09] [INFO]   IoU > 0.1: 0.0000
+[2025-08-08 15:39:09] [INFO]   IoU > 0.3: 0.0000
+[2025-08-08 15:39:09] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:39:09] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:39:09] [INFO] Combined IoU:
+[2025-08-08 15:39:09] [INFO]   IoU > 0.1: 0.0000
+[2025-08-08 15:39:09] [INFO]   IoU > 0.3: 0.0000
+[2025-08-08 15:39:09] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:39:09] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:39:09] [INFO] Validation ends: 
+[2025-08-08 15:39:09] [INFO] Validation ends: 
+[2025-08-08 15:39:09] [INFO] Epoch: 2/100
+[2025-08-08 15:39:09] [INFO] Training starts: 
+[2025-08-08 15:39:09] [INFO] Training epoch 2
+[2025-08-08 15:39:32] [INFO] Train Epoch: 2, Average Training Metric:1.261072 = 1008.857227/800.000000, Acc: 0.7556, Cause IoU: 0.0000, Effect IoU: 0.0000, [784/1355 (58%)]	
+[2025-08-08 15:39:34] [INFO] Train Epoch: 2, Average Training Metric:1.261169 = 1708.884237/1355.000000, Acc: 0.7530, Cause IoU: 0.0000, Effect IoU: 0.0023]	
+[2025-08-08 15:39:34] [INFO] Learning rate: 0.001
+[2025-08-08 15:39:34] [INFO] Cause  0.1 ~ 0.9 iou: tensor([0., 0., 0., 0., 0., 0., 0., 0., 0.])
+[2025-08-08 15:39:34] [INFO] Effect 0.1 ~ 0.9 iou: tensor([0.0081, 0.0052, 0.0030, 0.0007, 0.0007, 0.0007, 0.0007, 0.0007, 0.0000])
+[2025-08-08 15:39:34] [INFO] Both   0.1 ~ 0.9 iou: tensor([0.0041, 0.0026, 0.0015, 0.0004, 0.0004, 0.0004, 0.0004, 0.0004, 0.0000])
+[2025-08-08 15:39:34] [INFO] Key IoU Thresholds:
+[2025-08-08 15:39:34] [INFO] Cause IoU:
+[2025-08-08 15:39:34] [INFO]   IoU > 0.1: 0.0000
+[2025-08-08 15:39:34] [INFO]   IoU > 0.3: 0.0000
+[2025-08-08 15:39:34] [INFO]   IoU > 0.5: 0.0000
+[2025-08-08 15:39:34] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:39:34] [INFO] Effect IoU:
+[2025-08-08 15:39:34] [INFO]   IoU > 0.1: 0.0081
+[2025-08-08 15:39:34] [INFO]   IoU > 0.3: 0.0030
+[2025-08-08 15:39:34] [INFO]   IoU > 0.5: 0.0007
+[2025-08-08 15:39:34] [INFO]   IoU > 0.9: 0.0000
+[2025-08-08 15:39:34] [INFO] Epoch time: 24.47s
+[2025-08-08 15:39:34] [INFO] Training ends: 
+[2025-08-08 15:39:34] [INFO] Validation starts: 
+[2025-08-08 15:39:34] [INFO] Epoch: 2
+[2025-08-08 15:39:34] [INFO] Validation begins: 
+[2025-08-08 15:39:34] [INFO] Validation set size: 290
+[2025-08-08 15:39:34] [INFO] Validation batch size: 16
+[2025-08-08 15:39:34] [INFO] Validation steps: 19
