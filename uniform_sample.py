@@ -59,8 +59,8 @@ def main():
         video_path = os.path.join(args.video_dir, path)
         T = data_element['frame_count']
         out_dir = Path(os.path.join(args.output_dir, json_name))
-        uniform_frames(video_path, T, out_dir)
-        print(f"✅ {path} 已抽 {T} 帧 → {out_dir}")
+        uniform_frames(video_path, 5 * T, out_dir)
+        print(f"✅ {path} 已抽 {5 * T} 帧 → {out_dir}")
 
 if __name__ == "__main__":
     main()

@@ -57,6 +57,7 @@ def main(args:argparse.ArgumentParser):
                            resume_optimizer_path=p['resume_optimizer_path']
                            )
     test_result_dict = main_Trainer.test(test_dataloader=dataloader_test, metric_function=main_Trainer.criterion)
+    # print(test_result_dict)
     with open(p['prediction_save_path'], 'w') as f:
         json.dump(test_result_dict, f)
 
@@ -71,7 +72,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_workers', type=int, default=1) # 4
     parser.add_argument('--batch_size', type=int, default=1) # 16
     parser.add_argument('--mode',type=str, default='test', choices=['train', 'test', 'predict'])
-    parser.add_argument('--resume_model_path', type=str, default=r'model\v2-0-0\2025-08-09-13-30-48\best_model.pth')
+    parser.add_argument('--resume_model_path', type=str, default='./model/bestRGB/2025-08-09-13-30-48/best_model.pth')
     parser.add_argument('--resume_optimizer_path', type=str, default='')
     parser.add_argument('--feature', type=str, default="Mar9th")
     parser.add_argument('--feature_folder', type=str, default="RGBdataset")

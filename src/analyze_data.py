@@ -21,10 +21,31 @@ Sal_spit_num  = (1355, 1355 + 264, 1355 + 264 + 279)  # 279 条
 # 2. 读 annotation & 预测结果
 # ==========================================================
 RGB_anno = pickle.load(open(RGB_annotation_path, 'rb'))[RGB_split_num[1]:RGB_split_num[2]]
+video_names = [f'{anno[0][0]}_{int(anno[0][1])}_{int(anno[0][2])}' for anno in RGB_anno]
 Sal_anno = pickle.load(open(Sal_annotation_path, 'rb'))[Sal_spit_num[1]:Sal_spit_num[2]]
 
+self_saliency_dict_path = 'labels.json'
+self_saliency_dict = json.load(open(self_saliency_dict_path))
+dict_version = {json_dict['video']:json_dict for json_dict in self_saliency_dict}
+self_saliency_dict_names = [element['video'] for element in self_saliency_dict]
+
+
+
+acquire_labels = []
+for idx, video_name in enumerate(video_names):
+    name = video_name[2:]+'.mp4'
+    if name in self_saliency_dict_names:
+        acquire_labels.append(idx) # thus get the index of the video in RGB, or remove the non-used indexs due to the broken links of videos
+
+RGB_anno = [RGB_anno[idx] for idx in acquire_labels]
+
 RGB_pred = json.load(open(RGB_json_path))
+RGB_pred['cause_iou'] = [iou for idx, iou in enumerate(RGB_pred['cause_iou']) if idx in acquire_labels]
+RGB_pred['effect_iou'] = [iou for idx, iou in enumerate(RGB_pred['effect_iou']) if idx in acquire_labels]
+# print(RGB_pred)
+# quit()
 SM_pred  = json.load(open(SM_json_path))
+
 MGF_pred = json.load(open(MGF_json_path))
 
 # ==========================================================
@@ -71,20 +92,14 @@ SM_cause_df, SM_effect_df = build_df(
     'SM'
 )
 
-# ---------------- MGF ----------------
-MGF_cause_df, MGF_effect_df = build_df(
-    Sal_anno,
-    MGF_pred['cause_iou'],
-    MGF_pred['effect_iou'],
-    'MGF'
-)
+
 
 # ==========================================================
 # 4. 合并 & 画图
 # ==========================================================
-cause_df  = pd.concat([RGB_cause_df, SM_cause_df, MGF_cause_df],
+cause_df  = pd.concat([RGB_cause_df, SM_cause_df],
                       ignore_index=True)
-effect_df = pd.concat([RGB_effect_df, SM_effect_df, MGF_effect_df],
+effect_df = pd.concat([RGB_effect_df, SM_effect_df],
                       ignore_index=True)
 
 sns.set_style('whitegrid')
@@ -97,7 +112,7 @@ def plot_violin(df, task='cause'):
           .mean()
           .unstack(fill_value=0)
     )
-    mean_iou['diff'] = mean_iou['RGB'] - mean_iou['SM']
+    mean_iou['diff'] = - mean_iou['RGB'] + mean_iou['SM']
     order = mean_iou.sort_values('diff', ascending=False).index.tolist()
 
     # 2. 画图

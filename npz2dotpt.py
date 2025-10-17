@@ -36,7 +36,7 @@ if __name__ == '__main__':
         # although here is not actually npz file but binary file, we can still load it
         tmp_feature = np.fromfile(os.path.join(npz_root, name + '.npz'), dtype=np.float32)
         tmp_feature = tmp_feature.reshape(-1, 512*7*7)
-        assert tmp_feature.shape[0] == frame_count
+        assert tmp_feature.shape[0] == frame_count*2
     print('feature size is correct!')
     # 1355 264 279
 
@@ -46,9 +46,10 @@ if __name__ == '__main__':
         # although here is not actually npz file but binary file, we can still load it
         tmp_feature = np.fromfile(os.path.join(npz_root, name + '.npz'), dtype=np.float32)
         tmp_feature = tmp_feature.reshape(-1, 512*7*7)
-        tensor_feature = torch.from_numpy(tmp_feature)
-        feature_list.append(tensor_feature)
-    torch.save(feature_list, os.path.join('data/Saldataset', 'SMfeature.pt'))
+        np.save(os.path.join('data/Saldataset/SMfeature_npy', f'{i}.npy'), tmp_feature)
+        #tensor_feature = torch.from_numpy(tmp_feature)
+        #feature_list.append(tensor_feature)
+    # torch.save(feature_list, os.path.join('data/Saldataset', 'SMfeature.pt'))
     print('saving successfully!')
 
 

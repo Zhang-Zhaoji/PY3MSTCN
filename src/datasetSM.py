@@ -23,7 +23,7 @@ class CausalityInTrafficAccident(dataset.CausalityInTrafficAccident):
         elif split == 'val':
             data_length = (1355, 1355 + 264)
         elif split == 'test':
-            data_length = (1355, 1355 + 264 + 279)# (1355 + 264, 1355 + 264 + 279)
+            data_length = (1355 + 264, 1355 + 264 + 279)
         p['use_randperm'] = 7802
         self.feat_dir = os.path.join(DATA_ROOT, p['feature_folder'], f'{self.feature}_npy')
         self.feed_type = p['feed_type']
@@ -31,7 +31,7 @@ class CausalityInTrafficAccident(dataset.CausalityInTrafficAccident):
         self.use_flip = False # used to be true
 
         self.feature_dim = p['input_size']
-        self.seq_length = 208
+        self.seq_length = 500
         self.fps = 25
         self.vid_length = self.seq_length * 8 / self.fps
         
@@ -102,18 +102,39 @@ class CausalityInTrafficAccident(dataset.CausalityInTrafficAccident):
         _rgb_feat = torch.from_numpy(_rgb_feat.astype(np.float32))
 
         # add some noise:
-        _rgb_feat += torch.randn_like(_rgb_feat) * 0.05 * torch.std(_rgb_feat, dim=-1, keepdim=True).clamp_min(1e-5)
-        mask_ratio = 0.1
-        mask = torch.rand(_rgb_feat.size(0)) < mask_ratio
-        _rgb_feat[mask] = 0
+        # _rgb_feat += torch.randn_like(_rgb_feat) * 0.1 * torch.std(_rgb_feat, dim=-1, keepdim=True).clamp_min(1e-5)
+        # mask_ratio = 0.1
+        # mask = torch.rand(_rgb_feat.size(0)) < mask_ratio
+        # _rgb_feat[mask] = 0
 
-        rgb_feat = torch.zeros(self.seq_length, self.feature_dim)
-        assert _rgb_feat.size(0) <= self.seq_length
-        actual_len = min(_rgb_feat.size(0), self.seq_length)
-        rgb_feat[:actual_len, :] = _rgb_feat[:actual_len, :]
+        # rgb_feat = torch.zeros(self.seq_length, self.feature_dim)
+        # assert _rgb_feat.size(0) <= self.seq_length
+        # actual_len = min(_rgb_feat.size(0), self.seq_length)
+        # rgb_feat[:actual_len, :] = _rgb_feat[:actual_len, :]
 
         flow_feat = torch.zeros(0)
-        return rgb_feat, flow_feat, actual_len
+        
+        if self.split == 'train':
+            scale = np.random.uniform(0.6, 1.4)
+            new_len = int(_rgb_feat.size(0) * scale)
+            _rgb_feat = F.interpolate(_rgb_feat.unsqueeze(0).transpose(1,2),size=new_len, mode='linear', align_corners=True).squeeze(0).transpose(0,1)
+            # add some noise
+            _rgb_feat += torch.randn_like(_rgb_feat) * 0.15 * torch.std(_rgb_feat, dim=-1, keepdim=True).clamp_min(1e-5)
+            mask_ratio = 0.3
+            mask = torch.rand(_rgb_feat.size(0)) < mask_ratio
+            _rgb_feat[mask] = 0    
+
+        if(self.use_rgb):
+            rgb_feat = torch.zeros(self.seq_length, self.feature_dim)        
+            rgb_feat[0:min(self.seq_length,_rgb_feat.size(0)), :] = _rgb_feat[0:min(self.seq_length,_rgb_feat.size(0)),:]
+        else:
+            rgb_feat = torch.zeros(0)
+
+        if(self.use_flow):
+            print('no flow lol')
+        flow_feat = 0
+                    
+        return rgb_feat, flow_feat, _rgb_feat.size(0)
     
 def collate_fn(sample):
     feat_list = [s['feature'] for s in sample]

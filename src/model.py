@@ -136,8 +136,8 @@ class Squeeze0Stage(nn.Module):
 class SalMultiStageModel(MultiStageModel):
     def __init__(self, num_stages, num_layers, num_f_maps, dim, num_classes, pre_process_dim = 512, *args, **kwargs) -> None:
         super().__init__(num_stages, num_layers, num_f_maps, dim, num_classes, *args, **kwargs)
-        #self.preprocess = Squeeze2Stage()
-        self.preprocess = Squeeze1Stage()
+        # self.preprocess = Squeeze2Stage()
+        self.preprocess = Squeeze1Stage(in_ch = pre_process_dim, out_ch=dim)
         # self.preprocess = Squeeze0Stage()
     
     def forward(self, x:torch.Tensor, mask:torch.Tensor = None) -> torch.Tensor:
@@ -177,15 +177,35 @@ class AsymmetricFocalLoss(nn.Module):
                         (1 - self.delta) * (1 - prob).pow(self.gamma),
                         torch.tensor(self.delta, device=logp.device))
         return (-w * logpt).mean()
+        
+class SmoothCELoss(nn.Module):
+    def __init__(self, smoothing=0.1, ignore_index=255):
+        super().__init__()
+        self.smoothing = smoothing
+        self.ignore_index = ignore_index
+
+    def forward(self, logits: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        # logits [B,C,T], target [B,T]
+        C = logits.size(1)
+        mask = (target != self.ignore_index).float()        # [B,T]
+        target = target.masked_fill(target == self.ignore_index, 0)
+
+        # 平滑 one-hot
+        soft_target = torch.full_like(logits, self.smoothing / (C - 1))
+        soft_target.scatter_(1, target.unsqueeze(1), 1.0 - self.smoothing)
+        soft_target *= mask.unsqueeze(1)
+
+        logp = F.log_softmax(logits, dim=1)
+        loss = -torch.sum(soft_target * logp, dim=1) * mask
+        return loss.sum() / mask.sum()
 
 
 # from timm.loss import SoftTargetCrossEntropy
 def MSTCN_criterion(output:torch.Tensor, target:torch.Tensor)->torch.Tensor:
     logp = F.log_softmax(output, dim=1).clamp(min=-1e6)         # [B,C,T]
-    # logp = torch.log(logp + _EPSILON)
 
-    # focal loss
-    focal = AsymmetricFocalLoss(delta=0.7, gamma=0.5, common_class_index=0)(logp, target)
+    # focal loss, now use SCELoss instead
+    focal = SmoothCELoss(smoothing = 0.1)(output,target)# AsymmetricFocalLoss(delta=0.7, gamma=0.5, common_class_index=0)(logp, target)
 
     # MSE 正则（logp 与 one-hot）
     onehot = F.one_hot(target, output.size(1)).permute(0, 2, 1).float()

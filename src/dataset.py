@@ -47,7 +47,7 @@ class CausalityInTrafficAccident(Dataset):
         elif split == 'val':
             data_length = (1355, 1355 + 290)
         elif split == 'test':
-            data_length = (1355, 1355 + 290 + 290)# (1355 + 290, 1355 + 290 + 290)
+            data_length = (1355 + 290, 1355 + 290 + 290)
         p['use_randperm'] = 7802
 
         self.feed_type = p['feed_type']
@@ -125,6 +125,8 @@ class CausalityInTrafficAccident(Dataset):
                     self.feat_rgb_flip = feat_rgb_flip[start_idx:end_idx]
                     if(self.use_flow):
                         self.feat_flow_flip = feat_flow_flip[start_idx:end_idx]
+
+
 
     def __len__(self):
             return len(self.annos)
@@ -387,7 +389,7 @@ class CausalityInTrafficAccident(Dataset):
         # cause-effect label for attention calibration label 
         ######################################################
         
-        clip_length = 208
+        clip_length = self.seq_length
         causality_mask = torch.zeros(clip_length).long()
         if(cause_end_idx == effect_start_idx):
             effect_portion = effect_start_idx - effect_start_time

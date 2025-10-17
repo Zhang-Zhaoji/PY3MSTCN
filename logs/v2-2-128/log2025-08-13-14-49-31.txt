@@ -1,0 +1,56 @@
+{
+  "model_name": "v2-2-128",
+  "save_model": true,
+  "result_path": "./rsts/SMv2-2-128",
+  "max_save_model": 3,
+  "lr": 0.0005,
+  "lr_decay": 0.95,
+  "lr_decay_step": 15,
+  "weight_decay": 0.001,
+  "optimizer": "AdamW",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 4,
+  "num_layers": 10,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 70
+}
+[2025-08-13 14:49:31] [INFO] Training model with config: 
+[2025-08-13 14:49:31] [INFO] {'model_name': 'v2-2-128', 'save_model': True, 'result_path': './rsts/SMv2-2-128', 'max_save_model': 3, 'lr': 0.0005, 'lr_decay': 0.95, 'lr_decay_step': 15, 'weight_decay': 0.001, 'optimizer': 'AdamW', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 4, 'num_layers': 10, 'num_f_maps': 128, 'dim': 1024, 'epochs': 70}
+[2025-08-13 14:49:31] [INFO] Using device: 
+[2025-08-13 14:49:31] [INFO] Using GPU: NVIDIA A100 80GB PCIe
+[2025-08-13 14:49:31] [INFO] Loading model
+[2025-08-13 14:49:34] [INFO] loading model successfully
+[2025-08-13 14:49:34] [INFO] building optimizer with optimizer:AdamW
+[2025-08-13 14:49:34] [INFO] building scheduler with scheduler:StepLR
+[2025-08-13 14:49:36] [INFO] Starting training loop
+[2025-08-13 14:49:36] [INFO] Epoch: 0/70
+[2025-08-13 14:49:36] [INFO] Training starts: 
+[2025-08-13 14:49:36] [INFO] Training epoch 0
+[2025-08-13 14:49:45] [INFO] Train Epoch: 0, Average Training Metric:5.597260 = 1119.451986/200.000000, Acc: 0.7636, Cause IoU: 0.0000, Effect IoU: 0.0000, [196/1355 (14%)]	
+[2025-08-13 14:49:53] [INFO] Train Epoch: 0, Average Training Metric:5.582200 = 2232.880104/400.000000, Acc: 0.7588, Cause IoU: 0.0000, Effect IoU: 0.0000, [396/1355 (29%)]	
+[2025-08-13 14:50:05] [INFO] Train Epoch: 0, Average Training Metric:5.573145 = 3343.887020/600.000000, Acc: 0.7660, Cause IoU: 0.0000, Effect IoU: 0.0000, [596/1355 (44%)]	
+[2025-08-13 14:50:09] [INFO] Train Epoch: 0, Average Training Metric:5.571502 = 4457.201277/800.000000, Acc: 0.7656, Cause IoU: 0.0000, Effect IoU: 0.0000, [796/1355 (59%)]	
+[2025-08-13 14:50:17] [INFO] Train Epoch: 0, Average Training Metric:5.569644 = 5569.644098/1000.000000, Acc: 0.7657, Cause IoU: 0.0000, Effect IoU: 0.0004, [996/1355 (73%)]	
+[2025-08-13 14:50:24] [INFO] Train Epoch: 0, Average Training Metric:5.568338 = 6682.005636/1200.000000, Acc: 0.7662, Cause IoU: 0.0000, Effect IoU: 0.0020, [1196/1355 (88%)]	
+[2025-08-13 14:50:31] [INFO] Train Epoch: 0, Average Training Metric:5.566101 = 7542.066693/1355.000000, Acc: 0.7673, Cause IoU: 0.0000, Effect IoU: 0.0017]	
+[2025-08-13 14:50:31] [INFO] Learning rate: 0.0005
+[2025-08-13 14:50:31] [INFO] Cause  0.1 ~ 0.9 iou: tensor([0., 0., 0., 0., 0., 0., 0., 0., 0.])
+[2025-08-13 14:50:31] [INFO] Effect 0.1 ~ 0.9 iou: tensor([0.0044, 0.0030, 0.0030, 0.0030, 0.0007, 0.0007, 0.0000, 0.0000, 0.0000])
+[2025-08-13 14:50:31] [INFO] Both   0.1 ~ 0.9 iou: tensor([0.0022, 0.0015, 0.0015, 0.0015, 0.0004, 0.0004, 0.0000, 0.0000, 0.0000])
+[2025-08-13 14:50:31] [INFO] Key IoU Thresholds:
+[2025-08-13 14:50:31] [INFO] Cause IoU:
+[2025-08-13 14:50:31] [INFO]   IoU > 0.1: 0.0000
+[2025-08-13 14:50:31] [INFO]   IoU > 0.3: 0.0000
+[2025-08-13 14:50:31] [INFO]   IoU > 0.5: 0.0000
+[2025-08-13 14:50:31] [INFO]   IoU > 0.9: 0.0000
+[2025-08-13 14:50:31] [INFO] Effect IoU:
+[2025-08-13 14:50:31] [INFO]   IoU > 0.1: 0.0044
+[2025-08-13 14:50:31] [INFO]   IoU > 0.3: 0.0030
+[2025-08-13 14:50:31] [INFO]   IoU > 0.5: 0.0007
+[2025-08-13 14:50:31] [INFO]   IoU > 0.9: 0.0000
+[2025-08-13 14:50:31] [INFO] Epoch time: 54.82s
+[2025-08-13 14:50:31] [INFO] Training ends: 
+[2025-08-13 14:50:31] [INFO] Validation starts: 

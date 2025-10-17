@@ -13,5 +13,6 @@ npz_sms/
 *.pth
 *.pt
 *.0
+clipped_sm_twofold/
 model/
 privatersts/

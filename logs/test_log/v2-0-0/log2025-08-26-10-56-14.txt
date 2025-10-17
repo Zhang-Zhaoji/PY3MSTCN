@@ -1,0 +1,34 @@
+{
+  "model_name": "v2-0-0",
+  "save_model": true,
+  "result_path": "./rsts/v2-0-0",
+  "max_save_model": 3,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 15,
+  "weight_decay": 0.01,
+  "optimizer": "AdamW",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 4,
+  "num_layers": 10,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 200
+}
+[2025-08-26 10:56:14] [INFO] Training model with config: 
+[2025-08-26 10:56:14] [INFO] {'model_name': 'v2-0-0', 'save_model': True, 'result_path': './rsts/v2-0-0', 'max_save_model': 3, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 15, 'weight_decay': 0.01, 'optimizer': 'AdamW', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 4, 'num_layers': 10, 'num_f_maps': 128, 'dim': 1024, 'epochs': 200}
+[2025-08-26 10:56:14] [INFO] Using device: 
+[2025-08-26 10:56:15] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-08-26 10:56:15] [INFO] Loading model
+[2025-08-26 10:56:21] [INFO] loading model successfully
+[2025-08-26 10:56:21] [INFO] building optimizer with optimizer:AdamW
+[2025-08-26 10:56:21] [INFO] building scheduler with scheduler:StepLR
+[2025-08-26 10:56:21] [INFO] Resuming model
+[2025-08-26 10:56:21] [INFO] resume model from ./model/bestRGB/2025-08-09-13-30-48/best_model.pth
+[2025-08-26 10:56:21] [INFO] Resume success.
+[2025-08-26 10:56:21] [INFO] Test begins: 
+[2025-08-26 10:56:21] [INFO] Test set size: 290
+[2025-08-26 10:56:21] [INFO] Test batch size: 1
+[2025-08-26 10:56:21] [INFO] Test steps: 290

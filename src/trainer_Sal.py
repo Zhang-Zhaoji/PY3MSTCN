@@ -1,13 +1,16 @@
+import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
 import torch
 import torch.nn as nn  
 import datetime
 import torch.optim as optim
 import tqdm
-import os
 import pathlib
 from logger import Logger 
 from config import Config
 from model import build_from_cfg, ActionSegmentationLoss
+# 鍦?trainer.py 鏂囦欢寮€澶存坊鍔犲鍏?
 from utils import AverageMeter, compute_exact_iou, compute_temporalIoU
 from torch.utils.tensorboard import SummaryWriter
 import time
@@ -64,10 +67,9 @@ class Trainer(object):
         self.logger.info("Loading model")
         
         try:
-            self.model = build_from_cfg(self.model_cfg)
-            self.ema = ModelEmaV2(self.model, decay=0.999)
+            self.model = build_from_cfg(self.model_cfg,True)
             self.model.to(self.device)
-            self.ema.module.to(self.device)
+            self.ema = ModelEmaV2(self.model, decay=0.995, device = self.device)
         except Exception as e:
             self.logger.error("Error loading model: ")
             self.logger.error(e)
@@ -89,23 +91,34 @@ class Trainer(object):
         else:
             raise ValueError(f"scheduler {self.model_cfg.scheduler} not supported now")
         self.logger.info(f"building scheduler with scheduler:{self.model_cfg.scheduler}")
-        if resume_model_path:
+
+        if resume_model_path or resume_optimizer_path:
             self.resume_model_path = resume_model_path
+            self.resume_optimizer_path = resume_optimizer_path
             self.resume()
             self.logger.info("Resume success.")
-        if train_loader:
+        else:
+            self.logger.info("No resume model or optimizer path, start training from scratch")
+
+        if self.train_loader:
             dummy = torch.randn(1, *self.train_loader.dataset[0]['feature'].shape).to(self.device)
             self.tb_writer.add_graph(self.model, dummy)
-        self.best_metric = -float('inf')      # 用来比较，可根据需要改成 loss
+        self.best_metric = -float('inf')      # 鐢ㄦ潵姣旇緝锛屽彲鏍规嵁闇€瑕佹敼鎴?loss
         self.best_epoch = -1
         self.best_model_path = os.path.join(self.model_path, 'best_model.pth')
+        
+        
     def resume(self):
         self.logger.info("Resuming model")
-        self.logger.info(f"resume model from {self.resume_model_path}")
-        _model = torch.load(self.resume_model_path)
-        self.model.load_state_dict(_model['model_state_dict'])
-        self.optimizer.load_state_dict(_model['optimizer'])
-        self.ema.module.load_state_dict(_model['ema_state_dict'])
+        # assert self.resume_model_path and self.resume_optimizer_path
+        if self.resume_model_path:
+            self.logger.info(f"resume model from {self.resume_model_path}")
+            self.model.load_state_dict(torch.load(self.resume_model_path)['ema_state_dict'])
+            # keys state_dict: "model_state_dict", "ema_state_dict", "optimizer", "epoch", "metric".
+        if self.resume_optimizer_path:
+            self.logger.info(f"loading optimizer from {self.resume_optimizer_path}")
+            self.optimizer.load_state_dict(torch.load(self.resume_optimizer_path))
+            self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=self.model_cfg.lr_decay_step, gamma=self.model_cfg.lr_decay)
 
     def train(self, epoch:int, log_interval:int=10):
         self.model.train()
@@ -133,7 +146,7 @@ class Trainer(object):
             correct += ((predicted == target)*mask).float().sum().item()
             total += torch.sum(mask).item()
 
-            # 计算cause和effect的IoU
+            # 璁＄畻cause鍜宔ffect鐨処oU
             cause_iou, effect_iou = compute_exact_iou(output[-1], target, mask, predtype='both')
             for i in range(len(cause_iou)):
                 cause_iou_metrics.update(cause_iou[i].item(), 1)
@@ -144,10 +157,10 @@ class Trainer(object):
 
         self.logger.info(f"Train Epoch: {epoch}, {str(train_metrics)}, Acc: {correct/total:.4f}, Cause IoU: {cause_iou_metrics.avg:.4f}, Effect IoU: {effect_iou_metrics.avg:.4f}]\t")
         self.logger.info(f"Learning rate: {self.scheduler.get_last_lr()[0]}")
-        # self.scheduler.step()
+        self.scheduler.step()
         epoch_time = time.time() - epoch_start 
 
-        # 计算IoU阈值统计
+        # 璁＄畻IoU闃堝€肩粺璁?
         cause_0129_iou = compute_temporalIoU(cause_iou_metrics.val)  # 0129 means 0.1 to 0.9
         effect_0129_iou = compute_temporalIoU(effect_iou_metrics.val)
 
@@ -155,9 +168,9 @@ class Trainer(object):
         self.logger.info(f"Effect 0.1 ~ 0.9 iou: {effect_0129_iou}")
         self.logger.info(f"Both   0.1 ~ 0.9 iou: {(cause_0129_iou+effect_0129_iou)/2}")
 
-        # 特别关注的阈值统计
+        # 鐗瑰埆鍏虫敞鐨勯槇鍊肩粺璁?
         thresholds = [0.1, 0.3, 0.5, 0.9]
-        threshold_indices = [0, 2, 4, 8]  # 对应于compute_temporalIoU返回的索引
+        threshold_indices = [0, 2, 4, 8]  # 瀵瑰簲浜巆ompute_temporalIoU杩斿洖鐨勭储寮?
 
         self.logger.info("Key IoU Thresholds:")
         self.logger.info("Cause IoU:")
@@ -170,7 +183,7 @@ class Trainer(object):
 
         self.logger.info(f"Epoch time: {epoch_time:.2f}s")
 
-        # 写入TensorBoard
+        # 鍐欏叆TensorBoard
         self.tb_writer.add_scalar("Train/Loss_epoch", train_metrics.avg, epoch)
         self.tb_writer.add_scalar("Train/Accuracy_epoch", correct / total, epoch)
         self.tb_writer.add_scalar("Train/Cause_IoU_epoch", cause_iou_metrics.avg, epoch)
@@ -179,7 +192,7 @@ class Trainer(object):
         self.tb_writer.add_scalar("Train/Time", epoch_time, epoch)
         self.tb_writer.add_scalar("Train/SamplesPerSec", total / epoch_time, epoch)
 
-        # 写入关键阈值统计到TensorBoard
+        # 鍐欏叆鍏抽敭闃堝€肩粺璁″埌TensorBoard
         for i, idx in enumerate(threshold_indices):
             self.tb_writer.add_scalar(f"Train/Cause_IoU_over_{int(thresholds[i]*10)}", 
                                     cause_0129_iou[idx], epoch)
@@ -221,7 +234,7 @@ class Trainer(object):
                 total += torch.sum(mask).item()
                 val_metric.update(metric.item(), data.size(0))
 
-                # 计算IoU
+                # 璁＄畻IoU
                 cause_iou, effect_iou = compute_exact_iou(output, target, mask, predtype='both')
                 for i in range(len(cause_iou)):
                     cause_iou_metrics.update(cause_iou[i].item(), 1)
@@ -230,13 +243,13 @@ class Trainer(object):
                 if batch_idx % log_interval == log_interval-1:
                     self.logger.info(f"Validation step: {batch_idx} / {len(self.val_loader)}, {str(val_metric)}, Acc: {correct/total:.4f}, Cause IoU: {cause_iou_metrics.avg:.4f}, Effect IoU: {effect_iou_metrics.avg:.4f} ")
 
-            # 计算IoU阈值统计
+            # 璁＄畻IoU闃堝€肩粺璁?
             cause_0129_iou = compute_temporalIoU(cause_iou_metrics.val)
             effect_0129_iou = compute_temporalIoU(effect_iou_metrics.val)
 
             self.logger.info(f"Validate Epoch: {epoch}, {str(val_metric)}, Acc: {correct/total:.4f}, Cause IoU: {cause_iou_metrics.avg:.4f}, Effect IoU: {effect_iou_metrics.avg:.4f}]\t")
 
-            # 关键阈值统计
+            # 鍏抽敭闃堝€肩粺璁?
             thresholds = [0.1, 0.3, 0.5, 0.7]
             threshold_indices = [0, 2, 4, 6]
 
@@ -255,13 +268,13 @@ class Trainer(object):
                 self.logger.info(f"  IoU > {thresholds[i]:.1f}: {combined:.4f}")
         # self.ema.restore() 
 
-        # 写入TensorBoard
+        # 鍐欏叆TensorBoard
         self.tb_writer.add_scalar("Val/Loss_epoch", val_metric.avg, epoch)
         self.tb_writer.add_scalar("Val/Accuracy_epoch", correct / total, epoch)
         self.tb_writer.add_scalar("Val/Cause_IoU_epoch", cause_iou_metrics.avg, epoch)
         self.tb_writer.add_scalar("Val/Effect_IoU_epoch", effect_iou_metrics.avg, epoch)
 
-        # 写入关键阈值统计到TensorBoard
+        # 鍐欏叆鍏抽敭闃堝€肩粺璁″埌TensorBoard
         for i, idx in enumerate(threshold_indices):
             self.tb_writer.add_scalar(f"Val/Cause_IoU_over_{int(thresholds[i]*10)}", 
                                     cause_0129_iou[idx], epoch)
@@ -280,7 +293,7 @@ class Trainer(object):
                 'epoch':            epoch,
                 'metric':           combined_iou_05
             }, self.best_model_path)
-            self.logger.info(f"🚀 New best epoch {epoch}, Combined IoU@0.5 = {combined_iou_05:.4f}")
+            self.logger.info(f"馃殌 New best epoch {epoch}, Combined IoU@0.5 = {combined_iou_05:.4f}")
         self.logger.info("Validation ends: ")
 
     def test(self, test_dataloader:torch.utils.data.DataLoader, metric_function:callable):
@@ -303,26 +316,26 @@ class Trainer(object):
                 metric = metric_function(output, target, mask)
                 test_metric.update(metric.item(), data.size(0))
 
-                _, predicted = torch.max(output, 1)
+                _, predicted = torch.max(output.data, 1)
                 correct += ((predicted == target)*mask).float().sum().item()
                 total += torch.sum(mask).item()
 
-                # 计算IoU
+                # 璁＄畻IoU
                 cause_iou, effect_iou = compute_exact_iou(output, target, mask, predtype='both')
                 for i in range(len(cause_iou)):
-                    cause_iou_metrics.update(float(cause_iou[i].item()), 1)
-                    effect_iou_metrics.update(float(effect_iou[i].item()), 1)
+                    cause_iou_metrics.update(cause_iou[i].item(), 1)
+                    effect_iou_metrics.update(effect_iou[i].item(), 1)
 
                 if batch_idx % 10 == 0:
                     self.logger.info(f"Test step: {batch_idx} / {len(test_dataloader)}, {str(test_metric)}, Acc: {correct/total:.4f}, Cause IoU: {cause_iou_metrics.avg:.4f}, Effect IoU: {effect_iou_metrics.avg:.4f}")
 
-            # 计算IoU阈值统计
+            # 璁＄畻IoU闃堝€肩粺璁?
             cause_0129_iou = compute_temporalIoU(cause_iou_metrics.val)
             effect_0129_iou = compute_temporalIoU(effect_iou_metrics.val)
 
             self.logger.info(f"Test Results: {str(test_metric)}, Acc: {correct/total:.4f}, Cause IoU: {cause_iou_metrics.avg:.4f}, Effect IoU: {effect_iou_metrics.avg:.4f}")
 
-            # 关键阈值统计
+            # 鍏抽敭闃堝€肩粺璁?
             thresholds = [0.1, 0.3, 0.5, 0.7]
             threshold_indices = [0, 2, 4, 6]
 
@@ -342,7 +355,7 @@ class Trainer(object):
 
         self.logger.info("Test ends: ")
         return {
-            'loss': test_metric.avg,
+            'loss': test_metric.val,
             'accuracy': correct / total,
             'cause_iou': cause_iou_metrics.val,
             'effect_iou': effect_iou_metrics.val,
@@ -350,29 +363,49 @@ class Trainer(object):
             'effect_iou_thresholds': effect_0129_iou.tolist()
         }
 
-    def predict(self, vid_list_file):
+    def predict(self, test_dataloader: torch.utils.data.DataLoader, save_path: str = None):
         self.model.eval()
+        self.logger.info("Prediction begins: ")
+        self.logger.info(f"Prediction set size: {len(test_dataloader.dataset)}")
+        self.logger.info(f"Prediction batch size: {test_dataloader.batch_size}")
+        self.logger.info(f"Prediction steps: {len(test_dataloader)}")
+
+        predictions = []
+        cause_iou_metrics = AverageMeter("Average Prediction Cause IoU")
+        effect_iou_metrics = AverageMeter("Average Prediction Effect IoU")
+
         with torch.no_grad():
-            self.logger.info("Prediction starts: ")
-            file = open(vid_list_file, "r")
-            list_of_videos = [line.strip() for line in file.readlines()]
-            file.close()
-            self.logger.info(f"Total number of videos: {len(list_of_videos)}")
-            self.logger.info(f'{list_of_videos}...')
-            # for vid in list_of_videos:
-            #     features = np.load(features_path + vid.split('.')[0] + '.npy')
-            #     features = features[:, ::sample_rate]
-            #     input_x = torch.tensor(features, dtype=torch.float)
-            #     input_x.unsqueeze_(0)
-            #     input_x = input_x.to(device)
-            #     predictions = self.model(input_x, torch.ones(input_x.size(), device=device))
-            #     _, predicted = torch.max(predictions[-1].data, 1)
-            #     predicted = predicted.squeeze()
-            #     recognition = []
-            #     for i in range(len(predicted)):
-            #         recognition.append(actions_dict[predicted[i].item()])
-            #     self.logger.info(f"Video: {vid}, Recognition: {recognition}")
-            # self.logger.info("Prediction ends: ")
+            for batch_idx, (data, target, mask) in enumerate(tqdm.tqdm(test_dataloader, total=len(test_dataloader))):
+                data, target, mask = data.to(self.device), target.to(self.device), mask.to(self.device)
+                output = self.model(data)
+
+                _, predicted = torch.max(output.data, 1)
+
+                batch_predictions = {
+                    'predicted': (predicted * mask).cpu().squeeze(0).tolist(),
+                    'target': (target * mask).cpu().squeeze(0).tolist() if target is not None else None,
+                    'mask': mask.cpu().squeeze(0).tolist(),
+                    # 'output': output.cpu().tolist()
+                }
+                predictions.append(batch_predictions)
+
+                if target is not None and mask is not None:
+                    cause_iou, effect_iou = compute_exact_iou(output, target, mask, predtype='both')
+                    for i in range(len(cause_iou)):
+                        cause_iou_metrics.update(cause_iou[i].item(), 1)
+                        effect_iou_metrics.update(effect_iou[i].item(), 1)
+
+        if save_path:
+            pathlib.Path(save_path).mkdir(parents=True, exist_ok=True)
+            import jsonlines
+            tgt_path = os.path.join(save_path, "SM_predictions.jsonl")
+            with jsonlines.open(tgt_path, mode='w') as writer:
+                for prediction in predictions:
+                    writer.write(prediction)
+            self.logger.info(f"Predictions saved to {tgt_path}")
+
+        self.logger.info("Prediction ends: ")
+        return predictions
 
     def train_loop(self, epochs:int = None, train_log_interval:int=50, val_log_interval:int=50):
         """
@@ -390,11 +423,14 @@ class Trainer(object):
                 self.logger.info("Validation starts: ")
                 self.validate(idx, self.criterion, val_log_interval)
                 self.logger.info("Validation ends: ")
-            if idx % 5 == 4:   # 每 5 个 epoch 写一次
+            if idx % 5 == 4:   # 姣?5 涓?epoch 鍐欎竴娆?
                 for name, param in self.model.named_parameters():
                     if param.grad is not None:
                         self.tb_writer.add_histogram(f"Grad/{name}", param.grad, idx)
                     self.tb_writer.add_histogram(f"Weight/{name}", param, idx)
+        self.logger.info("===== Training Finished =====")
+        self.logger.info(f"Best epoch: {self.best_epoch} | Best Combined IoU@0.5: {self.best_metric:.4f}")
+        self.logger.info(f"Best checkpoint saved to: {self.best_model_path}")
 
 
 

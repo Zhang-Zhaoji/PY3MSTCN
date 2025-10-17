@@ -35,7 +35,7 @@ def main(args:argparse.ArgumentParser):
         dataset_val   = []
         dataset_test  = CausalityInTrafficAccident(p, split='test', test_mode=True)
         dataloader_train, dataloader_val = None, None
-        dataloader_test = DataLoader(dataset_test, batch_size=1, num_workers=1)
+        dataloader_test = DataLoader(dataset_test, batch_size=p['batch_size'], num_workers=p['num_workers'])
     elif args.mode == 'predict':
         raise NotImplementedError('predict mode is not implemented yet')
     else:
@@ -78,7 +78,6 @@ if __name__ == '__main__':
     parser.add_argument('--feed_type', type=str, default="multi-label",choices=["multi-label", "detection", "classification"])
     parser.add_argument('--dataset_ver', type=str, default='Mar9th')
     parser.add_argument('--positive_thres', type=float, default=0.4)
-    parser.add_argument('--prediction_save_path', type = str, default='./prediction/v2-0-128')
     
     args = parser.parse_args()
     main(args)
