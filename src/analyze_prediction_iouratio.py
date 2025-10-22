@@ -24,7 +24,7 @@ def _count_iou(pred_label:np.ndarray, _cls:int, cls_gt:np.ndarray)->np.ndarray:
     iou = inter / (union + 1e-8)
     return iou
 
-def compute_exact_iou(output:np.ndarray, cls_gt:np.ndarray, temporal_mask:np.ndarray, predtype:str='both') -> tuple[np.ndarray, np.ndarray]: 
+def compute_exact_iou(output:np.ndarray, cls_gt:np.ndarray, temporal_mask:np.ndarray, predtype:str='both'):# -> tuple[np.ndarray, np.ndarray]: 
     """
     output: [C, T], prediction logits
     cls_gt: [T], 0 for background, 1 for foreground
@@ -44,7 +44,7 @@ def compute_exact_iou(output:np.ndarray, cls_gt:np.ndarray, temporal_mask:np.nda
     elif predtype == 'effect':
         return _count_iou(valid_label, 2, cls_gt)
 
-def compute_temporalIoU(iou_set:list[np.ndarray]) -> np.ndarray:
+def compute_temporalIoU(iou_set) -> np.ndarray: # list[numpy.ndarray]
     """
     analyze a series of IOU, compute the amount of each class prediction iou over some threshold
     params:
@@ -161,5 +161,14 @@ temporial SM effect:
 [0.79569892 0.70250896 0.60573477 0.47670251 0.34767025 0.23655914  0.13620072 0.05734767 0.01433692]
 """
 
+'''
+# Squeeze0
+temporial SM cause
+[0.20430108 0.11469534 0.08602151 0.05734767 0.02867384 0.01075269
+ 0.00716846 0.         0.        ]
+temporial SM effect
+[0.2437276  0.17204301 0.12903226 0.08602151 0.04659498 0.03942652
+ 0.02150538 0.00358423 0.        ]
+'''
 
 

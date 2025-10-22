@@ -137,8 +137,8 @@ class SalMultiStageModel(MultiStageModel):
     def __init__(self, num_stages, num_layers, num_f_maps, dim, num_classes, pre_process_dim = 512, *args, **kwargs) -> None:
         super().__init__(num_stages, num_layers, num_f_maps, dim, num_classes, *args, **kwargs)
         # self.preprocess = Squeeze2Stage()
-        self.preprocess = Squeeze1Stage(in_ch = pre_process_dim, out_ch=dim)
-        # self.preprocess = Squeeze0Stage()
+        # self.preprocess = Squeeze1Stage(in_ch = pre_process_dim, out_ch=dim)
+        self.preprocess = Squeeze0Stage()
     
     def forward(self, x:torch.Tensor, mask:torch.Tensor = None) -> torch.Tensor:
         # [B,C,T]

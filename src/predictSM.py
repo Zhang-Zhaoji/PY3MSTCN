@@ -65,7 +65,7 @@ def main(args:argparse.ArgumentParser):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg_path', type=str, default='cfgs/v2-2-128.json')
+    parser.add_argument('--cfg_path', type=str, default='cfgs/v2-1-128.json')
     parser.add_argument('--logfile_dest', type=str, default='./logs/test_log')
     parser.add_argument('--model_dest', type=str, default='./model')
     parser.add_argument('--wandb_project', type=str, default='MyMSTCN')
@@ -74,7 +74,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_workers', type=int, default=1) # 4
     parser.add_argument('--batch_size', type=int, default=1) # 16
     parser.add_argument('--mode',type=str, default='predict', choices=['train', 'test', 'predict'])
-    parser.add_argument('--resume_model_path', type=str, default=r'model/bestSal2/2025-08-18-21-26-32/best_model.pth')
+    parser.add_argument('--resume_model_path', type=str, default='model/extract_models/best_Conv0.pth')
     parser.add_argument('--resume_optimizer_path', type=str, default='')
     parser.add_argument('--feature', type=str, default="SMfeature")
     parser.add_argument('--feature_folder', type=str, default="Saldataset")

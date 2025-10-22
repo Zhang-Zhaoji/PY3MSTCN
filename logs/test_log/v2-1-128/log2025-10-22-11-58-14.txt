@@ -1,0 +1,29 @@
+{
+  "model_name": "v2-1-128",
+  "save_model": true,
+  "result_path": "./rsts/MGFv2-1-128",
+  "max_save_model": 3,
+  "lr": 0.001,
+  "lr_decay": 0.95,
+  "lr_decay_step": 15,
+  "weight_decay": 0.01,
+  "optimizer": "AdamW",
+  "scheduler": "StepLR",
+  "resume": "",
+  "num_classes": 3,
+  "num_stages": 4,
+  "num_layers": 10,
+  "num_f_maps": 128,
+  "dim": 1024,
+  "epochs": 100
+}
+[2025-10-22 11:58:14] [INFO] Training model with config: 
+[2025-10-22 11:58:14] [INFO] {'model_name': 'v2-1-128', 'save_model': True, 'result_path': './rsts/MGFv2-1-128', 'max_save_model': 3, 'lr': 0.001, 'lr_decay': 0.95, 'lr_decay_step': 15, 'weight_decay': 0.01, 'optimizer': 'AdamW', 'scheduler': 'StepLR', 'resume': '', 'num_classes': 3, 'num_stages': 4, 'num_layers': 10, 'num_f_maps': 128, 'dim': 1024, 'epochs': 100}
+[2025-10-22 11:58:14] [INFO] Using device: 
+[2025-10-22 11:58:15] [INFO] Using GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+[2025-10-22 11:58:15] [INFO] Loading model
+[2025-10-22 11:58:24] [INFO] loading model successfully
+[2025-10-22 11:58:24] [INFO] building optimizer with optimizer:AdamW
+[2025-10-22 11:58:24] [INFO] building scheduler with scheduler:StepLR
+[2025-10-22 11:58:24] [INFO] Resuming model
+[2025-10-22 11:58:24] [INFO] resume model from E:\Li Lab\MS-TCA\MyMSTCN\model\extract_models\best_Conv0.pth
